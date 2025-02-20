@@ -89,7 +89,7 @@ export default function Page() {
 					variant="outline"
 					className="w-full border-gray-200 text-gray-600 hover:bg-gray-50 h-12"
 				>
-					Voir la démo
+					Demande sur mesure
 				</Button>
 			</div>
 		</div>

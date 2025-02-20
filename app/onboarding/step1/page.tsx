@@ -105,11 +105,14 @@ export default function Step1() {
 
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <div className="space-y-6">
+		  	<label className="block text-sm font-medium text-gray-700 mb-2">
+                Intitulé de poste précis
+        	</label>
             <div className="flex gap-2">
               <Input
                 value={jobTitleInput}
                 onChange={(e) => setJobTitleInput(e.target.value)}
-                placeholder="Ex : saas, e-commerce, ..."
+                placeholder="Ex : Développeur, Directeur, etc..."
                 className="bg-gray-50 border-gray-200 focus:ring-[#84cc16] focus:border-[#84cc16]"
               />
               <Button

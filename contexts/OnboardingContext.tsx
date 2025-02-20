@@ -17,10 +17,7 @@ type OnboardingData = {
 	expertise: Array<string>;
   };
   step4?: {
-    // Préférences de communication
-    phoneNumber: string;
-    preferredContact: 'email' | 'phone';
-    newsletter: boolean;
+    leadQuantity: string;
   };
   step5?: {
     // Informations personnelles

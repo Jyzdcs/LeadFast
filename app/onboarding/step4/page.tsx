@@ -4,10 +4,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { useOnboarding } from "@/contexts/OnboardingContext";
-import { Badge } from "@/components/ui/badge";
-import { X } from "lucide-react";
+
 import {
   Select,
   SelectContent,
@@ -17,53 +15,56 @@ import {
 } from "@/components/ui/select";
 
 type Step4FormValues = {
-  phoneNumber: string;
-  preferredContact: string[];
-  newsletter: boolean;
+  leadQuantity: string;
 };
 
-const contactMethods = [
-  { value: "email", label: "Email" },
-  { value: "phone", label: "Téléphone" },
-  { value: "sms", label: "SMS" },
-  { value: "whatsapp", label: "WhatsApp" },
-  { value: "linkedin", label: "LinkedIn" },
+const quantityPricing = [
+  { quantity: "1000", price: 30 },
+  { quantity: "2000", price: 55 },
+  { quantity: "3000", price: 80 },
+  { quantity: "4000", price: 105 },
+  { quantity: "5000", price: 125 },
+  { quantity: "6000", price: 140 },
+  { quantity: "7000", price: 155 },
+  { quantity: "8000", price: 170 },
+  { quantity: "9000", price: 185 },
+  { quantity: "10000", price: 200 },
 ];
 
 export default function Step4() {
   const { data, setData } = useOnboarding();
   const router = useRouter();
+  const [selectedPrice, setSelectedPrice] = React.useState<number | null>(null);
+
+  // Initialiser le prix si une quantité est déjà sélectionnée
+  React.useEffect(() => {
+    if (data?.step4?.leadQuantity) {
+      const pricing = quantityPricing.find(p => p.quantity === data.step4.leadQuantity);
+      setSelectedPrice(pricing?.price || null);
+    }
+  }, [data?.step4?.leadQuantity]);
 
   const form = useForm<Step4FormValues>({
     defaultValues: {
-      phoneNumber: data.step4?.phoneNumber || "",
-      preferredContact: data.step4?.preferredContact ? [data.step4.preferredContact] : [],
-      newsletter: data.step4?.newsletter || false,
+      leadQuantity: data.step4?.leadQuantity || "",
     },
   });
 
-  const handleAddContact = (value: string) => {
-    const currentContacts = form.getValues("preferredContact") || [];
-    if (!currentContacts.includes(value)) {
-      form.setValue("preferredContact", [...currentContacts, value]);
-    }
-  };
-
-  const handleRemoveContact = (valueToRemove: string) => {
-    const currentContacts = form.getValues("preferredContact");
-    form.setValue(
-      "preferredContact",
-      currentContacts.filter((contact) => contact !== valueToRemove)
-    );
+  const handleQuantityChange = (quantity: string) => {
+    form.setValue("leadQuantity", quantity);
+    const pricing = quantityPricing.find(p => p.quantity === quantity);
+    setSelectedPrice(pricing?.price || null);
+    
+    // Sauvegarder immédiatement dans le contexte
+    setData({ 
+      step4: {
+        leadQuantity: quantity
+      }
+    });
   };
 
   const onSubmit = async (values: Step4FormValues) => {
-    setData({ 
-      step4: {
-        ...values,
-        preferredContact: values.preferredContact[0] as 'email' | 'phone'
-      } 
-    });
+    // La sauvegarde est déjà faite dans handleQuantityChange
     router.push("/onboarding/step5");
   };
 
@@ -71,81 +72,52 @@ export default function Step4() {
     <div className="flex-1 flex flex-col">
       <div className="space-y-8 flex-1">
         <div className="inline-flex items-center px-3 py-1.5 bg-gray-50 rounded-full border border-gray-100">
-          <span className="text-sm text-gray-600">Étape 4 - Contact</span>
+          <span className="text-sm text-gray-600">Étape 4 - Configuration des leads</span>
         </div>
 
         <div>
           <h1 className="text-2xl font-semibold text-gray-900 mb-3">
-            Préférences de contact
+            Quantité de leads
           </h1>
           <p className="text-gray-600">
-            Comment souhaitez-vous être contacté ?
+            Choisissez le nombre de leads que vous souhaitez obtenir
           </p>
         </div>
 
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <div className="space-y-6">
             <div>
-              <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700 mb-2">
-                Numéro de téléphone
-              </label>
-              <Input
-                id="phoneNumber"
-                type="tel"
-                placeholder="+33 6 12 34 56 78"
-                className="bg-gray-50 border-gray-200"
-                {...form.register("phoneNumber")}
-              />
-            </div>
-
-            <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Méthodes de contact préférées
+                Quantité de leads souhaitée
               </label>
-              <Select onValueChange={handleAddContact}>
+              <Select 
+                onValueChange={handleQuantityChange}
+                defaultValue={data.step4?.leadQuantity}
+              >
                 <SelectTrigger className="bg-gray-50 border-gray-200">
-                  <SelectValue placeholder="Sélectionnez vos préférences" />
+                  <SelectValue placeholder="Sélectionnez la quantité" />
                 </SelectTrigger>
                 <SelectContent>
-                  {contactMethods.map((method) => (
+                  {quantityPricing.map((option) => (
                     <SelectItem
-                      key={method.value}
-                      value={method.value}
+                      key={option.quantity}
+                      value={option.quantity}
                       className="cursor-pointer hover:bg-primary/5"
                     >
-                      {method.label}
+                      {option.quantity} leads
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
 
-              <div className="flex flex-wrap gap-2 mt-3">
-                {form.watch("preferredContact")?.map((contact) => (
-                  <Badge
-                    key={contact}
-                    variant="secondary"
-                    className="px-3 py-1 flex items-center gap-1"
-                  >
-                    {contactMethods.find((m) => m.value === contact)?.label}
-                    <X
-                      className="h-3 w-3 cursor-pointer hover:text-red-500"
-                      onClick={() => handleRemoveContact(contact)}
-                    />
-                  </Badge>
-                ))}
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                id="newsletter"
-                className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
-                {...form.register("newsletter")}
-              />
-              <label htmlFor="newsletter" className="text-sm text-gray-600">
-                Je souhaite recevoir la newsletter
-              </label>
+              {selectedPrice && (
+                <div className="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm font-medium text-gray-600">Prix total :</span>
+                    <span className="text-lg font-semibold text-gray-900">{selectedPrice}€</span>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
@@ -161,7 +133,7 @@ export default function Step4() {
             <Button
               type="submit"
               className="flex-1 bg-black hover:bg-gray-900"
-              disabled={form.formState.isSubmitting}
+              disabled={!form.watch("leadQuantity")}
             >
               {form.formState.isSubmitting ? "Chargement..." : "Continuer"}
             </Button>

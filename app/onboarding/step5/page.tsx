@@ -104,12 +104,12 @@ export default function Step5() {
                 htmlFor="email"
                 className="block text-sm font-medium text-gray-700 mb-2"
               >
-                Email professionnel
+                Email
               </label>
               <Input
                 id="email"
                 type="email"
-                placeholder="john.doe@entreprise.com"
+                placeholder="john.doe@gmail.com"
                 className="bg-gray-50 border-gray-200"
                 {...form.register("email", {
                   required: "L'email est requis",
