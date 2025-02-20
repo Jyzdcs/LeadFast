@@ -4,12 +4,12 @@ import React, { createContext, useContext, useState } from 'react';
 
 type OnboardingData = {
   step1?: {
-    jobTitle: string;
-    managementLevel: string;
+    jobTitle: string[];
+    managementLevel: string[];
   };
   step2?: {
     activitySector: string[];
-    companySize: string;
+    companySize: string[];
   };
   step3?: {
     // Informations professionnelles

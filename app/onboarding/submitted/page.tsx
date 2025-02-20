@@ -22,34 +22,18 @@ export default function SubmittedPage() {
 
       {/* Message de confirmation */}
       <div className="space-y-4">
-        <h1 className="text-3xl font-bold">Félicitations {userName} !</h1>
-        <p className="text-muted-foreground text-lg">
-          Votre inscription a été complétée avec succès.
-        </p>
+        <h1 className="text-3xl font-bold">Merci pour votre confiance !!</h1>
         <p className="text-muted-foreground">
-          Nous avons bien reçu vos informations et nous vous contacterons bientôt.
+          Nous avons bien reçu vos criteres de recherche. Notre equipe va commencer a generer vos leads qualifies.
         </p>
       </div>
 
-      {/* Résumé des étapes complétées */}
-      <div className="bg-muted/50 p-6 rounded-lg max-w-md mx-auto">
-        <h2 className="font-semibold mb-4">Ce que vous avez accompli :</h2>
-        <ul className="space-y-2 text-left list-none">
-          <li className="flex items-center gap-2">
-            <CheckCircle2 className="h-4 w-4 text-green-500" />
-            <span>Création de votre profil</span>
-          </li>
-          <li className="flex items-center gap-2">
-            <CheckCircle2 className="h-4 w-4 text-green-500" />
-            <span>Configuration de vos préférences</span>
-          </li>
-          <li className="flex items-center gap-2">
-            <CheckCircle2 className="h-4 w-4 text-green-500" />
-            <span>Personnalisation de votre compte</span>
-          </li>
-        </ul>
-      </div>
-
+	  	<div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/5 backdrop-blur-sm border border-white/rounded-full">
+				<div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
+				<span className="text-xs text-black tracking-wide uppercase">
+					Configuration terminée
+				</span>
+			</div>
       {/* Boutons d'action */}
       <div className="flex flex-col gap-4 items-center">
         <Button 

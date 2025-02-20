@@ -4,18 +4,20 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { useOnboarding } from '@/contexts/OnboardingContext';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { StepIndicator } from '../components/StepIndicator';
-import { Check } from 'lucide-react';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
-import { cn } from '@/lib/utils';
+import { X } from 'lucide-react';
 
-// Types pour le formulaire
 type Step2FormValues = {
   activitySector: string[];
-  companySize: string;
+  companySize: string[];
 };
 
 // Liste des tailles d'entreprise avec leurs volumes de prospects
@@ -188,163 +190,162 @@ export default function Step2() {
   const { data, setData } = useOnboarding();
   const router = useRouter();
 
-  // Initialisation du formulaire avec un tableau vide pour activitySector
   const form = useForm<Step2FormValues>({
     defaultValues: {
-      activitySector: [],
-      companySize: '',
-    }
+      activitySector: data.step2?.activitySector || [],
+      companySize: data.step2?.companySize || [],
+    },
   });
 
-  // Fonction pour gérer la sélection/déselection des secteurs
-  const handleSectorChange = (value: string) => {
-    const currentSectors = form.getValues('activitySector');
-    let newSectors: string[];
-
-    if (currentSectors.includes(value)) {
-      // Si le secteur est déjà sélectionné, on le retire
-      newSectors = currentSectors.filter(sector => sector !== value);
-    } else {
-      // Sinon, on l'ajoute
-      newSectors = [...currentSectors, value];
+  const handleAddSector = (value: string) => {
+    const currentSectors = form.getValues('activitySector') || [];
+    if (!currentSectors.includes(value)) {
+      form.setValue('activitySector', [...currentSectors, value]);
     }
-
-    form.setValue('activitySector', newSectors);
   };
 
-  // Soumission du formulaire
+  const handleRemoveSector = (valueToRemove: string) => {
+    const currentSectors = form.getValues('activitySector');
+    form.setValue(
+      'activitySector',
+      currentSectors.filter((sector) => sector !== valueToRemove)
+    );
+  };
+
+  const handleAddSize = (value: string) => {
+    const currentSizes = form.getValues('companySize') || [];
+    if (!currentSizes.includes(value)) {
+      form.setValue('companySize', [...currentSizes, value]);
+    }
+  };
+
+  const handleRemoveSize = (valueToRemove: string) => {
+    const currentSizes = form.getValues('companySize');
+    form.setValue(
+      'companySize',
+      currentSizes.filter((size) => size !== valueToRemove)
+    );
+  };
+
   const onSubmit = async (values: Step2FormValues) => {
     setData({ step2: values });
     router.push('/onboarding/step3');
   };
 
   return (
-    <div className="space-y-8">
-      {/* Indicateur d'étape simplifié */}
-      <div className="inline-flex items-center px-3 py-1.5 bg-gray-50 rounded-full border border-gray-100">
-        <span className="text-sm text-gray-600">Étape 2 - Entreprise cible</span>
-      </div>
+    <div className="flex-1 flex flex-col">
+      <div className="space-y-8 flex-1">
+        <div className="inline-flex items-center px-3 py-1.5 bg-gray-50 rounded-full border border-gray-100">
+          <span className="text-sm text-gray-600">Étape 2 - Entreprise cible</span>
+        </div>
 
-      <div>
-        <h1 className="text-2xl font-semibold text-gray-900 mb-3">
-          Entreprise cible
-        </h1>
-        <p className="text-gray-600">
-          Définissez le profil des entreprises que vous souhaitez cibler.
-        </p>
-      </div>
+        <div>
+          <h1 className="text-2xl font-semibold text-gray-900 mb-3">
+            Entreprise cible
+          </h1>
+          <p className="text-gray-600">
+            Définissez le profil des entreprises que vous souhaitez cibler.
+          </p>
+        </div>
 
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        {/* Remplacer l'Input par un Select multiple pour les secteurs d'activité */}
-        <div className="space-y-2">
-          <label className="block text-sm font-medium">
-            Secteurs d'activité
-          </label>
-          <Select
-            onValueChange={handleSectorChange}
-          >
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Sélectionnez un ou plusieurs secteurs" />
-            </SelectTrigger>
-            <SelectContent>
-              {/* Groupe les industries par ordre alphabétique pour une meilleure UX */}
-              {industries
-                .sort((a, b) => a.label.localeCompare(b.label))
-                .map((industry) => (
-                  <SelectItem 
-                    key={industry.value} 
-                    value={industry.value}
-                    className={cn(
-                      "cursor-pointer hover:bg-primary/5",
-                      // Ajoute une classe pour indiquer si l'item est sélectionné
-                      form.watch('activitySector').includes(industry.value) && "bg-primary/10"
-                    )}
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <div className="space-y-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Secteurs d'activité
+              </label>
+              <Select onValueChange={handleAddSector}>
+                <SelectTrigger className="bg-gray-50 border-gray-200">
+                  <SelectValue placeholder="Sélectionnez les secteurs" />
+                </SelectTrigger>
+                <SelectContent>
+                  {industries.map((industry) => (
+                    <SelectItem
+                      key={industry.value}
+                      value={industry.value}
+                      className="cursor-pointer hover:bg-primary/5"
+                    >
+                      {industry.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
+              <div className="flex flex-wrap gap-2 mt-3">
+                {form.watch('activitySector')?.map((sector) => (
+                  <Badge
+                    key={sector}
+                    variant="secondary"
+                    className="px-3 py-1 flex items-center gap-1"
                   >
-                    <div className="flex items-center gap-2">
-                      <div className="flex-grow">{industry.label}</div>
-                      {/* Affiche un indicateur de sélection */}
-                      {form.watch('activitySector').includes(industry.value) && (
-                        <Check className="h-4 w-4" />
-                      )}
-                    </div>
-                  </SelectItem>
+                    {industries.find((i) => i.value === sector)?.label}
+                    <X
+                      className="h-3 w-3 cursor-pointer hover:text-red-500"
+                      onClick={() => handleRemoveSector(sector)}
+                    />
+                  </Badge>
                 ))}
-            </SelectContent>
-          </Select>
-          
-          {/* Affichage des secteurs sélectionnés */}
-          <div className="flex flex-wrap gap-2 mt-2">
-            {form.watch('activitySector').map((sectorValue) => {
-              const sector = industries.find(i => i.value === sectorValue);
-              return (
-                <Badge
-                  key={sectorValue}
-                  variant="secondary"
-                  className="cursor-pointer"
-                  onClick={() => handleSectorChange(sectorValue)}
-                >
-                  {sector?.label} ×
-                </Badge>
-              );
-            })}
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Tailles d'entreprise
+              </label>
+              <Select onValueChange={handleAddSize}>
+                <SelectTrigger className="bg-gray-50 border-gray-200">
+                  <SelectValue placeholder="Sélectionnez les tailles" />
+                </SelectTrigger>
+                <SelectContent>
+                  {employeeRanges.map((size) => (
+                    <SelectItem
+                      key={size.value}
+                      value={size.value}
+                      className="cursor-pointer hover:bg-primary/5"
+                    >
+                      {size.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
+              <div className="flex flex-wrap gap-2 mt-3">
+                {form.watch('companySize')?.map((size) => (
+                  <Badge
+                    key={size}
+                    variant="secondary"
+                    className="px-3 py-1 flex items-center gap-1"
+                  >
+                    {employeeRanges.find((s) => s.value === size)?.label}
+                    <X
+                      className="h-3 w-3 cursor-pointer hover:text-red-500"
+                      onClick={() => handleRemoveSize(size)}
+                    />
+                  </Badge>
+                ))}
+              </div>
+            </div>
           </div>
 
-          {form.formState.errors.activitySector && (
-            <span className="text-sm text-destructive">
-              {form.formState.errors.activitySector.message}
-            </span>
-          )}
-        </div>
-
-        {/* Select pour la taille d'entreprise */}
-        <div className="space-y-2">
-          <label className="block text-sm font-medium">
-            Taille de l'entreprise
-          </label>
-          <Select
-            onValueChange={(value) => form.setValue('companySize', value )}
-          >
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Sélectionnez une taille d'entreprise" />
-            </SelectTrigger>
-            <SelectContent>
-              {employeeRanges.map((range) => (
-                <SelectItem 
-                  key={range.value} 
-                  value={range.value}
-                  className="cursor-pointer hover:bg-primary/5"
-                >
-                  {range.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          {form.formState.errors.companySize && (
-            <span className="text-sm text-destructive">
-              {form.formState.errors.companySize.message}
-            </span>
-          )}
-        </div>
-
-        {/* Boutons de navigation */}
-        <div className="flex gap-4 pt-4">
-          <Button 
-            type="button" 
-            variant="outline"
-            onClick={() => router.push('/onboarding/step1')}
-            className="w-full"
-          >
-            Retour
-          </Button>
-          <Button 
-            type="submit" 
-            className="w-full"
-            disabled={form.formState.isSubmitting}
-          >
-            {form.formState.isSubmitting ? 'Chargement...' : 'Continuer'}
-          </Button>
-        </div>
-      </form>
+          <div className="flex gap-4 mt-auto pt-8">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => router.push('/onboarding/step1')}
+              className="flex-1 border-gray-200 text-gray-600 hover:bg-gray-50"
+            >
+              Retour
+            </Button>
+            <Button
+              type="submit"
+              className="flex-1 bg-black hover:bg-gray-900"
+              disabled={form.formState.isSubmitting}
+            >
+              {form.formState.isSubmitting ? 'Chargement...' : 'Continuer'}
+            </Button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
