@@ -36,10 +36,10 @@ export default function Step4() {
   const router = useRouter();
   const [selectedPrice, setSelectedPrice] = React.useState<number | null>(null);
 
-  // Initialiser le prix si une quantité est déjà sélectionnée
   React.useEffect(() => {
-    if (data?.step4?.leadQuantity) {
-      const pricing = quantityPricing.find(p => p.quantity === data.step4.leadQuantity);
+    const quantity = data?.step4?.leadQuantity;
+    if (quantity) {
+      const pricing = quantityPricing.find(p => p.quantity === quantity);
       setSelectedPrice(pricing?.price || null);
     }
   }, [data?.step4?.leadQuantity]);
