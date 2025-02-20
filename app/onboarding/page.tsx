@@ -1,141 +1,97 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { 
-	ArrowRight, 
-	Linkedin, 
-	Mail, 
-	Globe, 
-	Phone,
-	Building2,
-	Users2
+	Target,
+	Users,
+	ChartBar,
+	Shield 
 } from "lucide-react";
 
-// Animation variants améliorés
-const containerVariants = {
-	hidden: { opacity: 0 },
-	visible: {
-		opacity: 1,
-		transition: {
-			staggerChildren: 0.15,
-			duration: 0.8,
-			ease: "easeOut"
-		}
-	}
-};
+// Types
+interface Feature {
+	icon: React.ReactNode;
+	title: string;
+	description: string;
+}
 
-const itemVariants = {
-	hidden: { y: 30, opacity: 0 },
-	visible: {
-		y: 0,
-		opacity: 1,
-		transition: {
-			duration: 0.6,
-			ease: "easeOut"
-		}
-	}
-};
-
-// Sources de données redéfinies
-const dataSources = [
+const features: Feature[] = [
 	{
-		icon: <Linkedin className="w-6 h-6 text-primary" />,
-		title: "LinkedIn",
-		description: "Extraction intelligente des profils professionnels et réseaux"
+		icon: <Target className="w-5 h-5" />,
+		title: "Ciblage Précis",
+		description: "Identifiez vos prospects B2B idéaux"
 	},
 	{
-		icon: <Mail className="w-6 h-6 text-primary" />,
-		title: "Email Pro",
-		description: "Vérification et validation des adresses professionnelles"
+		icon: <Users className="w-5 h-5" />,
+		title: "Base de Données",
+		description: "Accédez à des millions de décideurs"
 	},
 	{
-		icon: <Phone className="w-6 h-6 text-primary" />,
-		title: "Téléphone",
-		description: "Numéros directs et mobiles professionnels vérifiés"
+		icon: <ChartBar className="w-5 h-5" />,
+		title: "Analytics",
+		description: "Suivi des performances"
 	},
 	{
-		icon: <Globe className="w-6 h-6 text-primary" />,
-		title: "Site Web",
-		description: "Analyse des domaines et pages d'entreprise"
-	},
-	{
-		icon: <Building2 className="w-6 h-6 text-primary" />,
-		title: "Entreprise",
-		description: "Informations détaillées sur les sociétés (SIRET, CA, effectif)"
-	},
-	{
-		icon: <Users2 className="w-6 h-6 text-primary" />,
-		title: "Décideurs",
-		description: "Identification des décisionnaires et leurs rôles"
+		icon: <Shield className="w-5 h-5" />,
+		title: "RGPD",
+		description: "100% conforme à la réglementation"
 	}
 ];
 
 export default function Page() {
 	return (
-		<div className="h-[calc(100vh-4rem)] flex flex-col justify-between p-8">
-			{/* En-tête simplifié */}
-			<motion.div 
-				initial={{ opacity: 0, y: -20 }}
-				animate={{ opacity: 1, y: 0 }}
-				transition={{ duration: 0.8 }}
-				className="text-center"
-			>
-				<h1 className="text-3xl font-medium mb-3 text-primary/90">
-					Toutes vos données B2B en un seul endroit
+		<div className="space-y-12">
+			{/* En-tête */}
+			<div>
+				<h1 className="text-2xl font-semibold text-gray-900 mb-3">
+					Solution de Prospection B2B
 				</h1>
-				<p className="text-lg text-muted-foreground max-w-xl mx-auto">
-					Accédez aux informations essentielles de vos prospects
+				<p className="text-gray-600">
+					Optimisez votre processus de génération de leads.
 				</p>
-			</motion.div>
+			</div>
 
-			{/* Cards avec espacement optimisé */}
-			<motion.div
-				variants={containerVariants}
-				initial="hidden"
-				animate="visible"
-				className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mx-auto px-4"
-			>
-				{dataSources.map((source, index) => (
-					<motion.div key={index} variants={itemVariants} className="w-44">
-						<Card className="group hover:shadow-lg transition-all duration-300 border-primary/5 h-full">
-							<CardContent className="p-6 flex flex-col h-full">
-								<div className="mb-4 p-3 bg-primary/5 rounded-lg w-fit group-hover:bg-primary/10 transition-all duration-300">
-									{source.icon}
-								</div>
-								<h3 className="text-lg font-medium mb-2 text-primary/90">
-									{source.title}
+			{/* Fonctionnalités */}
+			<div className="grid grid-cols-2 gap-6">
+				{features.map((feature, index) => (
+					<div
+						key={index}
+						className="p-5 border border-gray-200 rounded-lg hover:border-gray-300 transition-colors"
+					>
+						<div className="flex gap-4">
+							<div className="text-gray-700">
+								{feature.icon}
+							</div>
+							<div>
+								<h3 className="font-medium text-gray-900 mb-1">
+									{feature.title}
 								</h3>
-								<p className="text-muted-foreground text-sm leading-relaxed">
-									{source.description}
+								<p className="text-sm text-gray-500">
+									{feature.description}
 								</p>
-							</CardContent>
-						</Card>
-					</motion.div>
+							</div>
+						</div>
+					</div>
 				))}
-			</motion.div>
+			</div>
 
-			{/* CTA simplifié */}
-			<motion.div
-				initial={{ opacity: 0, scale: 0.95 }}
-				animate={{ opacity: 1, scale: 1 }}
-				transition={{ duration: 0.8, delay: 0.2 }}
-				className="text-center"
-			>
-				<div className="flex gap-4 justify-center">
-					<Link href="/onboarding/step1">
-						<Button size="lg" className="group px-6 py-5">
-							Generes ton leads
-							<ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-						</Button>
-					</Link>
-					<Button variant="outline" size="lg" className="px-6 py-5">
-						Voir une démo
+			{/* CTA */}
+			<div className="space-y-4">
+				<Link href="/onboarding/step1" className="block">
+					<Button 
+						className="w-full bg-black hover:bg-gray-900 text-white h-12"
+					>
+						Commencer
 					</Button>
-				</div>
-			</motion.div>
+				</Link>
+				<Button
+					variant="outline"
+					className="w-full border-gray-200 text-gray-600 hover:bg-gray-50 h-12"
+				>
+					Voir la démo
+				</Button>
+			</div>
 		</div>
 	);
 }

@@ -219,18 +219,22 @@ export default function Step2() {
   };
 
   return (
-    <div className="space-y-6">
-      <StepIndicator currentStep={2} />
-      
-      {/* En-tête de la page */}
-      <div className="space-y-2">
-        <h1 className="text-2xl font-bold">Entreprise cible</h1>
-        <p className="text-muted-foreground">
-          Définissez le secteur d'activité et la taille de l'entreprise de vos prospects
+    <div className="space-y-8">
+      {/* Indicateur d'étape simplifié */}
+      <div className="inline-flex items-center px-3 py-1.5 bg-gray-50 rounded-full border border-gray-100">
+        <span className="text-sm text-gray-600">Étape 2 - Entreprise cible</span>
+      </div>
+
+      <div>
+        <h1 className="text-2xl font-semibold text-gray-900 mb-3">
+          Entreprise cible
+        </h1>
+        <p className="text-gray-600">
+          Définissez le profil des entreprises que vous souhaitez cibler.
         </p>
       </div>
 
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         {/* Remplacer l'Input par un Select multiple pour les secteurs d'activité */}
         <div className="space-y-2">
           <label className="block text-sm font-medium">
