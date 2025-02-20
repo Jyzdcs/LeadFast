@@ -8,16 +8,13 @@ type OnboardingData = {
     managementLevel: string;
   };
   step2?: {
-    address: string;
-    city: string;
-    postalCode: string;
-    country: string;
+    activitySector: string[];
+    companySize: string;
   };
   step3?: {
     // Informations professionnelles
     company: string;
-    position: string;
-    experience: string;
+	expertise: Array<string>;
   };
   step4?: {
     // Préférences de communication
@@ -26,9 +23,11 @@ type OnboardingData = {
     newsletter: boolean;
   };
   step5?: {
-    // Compétences et intérêts
-    skills: string[];
-    interests: string[];
+    // Informations personnelles
+    firstName: string;
+    lastName: string;
+	phoneNumber: string;
+	email: string;
   };
   step6?: {
     // Configuration du compte

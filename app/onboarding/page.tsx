@@ -127,7 +127,7 @@ export default function Page() {
 				<div className="flex gap-4 justify-center">
 					<Link href="/onboarding/step1">
 						<Button size="lg" className="group px-6 py-5">
-							Générez vos leads
+							Generes ton leads
 							<ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
 						</Button>
 					</Link>

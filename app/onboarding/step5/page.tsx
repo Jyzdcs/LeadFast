@@ -1,154 +1,164 @@
 "use client";
 
 import React from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { useOnboarding } from '@/contexts/OnboardingContext';
-import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { StepIndicator } from '../components/StepIndicator';
+
+// Type pour le formulaire correspondant au modèle de données
 type Step5FormValues = {
-  skills: string[];
-  interests: string[];
+	firstName: string;
+	lastName: string;
+	phoneNumber: string;
+	email: string;
 };
 
 export default function Step5() {
-  const { data, setData } = useOnboarding();
-  const router = useRouter();
-  const [skillInput, setSkillInput] = React.useState('');
-  const [interestInput, setInterestInput] = React.useState('');
+	const { data, setData } = useOnboarding();
+	const router = useRouter();
 
-  const form = useForm<Step5FormValues>({
-    defaultValues: data.step5 || {
-      skills: [],
-      interests: []
-    },
-  });
+	// Initialisation du formulaire avec React Hook Form
+	const form = useForm<Step5FormValues>({
+		defaultValues: data.step5 || {
+			firstName: '',
+			lastName: '',
+			phoneNumber: '',
+			email: ''
+		},
+	});
 
-  // Gestionnaire pour ajouter une compétence
-  const handleAddSkill = () => {
-    if (skillInput.trim()) {
-      const currentSkills = form.getValues('skills') || [];
-      form.setValue('skills', [...currentSkills, skillInput.trim()]);
-      setSkillInput('');
-    }
-  };
+	// Soumission du formulaire avec validation
+	const onSubmit = async (values: Step5FormValues) => {
+		setData({ step5: values });
+		router.push('/onboarding/step6');
+	};
 
-  // Gestionnaire pour ajouter un intérêt
-  const handleAddInterest = () => {
-    if (interestInput.trim()) {
-      const currentInterests = form.getValues('interests') || [];
-      form.setValue('interests', [...currentInterests, interestInput.trim()]);
-      setInterestInput('');
-    }
-  };
+	// Redirection vers le formulaire de demande sur mesure
+	const handleCustomRequest = () => {
+		router.push('/custom-request');
+	};
 
-  // Gestionnaire pour supprimer une compétence
-  const handleRemoveSkill = (skillToRemove: string) => {
-    const currentSkills = form.getValues('skills');
-    form.setValue('skills', currentSkills.filter(skill => skill !== skillToRemove));
-  };
+	return (
+		<div className="space-y-6">
+			<StepIndicator currentStep={5} />
+			
+			{/* En-tête de la section */}
+			<div className="space-y-2">
+				<h1 className="text-2xl font-bold">Informations personnelles</h1>
+			</div>
 
-  // Gestionnaire pour supprimer un intérêt
-  const handleRemoveInterest = (interestToRemove: string) => {
-    const currentInterests = form.getValues('interests');
-    form.setValue('interests', currentInterests.filter(interest => interest !== interestToRemove));
-  };
+			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+				{/* Nom */}
+				<div className="space-y-2">
+					<label htmlFor="lastName" className="block text-sm font-medium">
+						Nom
+					</label>
+					<Input
+						id="lastName"
+						placeholder="Votre nom"
+						{...form.register('lastName', { 
+							required: 'Le nom est requis',
+							minLength: { value: 2, message: 'Le nom doit contenir au moins 2 caractères' }
+						})}
+					/>
+					{form.formState.errors.lastName && (
+						<span className="text-sm text-destructive">
+							{form.formState.errors.lastName.message}
+						</span>
+					)}
+				</div>
 
-  const onSubmit = async (values: Step5FormValues) => {
-    setData({ step5: values });
-    router.push('/onboarding/step6');
-  };
+				{/* Prénom */}
+				<div className="space-y-2">
+					<label htmlFor="firstName" className="block text-sm font-medium">
+						Prénom
+					</label>
+					<Input
+						id="firstName"
+						placeholder="Votre prénom"
+						{...form.register('firstName', { 
+							required: 'Le prénom est requis',
+							minLength: { value: 2, message: 'Le prénom doit contenir au moins 2 caractères' }
+						})}
+					/>
+					{form.formState.errors.firstName && (
+						<span className="text-sm text-destructive">
+							{form.formState.errors.firstName.message}
+						</span>
+					)}
+				</div>
 
-  return (
-    <div className="space-y-6">
-      <StepIndicator currentStep={5} />
-      <div className="space-y-2">
-        <h1 className="text-2xl font-bold">Compétences et Intérêts</h1>
-        <p className="text-muted-foreground">
-          Parlez-nous de vos compétences et centres d'intérêt
-        </p>
-      </div>
+				{/* Email */}
+				<div className="space-y-2">
+					<label htmlFor="email" className="block text-sm font-medium">
+						Email professionnel
+					</label>
+					<Input
+						id="email"
+						type="email"
+						placeholder="votre@email.com"
+						{...form.register('email', { 
+							required: 'L\'email est requis',
+							pattern: {
+								value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+								message: 'Adresse email invalide'
+							}
+						})}
+					/>
+					{form.formState.errors.email && (
+						<span className="text-sm text-destructive">
+							{form.formState.errors.email.message}
+						</span>
+					)}
+				</div>
 
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        {/* Section Compétences */}
-        <div className="space-y-4">
-          <label className="block text-sm font-medium">
-            Compétences
-          </label>
-          <div className="flex gap-2">
-            <Input
-              value={skillInput}
-              onChange={(e) => setSkillInput(e.target.value)}
-              placeholder="Ajouter une compétence"
-            />
-            <Button type="button" onClick={handleAddSkill}>
-              Ajouter
-            </Button>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {form.watch('skills')?.map((skill) => (
-              <Badge
-                key={skill}
-                variant="secondary"
-                className="cursor-pointer"
-                onClick={() => handleRemoveSkill(skill)}
-              >
-                {skill} ×
-              </Badge>
-            ))}
-          </div>
-        </div>
+				{/* Téléphone */}
+				<div className="space-y-2">
+					<label htmlFor="phoneNumber" className="block text-sm font-medium">
+						Téléphone
+					</label>
+					<Input
+						id="phoneNumber"
+						placeholder="+33 6 XX XX XX XX"
+						{...form.register('phoneNumber', { 
+							required: 'Le numéro de téléphone est requis',
+							pattern: {
+								value: /^(\+33|0)[1-9](\d{2}){4}$/,
+								message: 'Format de numéro invalide'
+							}
+						})}
+					/>
+					{form.formState.errors.phoneNumber && (
+						<span className="text-sm text-destructive">
+							{form.formState.errors.phoneNumber.message}
+						</span>
+					)}
+				</div>
 
-        {/* Section Intérêts */}
-        <div className="space-y-4">
-          <label className="block text-sm font-medium">
-            Centres d'intérêt
-          </label>
-          <div className="flex gap-2">
-            <Input
-              value={interestInput}
-              onChange={(e) => setInterestInput(e.target.value)}
-              placeholder="Ajouter un centre d'intérêt"
-            />
-            <Button type="button" onClick={handleAddInterest}>
-              Ajouter
-            </Button>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {form.watch('interests')?.map((interest) => (
-              <Badge
-                key={interest}
-                variant="secondary"
-                className="cursor-pointer"
-                onClick={() => handleRemoveInterest(interest)}
-              >
-                {interest} ×
-              </Badge>
-            ))}
-          </div>
-        </div>
-
-        {/* Navigation */}
-        <div className="flex gap-4 pt-4">
-          <Button 
-            type="button" 
-            variant="outline"
-            onClick={() => router.push('/onboarding/step4')}
-            className="w-full"
-          >
-            Retour
-          </Button>
-          <Button 
-            type="submit" 
-            className="w-full"
-            disabled={form.formState.isSubmitting}
-          >
-            {form.formState.isSubmitting ? 'Chargement...' : 'Continuer'}
-          </Button>
-        </div>
-      </form>
-    </div>
-  );
+				{/* Boutons de navigation */}
+				<div className="flex flex-col gap-4 pt-4">
+					<div className="flex gap-4">
+						<Button 
+							type="button" 
+							variant="outline"
+							onClick={() => router.push('/onboarding/step4')}
+							className="w-full"
+						>
+							Faire une demande sur mesure
+						</Button>
+						<Button 
+							type="submit" 
+							className="w-full"
+							disabled={form.formState.isSubmitting}
+						>
+							{form.formState.isSubmitting ? 'Chargement...' : 'Continuer'}
+						</Button>
+					</div>
+				</div>
+			</form>
+		</div>
+	);
 } 

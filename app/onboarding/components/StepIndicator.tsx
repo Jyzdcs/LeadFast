@@ -3,11 +3,10 @@ import { cn } from "@/lib/utils";
 
 export const steps = [
   "Profil",
-  "Contact",
-  "Entreprise",
-  "Préférences",
-  "Intérêts",
-  "Configuration"
+  "Entreprise Cible",
+  "Entreprise Domaine",
+  "Préférences Contact",
+  "Informations personnelles",
 ];
 
 interface StepIndicatorProps {
