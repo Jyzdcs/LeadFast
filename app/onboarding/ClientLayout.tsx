@@ -16,6 +16,12 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
       {/* Right Section - Card Design */}
       <div className="hidden lg:flex lg:w-2/4 p-8">
         <Card className="w-full bg-black rounded-3xl overflow-hidden relative">
+          {/* Background Image */}
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat" 
+            style={{ backgroundImage: 'url(/background-V2.jpg)' }}
+          />
+          
           {/* Background Pattern */}
           <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:30px_30px]" />
           

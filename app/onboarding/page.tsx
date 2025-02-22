@@ -61,7 +61,7 @@ const CONTACTS = [
 
 export default function Page() {
 	return (
-		<div className="min-h-screen flex items-center justify-center">
+		<div className="flex items-center justify-center">
 			<div className="w-[85%] max-w-7xl space-y-10">
 				{/* En-tête */}
 				<div className="text-center">
