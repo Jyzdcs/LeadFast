@@ -2,16 +2,16 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 import { UserIcon } from "@heroicons/react/24/outline"
 
-function Input({ icon, className, type, ...props }: React.ComponentProps<"input"> & { icon?: React.ReactNode }) {
+function Input({ className, type, ...props }: React.ComponentProps<"input">) {
   return (
-    <div className="relative w-full">
-      {icon}
+    <div className="relative w-full max-w-[400px] sm:max-w-[320px]">
+      <UserIcon className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-4 sm:w-5 h-4 sm:h-5 text-gray-400" />
       <input
         type={type}
         data-slot="input"
         className={cn(
           "w-full",
-          "h-12",
+          "h-12 sm:h-14",
           "pl-10 sm:pl-12 pr-4 sm:pr-5",
           "text-sm sm:text-base font-light",
           "bg-black/[0.02]",

@@ -4,29 +4,36 @@ import React, { createContext, useContext, useState } from 'react';
 
 type OnboardingData = {
   step1?: {
+    // Informations personnelles
+    firstName: string;
+    lastName: string;
+    email: string;
+    phoneNumber: string;
+  };
+  step2?: {
     jobTitle: string[];
     managementLevel: string[];
   };
-  step2?: {
+  step3?: {
     activitySector: string[];
     companySize: string[];
   };
-  step3?: {
+  step4?: {
     // Informations professionnelles
     company: string;
 	expertise: Array<string>;
   };
-  step4?: {
+  step5?: {
     leadQuantity: string;
   };
-  step5?: {
+  step6?: {
     // Informations personnelles
     firstName: string;
     lastName: string;
 	phoneNumber: string;
 	email: string;
   };
-  step6?: {
+  	step7?: {
     // Configuration du compte
     username: string;
     timezone: string;

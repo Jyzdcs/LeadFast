@@ -137,3 +137,9 @@ body {
 .animation-delay-2000 {
   animation-delay: -10s;
 }
+
+/* Suppression de l'outline bleu sur focus pour tous les inputs */
+input:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
