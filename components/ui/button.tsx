@@ -16,9 +16,10 @@ const buttonVariants = cva(
         outline: "h-12 border-black/10 hover:bg-black/[0.02] hover:border-black/20 rounded-xl text-black/60 text-sm px-6 h-12 px-6 border border-black/10 text-black/60 hover:bg-black/[0.02] hover:border-black/20",
       },
       size: {
-        default: "",
-        sm: "h-10 px-4",
+        default: "h-12 px-6",
+        sm: "h-9 px-4 text-sm",
         lg: "h-14 px-8 text-base",
+        compact: "h-8 px-3 text-xs rounded-lg",
       },
     },
     defaultVariants: {
@@ -50,7 +51,7 @@ function Button({
       {...props}
     >
       {children}
-      {variant === "primary" && (
+      {variant === "primary" && size !== "compact" && (
         <ArrowRightIcon className="w-4 h-4" />
       )}
     </Comp>

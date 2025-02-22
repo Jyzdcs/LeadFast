@@ -4,162 +4,119 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { useOnboarding } from "@/contexts/OnboardingContext";
 import { StepIndicator } from "@/components/ui/step-indicator";
+import { Combobox } from "@/components/ui/combobox";
+import { ArrowRightIcon, Package } from "lucide-react";
+
 type Step5FormValues = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phoneNumber: string;
+  leadQuantity: string;
 };
 
-const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+const quantityPricing = [
+  { value: "1000", label: "1000 leads", price: 30 },
+  { value: "2000", label: "2000 leads", price: 55 },
+  { value: "3000", label: "3000 leads", price: 80 },
+  { value: "4000", label: "4000 leads", price: 105 },
+  { value: "5000", label: "5000 leads", price: 125 },
+  { value: "6000", label: "6000 leads", price: 140 },
+  { value: "7000", label: "7000 leads", price: 155 },
+  { value: "8000", label: "8000 leads", price: 170 },
+  { value: "9000", label: "9000 leads", price: 185 },
+  { value: "10000", label: "10000 leads", price: 200 },
+];
 
 export default function Step5() {
   const { data, setData } = useOnboarding();
   const router = useRouter();
+  const [selectedQuantity, setSelectedQuantity] = React.useState(data.step5?.leadQuantity || "");
 
   const form = useForm<Step5FormValues>({
     defaultValues: {
-      firstName: data.step5?.firstName || "",
-      lastName: data.step5?.lastName || "",
-      email: data.step5?.email || "",
-      phoneNumber: data.step5?.phoneNumber || "",
+      leadQuantity: data.step5?.leadQuantity || "",
     },
   });
 
+  const selectedPrice = React.useMemo(() => {
+    const pricing = quantityPricing.find(p => p.value === selectedQuantity);
+    return pricing?.price || null;
+  }, [selectedQuantity]);
+
+  const handleQuantityChange = (quantity: string) => {
+    setSelectedQuantity(quantity);
+    form.setValue("leadQuantity", quantity);
+    
+    setData({ 
+      step5: {
+        leadQuantity: quantity
+      }
+    });
+  };
+
   const onSubmit = async (values: Step5FormValues) => {
-    setData({ step5: values });
-    router.push("/onboarding/submitted");
+    router.push("/onboarding/step6");
   };
 
   return (
     <div className="flex-1 flex flex-col">
       <div className="space-y-8 flex-1">
-        <StepIndicator step={5} label="Informations personnelles" />
-
-        <div className="inline-flex items-center px-3 py-1.5 bg-gray-50 rounded-full border border-gray-100">
-          <span className="text-sm text-gray-600">Étape 5 - Confirmation</span>
-        </div>
+        <StepIndicator step={6} label="Configuration des leads" />
 
         <div>
           <h1 className="text-2xl font-semibold text-gray-900 mb-3">
-            Vos informations
+            Quantité de leads
           </h1>
-          <p className="text-gray-600">
-            Pour finaliser votre inscription, merci de renseigner vos
-            informations
-          </p>
         </div>
 
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <div className="space-y-6">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label
-                  htmlFor="firstName"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
-                  Prénom
-                </label>
-                <Input
-                  id="firstName"
-                  placeholder="John"
-                  className="bg-gray-50 border-gray-200"
-                  {...form.register("firstName", {
-                    required: "Le prénom est requis",
-                  })}
-                />
-                {form.formState.errors.firstName && (
-                  <p className="mt-1 text-sm text-red-500">
-                    {form.formState.errors.firstName.message}
-                  </p>
-                )}
-              </div>
-
-              <div>
-                <label
-                  htmlFor="lastName"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
-                  Nom
-                </label>
-                <Input
-                  id="lastName"
-                  placeholder="Doe"
-                  className="bg-gray-50 border-gray-200"
-                  {...form.register("lastName", {
-                    required: "Le nom est requis",
-                  })}
-                />
-                {form.formState.errors.lastName && (
-                  <p className="mt-1 text-sm text-red-500">
-                    {form.formState.errors.lastName.message}
-                  </p>
-                )}
-              </div>
-            </div>
-
             <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
-                Email
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Quantité de leads souhaitée
               </label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="john.doe@gmail.com"
-                className="bg-gray-50 border-gray-200"
-                {...form.register("email", {
-                  required: "L'email est requis",
-                })}
+              <Combobox
+                options={quantityPricing.map((option) => ({
+                  id: option.value,
+                  label: option.label,
+                  desc: `${option.price}€ - ${option.label}`,
+                }))}
+                value={selectedQuantity}
+                onChange={handleQuantityChange}
+                placeholder="Sélectionner une quantité..."
+                searchPlaceholder="Rechercher une quantité..."
+                icon={<Package className="w-4 h-4" />}
               />
-              {form.formState.errors.email && (
-                <p className="mt-1 text-sm text-red-500">
-                  {form.formState.errors.email.message}
-                </p>
+
+              {selectedPrice && (
+                <div className="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm font-medium text-gray-600">Prix total :</span>
+                    <span className="text-lg font-semibold text-gray-900">{selectedPrice}€</span>
+                  </div>
+                </div>
               )}
-            </div>
-
-            <div>
-              <label
-                htmlFor="phoneNumber"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
-                Numéro de téléphone
-              </label>
-              <Input
-                id="phoneNumber"
-                type="tel"
-                placeholder="+33 6 XX XX XX XX"
-                className="bg-gray-50 border-gray-200"
-                {...form.register("phoneNumber")}
-              />
             </div>
           </div>
 
-          <div className="flex gap-4 mt-auto pt-8">
+          <div className="flex gap-6 mt-auto pt-8 justify-between">
             <Button
               type="button"
               variant="outline"
-              onClick={() => router.push("/onboarding/step4")}
-              className="flex-1 border-gray-200 text-gray-600 hover:bg-gray-50"
+              onClick={() => router.push("/onboarding/step5")}
+              className="border-gray-200 text-gray-600 hover:bg-gray-50 h-12"
             >
               Retour
             </Button>
-            <Button
+						<Button
               type="submit"
-              className="flex-1 bg-black hover:bg-gray-900"
+              className="bg-black hover:bg-gray-900 w-36 h-12"
               disabled={form.formState.isSubmitting}
             >
-              {form.formState.isSubmitting ? "Chargement..." : "Terminer"}
+              {form.formState.isSubmitting ? "Chargement..." : "Terminer"} <ArrowRightIcon className="w-4 h-4" />
             </Button>
           </div>
         </form>
       </div>
     </div>
   );
-}
+} 

@@ -4,7 +4,7 @@ import { UserIcon } from "@heroicons/react/24/outline"
 
 function Input({ className, type, ...props }: React.ComponentProps<"input">) {
   return (
-    <div className="relative w-full max-w-[400px] sm:max-w-[320px]">
+    <div className="relative w-full">
       <UserIcon className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-4 sm:w-5 h-4 sm:h-5 text-gray-400" />
       <input
         type={type}

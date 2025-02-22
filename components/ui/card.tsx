@@ -10,7 +10,7 @@ function Card({ className, children, ...props }: CardProps) {
   return (
     <div
       className={cn(
-        "w-full max-w-[400px] sm:max-w-[320px]",
+        "w-full",
         "border border-black/10 rounded-xl",
         "bg-white",
         "p-4",

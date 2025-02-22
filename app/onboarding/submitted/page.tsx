@@ -10,10 +10,7 @@ export default function SubmittedPage() {
   const { data } = useOnboarding();
 
   console.log(data);
-  // Récupération du nom pour personnaliser le message
-  const userName =
-    data.step1?.jobTitle || data.step6?.username || "utilisateur";
-
+	
   return (
     <div className="space-y-8 text-center">
       {/* Logo SVG */}
@@ -53,7 +50,6 @@ export default function SubmittedPage() {
           </g>
         </svg>
       </div>
-
       {/* Message de confirmation */}
       <div className="space-y-4">
         <h1 className="text-3xl font-bold">Merci pour votre confiance !</h1>

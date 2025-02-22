@@ -27,18 +27,9 @@ type OnboardingData = {
     leadQuantity: string;
   };
   step6?: {
-    // Informations personnelles
-    firstName: string;
-    lastName: string;
-	phoneNumber: string;
-	email: string;
-  };
-  	step7?: {
-    // Configuration du compte
-    username: string;
-    timezone: string;
-    language: string;
-  };
+	emailType: string[];
+	emailStatus: string[];
+  }
   // Ajoute d'autres étapes au besoin...
 };
 

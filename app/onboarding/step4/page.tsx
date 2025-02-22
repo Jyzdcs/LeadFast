@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { useOnboarding } from "@/contexts/OnboardingContext";
 import { StepIndicator } from "@/components/ui/step-indicator";
 import { KeywordInput } from "@/components/ui/keyword-input";
-import { Building2Icon } from "lucide-react";
+import { ArrowRightIcon, Building2Icon } from "lucide-react";
 
 type Step4FormValues = {
   company: string;
@@ -47,8 +47,11 @@ export default function Step4() {
                 id="company"
                 placeholder="Ex : Google, Apple, ..."
                 className="bg-gray-50 border-gray-200"
-                {...form.register("company")}
 								icon={<Building2Icon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />}
+								defaultValue={data.step4?.company}
+								onChange={(e) => {
+									form.setValue("company", e.target.value);
+								}}
               />
             </div>
 
@@ -66,21 +69,21 @@ export default function Step4() {
             </div>
           </div>
 
-          <div className="flex gap-4 mt-auto pt-8">
+          <div className="flex gap-6 mt-auto pt-8 justify-between">
             <Button
               type="button"
               variant="outline"
-              onClick={() => router.push("/onboarding/step2")}
-              className="flex-1 border-gray-200 text-gray-600 hover:bg-gray-50"
+              onClick={() => router.push("/onboarding/step3")}
+              className="border-gray-200 text-gray-600 hover:bg-gray-50 h-12"
             >
               Retour
             </Button>
             <Button
               type="submit"
-              className="flex-1 bg-black hover:bg-gray-900"
-              disabled={form.formState.isSubmitting}
+							size="sm"
+              className="bg-black hover:bg-gray-900 w-36 h-12"
             >
-              {form.formState.isSubmitting ? "Chargement..." : "Continuer"}
+              Continuer <ArrowRightIcon className="w-4 h-4" />
             </Button>
           </div>
         </form>

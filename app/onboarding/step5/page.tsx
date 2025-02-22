@@ -4,119 +4,188 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { useOnboarding } from "@/contexts/OnboardingContext";
 import { StepIndicator } from "@/components/ui/step-indicator";
-import { Combobox } from "@/components/ui/combobox";
-import { Package } from "lucide-react";
+import { UserIcon, EnvelopeIcon, PhoneIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
+/**
+ * Interface pour les données du formulaire Step1
+ */
+interface Step1FormValues {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string; // On le rend requis pour éviter les problèmes de type
+}
 
-type Step5FormValues = {
-  leadQuantity: string;
-};
-
-const quantityPricing = [
-  { value: "1000", label: "1000 leads", price: 30 },
-  { value: "2000", label: "2000 leads", price: 55 },
-  { value: "3000", label: "3000 leads", price: 80 },
-  { value: "4000", label: "4000 leads", price: 105 },
-  { value: "5000", label: "5000 leads", price: 125 },
-  { value: "6000", label: "6000 leads", price: 140 },
-  { value: "7000", label: "7000 leads", price: 155 },
-  { value: "8000", label: "8000 leads", price: 170 },
-  { value: "9000", label: "9000 leads", price: 185 },
-  { value: "10000", label: "10000 leads", price: 200 },
-];
-
-export default function Step5() {
+/**
+ * Composant Step1 - Collecte des informations personnelles
+ * Premier step du processus d'onboarding
+ */
+export default function Step1() {
   const { data, setData } = useOnboarding();
   const router = useRouter();
-  const [selectedQuantity, setSelectedQuantity] = React.useState(data.step5?.leadQuantity || "");
 
-  const form = useForm<Step5FormValues>({
+  // Styles
+  const inputClassName = "bg-gray-50 border-gray-200 w-full";
+  const labelClassName = "block text-sm font-medium text-gray-700 mb-2";
+
+  const [errors, setErrors] = React.useState<Partial<Step1FormValues>>({});
+
+  const form = useForm<Step1FormValues>({
     defaultValues: {
-      leadQuantity: data.step5?.leadQuantity || "",
-    },
+      firstName: data.step1?.firstName || "",
+      lastName: data.step1?.lastName || "",
+      email: data.step1?.email || "",
+      phoneNumber: data.step1?.phoneNumber || ""
+    }
   });
 
-  const selectedPrice = React.useMemo(() => {
-    const pricing = quantityPricing.find(p => p.value === selectedQuantity);
-    return pricing?.price || null;
-  }, [selectedQuantity]);
-
-  const handleQuantityChange = (quantity: string) => {
-    setSelectedQuantity(quantity);
-    form.setValue("leadQuantity", quantity);
+  const validateForm = (values: Step1FormValues) => {
+    const newErrors: Partial<Step1FormValues> = {};
     
-    setData({ 
-      step5: {
-        leadQuantity: quantity
-      }
-    });
+    if (!values.firstName?.trim()) {
+      newErrors.firstName = "Le prénom est requis";
+    }
+    
+    if (!values.lastName?.trim()) {
+      newErrors.lastName = "Le nom est requis";
+    }
+    
+    if (!values.email?.trim()) {
+      newErrors.email = "L'email est requis";
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
+      newErrors.email = "Format d'email invalide";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
-  const onSubmit = async (values: Step5FormValues) => {
-    router.push("/onboarding/step6");
+  const onSubmit = (values: Step1FormValues) => {
+    if (validateForm(values)) {
+      setData({ step1: values });
+      router.push("/onboarding/step2");
+    }
   };
 
   return (
     <div className="flex-1 flex flex-col">
       <div className="space-y-8 flex-1">
-        <StepIndicator step={5} label="Configuration des leads" />
-
-        <div>
-          <h1 className="text-2xl font-semibold text-gray-900 mb-3">
-            Quantité de leads
-          </h1>
-        </div>
-
+        <StepIndicator step={5} label="Informations personnelles" />
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <div className="space-y-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Quantité de leads souhaitée
-              </label>
-              <Combobox
-                options={quantityPricing.map((option) => ({
-                  id: option.value,
-                  label: option.label,
-                  desc: `${option.price}€ - ${option.label}`,
-                }))}
-                value={selectedQuantity}
-                onChange={handleQuantityChange}
-                placeholder="Sélectionner une quantité..."
-                searchPlaceholder="Rechercher une quantité..."
-                icon={<Package className="w-4 h-4" />}
-              />
+          <div className="space-y-6 max-w-xl">
+            <div className="grid grid-cols-2 gap-6">
+              {/* Champ Prénom */}
+              <div>
+                <label htmlFor="firstName" className={labelClassName}>
+                  Prénom <span className="text-red-500">*</span>
+                </label>
+                <Input
+                  icon={<UserIcon className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-4 sm:w-5 h-4 sm:h-5 text-gray-400" />}
+                  id="firstName"
+                  placeholder="John"
+                  className={inputClassName}
+                  defaultValue={data.step1?.firstName}
+                  onChange={(e) => {
+                    form.setValue("firstName", e.target.value);
+                    if (errors.firstName) {
+                      setErrors({ ...errors, firstName: undefined });
+                    }
+                  }}
+                />
+                {errors.firstName && (
+                  <p className="mt-1 text-sm text-red-500">{errors.firstName}</p>
+                )}
+              </div>
 
-              {selectedPrice && (
-                <div className="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm font-medium text-gray-600">Prix total :</span>
-                    <span className="text-lg font-semibold text-gray-900">{selectedPrice}€</span>
-                  </div>
-                </div>
+              {/* Champ Nom */}
+              <div>
+                <label htmlFor="lastName" className={labelClassName}>
+                  Nom <span className="text-red-500">*</span>
+                </label>
+                <Input
+                  icon={<UserIcon className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-4 sm:w-5 h-4 sm:h-5 text-gray-400" />}
+                  id="lastName"
+                  placeholder="Doe"
+                  className={inputClassName}
+                  defaultValue={data.step1?.lastName}
+                  onChange={(e) => {
+                    form.setValue("lastName", e.target.value);
+                    if (errors.lastName) {
+                      setErrors({ ...errors, lastName: undefined });
+                    }
+                  }}
+                />
+                {errors.lastName && (
+                  <p className="mt-1 text-sm text-red-500">{errors.lastName}</p>
+                )}
+              </div>
+            </div>
+
+            {/* Champ Email */}
+            <div className="w-full">
+              <label htmlFor="email" className={labelClassName}>
+                Email <span className="text-red-500">*</span>
+              </label>
+              <Input
+                icon={<EnvelopeIcon className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-4 sm:w-5 h-4 sm:h-5 text-gray-400" />}
+                id="email"
+                type="email"
+                placeholder="john.doe@example.com"
+                className={inputClassName}
+                defaultValue={data.step1?.email}
+                onChange={(e) => {
+                  form.setValue("email", e.target.value);
+                  if (errors.email) {
+                    setErrors({ ...errors, email: undefined });
+                  }
+                }}
+              />
+              {errors.email && (
+                <p className="mt-1 text-sm text-red-500">{errors.email}</p>
               )}
+            </div>
+
+            {/* Champ Téléphone */}
+            <div className="w-full">
+              <label htmlFor="phoneNumber" className={labelClassName}>
+                Numéro de téléphone (optionnel)
+              </label>
+              <Input
+                icon={<PhoneIcon className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-4 sm:w-5 h-4 sm:h-5 text-gray-400" />}
+                id="phoneNumber"
+                type="tel"
+                placeholder="+33 6 XX XX XX XX"
+                className={inputClassName}
+                defaultValue={data.step1?.phoneNumber}
+                onChange={(e) => {
+                  form.setValue("phoneNumber", e.target.value);
+                }}
+              />
             </div>
           </div>
 
-          <div className="flex gap-4 mt-auto pt-8">
+          {/* Navigation */}
+          <div className="flex gap-6 mt-auto pt-8 justify-between">
             <Button
               type="button"
               variant="outline"
-              onClick={() => router.push("/onboarding/step3")}
-              className="flex-1 border-gray-200 text-gray-600 hover:bg-gray-50"
+              onClick={() => router.push("/onboarding")}
+              className="border-gray-200 text-gray-600 hover:bg-gray-50 h-12"
             >
               Retour
             </Button>
             <Button
               type="submit"
-              className="flex-1 bg-black hover:bg-gray-900"
-              disabled={!selectedQuantity}
+							size="sm"
+              className="bg-black hover:bg-gray-900 w-36 h-12"
             >
-              {form.formState.isSubmitting ? "Chargement..." : "Continuer"}
+              Continuer <ArrowRightIcon className="w-4 h-4" />
             </Button>
           </div>
         </form>
       </div>
     </div>
   );
-} 
+}

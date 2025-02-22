@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
-import { X, UserIcon, BriefcaseIcon } from "lucide-react";
+import { X, UserIcon, BriefcaseIcon, ArrowRightIcon } from "lucide-react";
 import { Combobox } from "@/components/ui/combobox";
 import { KeywordInput } from "@/components/ui/keyword-input";
 import { StepIndicator } from "@/components/ui/step-indicator";
@@ -143,21 +143,21 @@ export default function Step2() {
             </div>
           </div>
 
-          <div className="flex gap-4 mt-auto pt-8">
+          <div className="flex gap-6 mt-auto pt-8 justify-between">
             <Button
               type="button"
               variant="outline"
               onClick={() => router.push("/onboarding/step1")}
-              className="flex-1 border-gray-200 text-gray-600 hover:bg-gray-50"
+              className="border-gray-200 text-gray-600 hover:bg-gray-50 h-12"
             >
               Retour
             </Button>
             <Button
               type="submit"
-              className="flex-1 bg-black hover:bg-gray-900"
-              disabled={form.formState.isSubmitting}
+							size="sm"
+              className="bg-black hover:bg-gray-900 w-36 h-12"
             >
-              {form.formState.isSubmitting ? "Chargement..." : "Continuer"}
+              Continuer <ArrowRightIcon className="w-4 h-4" />
             </Button>
           </div>
         </form>

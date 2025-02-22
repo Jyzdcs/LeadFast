@@ -7,14 +7,14 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen lg:min-h-[100dvh]">
       {/* Left Section - Form */}
-      <div className="w-full lg:w-1/2 flex items-center">
-        <div className="max-w-2xl mx-auto w-full py-12 px-12">
+      <div className="w-full lg:w-2/3 flex items-center">
+        <div className="mx-auto w-full py-12 px-12">
           {children}
         </div>
       </div>
 
       {/* Right Section - Hidden on mobile */}
-      <div className="hidden lg:block w-1/2 bg-black relative overflow-hidden">
+      <div className="hidden lg:block w-2/4 bg-black relative overflow-hidden">
         {/* Video Background */}
         <div className="absolute inset-0 z-0">
           <video
