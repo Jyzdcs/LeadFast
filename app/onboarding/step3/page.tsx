@@ -239,7 +239,7 @@ export default function Step3() {
   };
 
   return (
-    <div className="flex-1 flex flex-col">
+    <div className="flex-1 flex flex-col w-[85%]">
       <div className="space-y-8 flex-1">
         <StepIndicator step={3} label="Entreprises Cibles" />
 

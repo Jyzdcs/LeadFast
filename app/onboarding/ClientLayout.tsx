@@ -3,12 +3,46 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { HoverButton } from "@/components/ui/hover-button";
-import { ArrowRightIcon, MailIcon } from "lucide-react";
+import { ArrowRightIcon, MailIcon, Sparkles } from "lucide-react";
 import { LinkedinIcon } from "lucide-react";
-
+import DisplayCards from "@/components/ui/display-cards";
+import { TvIcon } from "lucide-react";
 export function ClientLayout({ children }: { children: React.ReactNode }) {
+	const defaultCards = [
+		{
+			icon: <Sparkles className="size-4 text-blue-300" />,
+			title: "Mailing",
+			description: "Campagnes de cold mailing",
+			date: "Just now",
+			iconClassName: "text-blue-500",
+			titleClassName: "text-blue-500",
+			className:
+				"[grid-area:stack] hover:-translate-y-10 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration-700 hover:grayscale-0 before:left-0 before:top-0",
+		},
+		{
+			icon: <Sparkles className="size-4 text-blue-300" />,
+			title: "LinkedIn",
+			description: "Prospection automatisée",
+			date: "2 days ago",
+			iconClassName: "text-blue-500",
+			titleClassName: "text-blue-500",
+			className:
+				"[grid-area:stack] translate-x-12 translate-y-10 hover:-translate-y-1 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration-700 hover:grayscale-0 before:left-0 before:top-0",
+		},
+		{
+			icon: <Sparkles className="size-4 text-blue-300" />,
+			title: "New",
+			description: "Latest updates and features",
+			date: "Today",
+			iconClassName: "text-blue-500",
+			titleClassName: "text-blue-500",
+			className:
+				"[grid-area:stack] translate-x-24 translate-y-20 hover:translate-y-10",
+		},
+	];
+
   return (
-    <div className="flex min-h-screen lg:min-h-[100dvh] bg-zinc-50">
+    <div className="flex min-h-screen lg:min-h-[100dvh] bg-zinc-50 font-['Arial, Helvetica, sans-serif']">
       {/* Left Section - Form */}
       <div className="w-full lg:w-2/3 flex flex-col">
         <nav className="md:hidden w-full bg-black px-4 py-2">
@@ -47,7 +81,7 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
                 </g>
               </g>
             </svg>
-            <div className="text-base font-medium text-white">
+            <div className="text-base font-medium text-white font-['Arial,_Helvetica']">
               LeadFast<span className="text-white/70">.io</span>
             </div>
           </div>
@@ -111,7 +145,7 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
                   </g>
                 </g>
               </svg>
-              <div className="text-base font-medium text-white">
+              <div className="text-base font-medium text-white font-['Arial']">
                 LeadFast<span className="text-white/70">.io</span>
               </div>
             </div>
@@ -146,25 +180,7 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
 
               {/* Feature Cards avec HoverButton optimisé */}
               <div className="grid grid-cols-2 gap-4 mt-12">
-                <HoverButton
-                  className="group relative flex h-[72px] items-center justify-between overflow-hidden rounded-xl border border-white/10 bg-gradient-to-b from-white/[0.04] to-white/[0.02] p-4 transition-all duration-300 hover:border-white/20 hover:from-white/[0.06] hover:to-white/[0.04] hover:shadow-xl hover:shadow-black/5"
-                >
-                  <div className="flex flex-col items-start gap-1">
-                    <span className="text-base font-medium text-white/90">Mailing</span>
-                    <span className="text-sm text-white/50">Campagnes de cold mailing</span>
-                  </div>
-                  <ArrowRightIcon className="w-5 h-5 text-white/40 transition-all duration-500 group-hover:translate-x-1 group-hover:text-white/90" />
-                </HoverButton>
-
-                <HoverButton
-                  className="group relative flex h-[72px] items-center justify-between overflow-hidden rounded-xl border border-white/10 bg-gradient-to-b from-white/[0.04] to-white/[0.02] p-4 transition-all duration-300 hover:border-white/20 hover:from-white/[0.06] hover:to-white/[0.04] hover:shadow-xl hover:shadow-black/5"
-                >
-                  <div className="flex flex-col items-start gap-1">
-                    <span className="text-base font-medium text-white/90">LinkedIn</span>
-                    <span className="text-sm text-white/50">Prospection automatisée</span>
-                  </div>
-                  <ArrowRightIcon className="w-5 h-5 text-white/40 transition-all duration-500 group-hover:translate-x-1 group-hover:text-white/90" />
-                </HoverButton>
+								<DisplayCards cards={defaultCards}/>
               </div>
             </div>
           </div>

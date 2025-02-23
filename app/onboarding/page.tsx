@@ -116,7 +116,6 @@ export default function Page() {
 									<div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
 									<div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:20px_20px]" />
 								</div>
-
 								<div className="relative p-8">
 									<div className="flex items-center justify-between">
 										<div className="space-y-3">
