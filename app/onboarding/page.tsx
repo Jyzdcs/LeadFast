@@ -61,50 +61,52 @@ const CONTACTS = [
 
 export default function Page() {
 	return (
-		<div className="flex items-center justify-center">
-			<div className="w-[85%] max-w-7xl space-y-10">
-				{/* En-tête */}
-				<div className="text-center">
-					<h1 className="text-2xl font-medium text-gray-900 mb-2">
-						Informations ciblées
-					</h1>
-					<p className="text-sm text-gray-500">
-						Accédez aux données B2B qualifiées
-					</p>
-				</div>
+		<>
+			<div className="flex items-center justify-center h-full">
+				<div className="w-[85%] max-w-7xl flex flex-col h-[calc(100vh-48px)] md:h-screen">
+					{/* En-tête */}
+					<div className="text-center pt-10">
+						<h1 className="text-2xl font-medium text-gray-900 mb-2">
+							Informations ciblées
+						</h1>
+						<p className="text-sm text-gray-500">
+							Accédez aux données B2B qualifiées
+						</p>
+					</div>
 
-				{/* AnimatedBackground */}
-				<div className="w-full">
-					<AnimatedBackground
-						items={CONTACTS}
-						className="rounded-2xl bg-zinc-50 dark:bg-zinc-800 shadow-xl"
-						transition={{
-							type: 'spring',
-							bounce: 0.2,
-							duration: 0.6,
-						}}
-						enableHover
-						iconClassName="text-zinc-600 dark:text-zinc-400"
-					/>
-				</div>
+					{/* AnimatedBackground */}
+					<div className="flex-1 flex items-center">
+						<AnimatedBackground
+							items={CONTACTS}
+							className="rounded-2xl bg-zinc-50 dark:bg-zinc-800 shadow-xl"
+							transition={{
+								type: 'spring',
+								bounce: 0.2,
+								duration: 0.6,
+							}}
+							enableHover
+							iconClassName="text-zinc-600 dark:text-zinc-400"
+						/>
+					</div>
 
-				{/* Actions */}
-				<div className="flex justify-between items-center pt-4 px-4">
-					<Button
-						variant="outline"
-						className="bg-white text-black hover:bg-gray-50/80 h-10"
-					>
-						Demande sur mesure
-					</Button>
-					<Link href="/onboarding/step1">
-						<Button 
-							className="bg-black/90 hover:bg-black text-white h-10 w-32"
+					{/* Actions */}
+					<div className="flex justify-between items-center py-6 px-4">
+						<Button
+							variant="outline"
+							className="bg-white text-black hover:bg-gray-50/80 h-10"
 						>
-							Commencer
+							Demande sur mesure
 						</Button>
-					</Link>
+						<Link href="/onboarding/step1">
+							<Button 
+								className="bg-black/90 hover:bg-black text-white h-10 w-32"
+							>
+								Commencer
+							</Button>
+						</Link>
+					</div>
 				</div>
 			</div>
-		</div>
+		</>
 	);
 }

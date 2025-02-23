@@ -53,7 +53,7 @@ export default function AnimatedBackground({
   }, [defaultValue]);
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 gap-2 sm:grid-cols-1">
+    <div className="grid md:grid-cols-3 gap-2 sm:grid-cols-1">
       {items.map((item, index) => {
         const id = `card-${index}`;
 

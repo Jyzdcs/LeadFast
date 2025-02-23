@@ -11,12 +11,16 @@ import { X, UserIcon, BriefcaseIcon, ArrowRightIcon } from "lucide-react";
 import { Combobox } from "@/components/ui/combobox";
 import { KeywordInput } from "@/components/ui/keyword-input";
 import { StepIndicator } from "@/components/ui/step-indicator";
+import { StepLayout } from "@/components/ui/step-layout";
+import { Stepper, StepperIndicator, StepperItem, StepperTrigger } from "@/components/ui/stepper"
 
 // Types pour le formulaire
 type Step2FormValues = {
   jobTitle: string[];
   managementLevel: string[];
 };
+
+const steps = ["1", "2", "3", "4", "5", "6"];
 
 // Niveaux hiérarchiques avec le volume de prospects disponibles
 const managementLevels = [
@@ -69,99 +73,118 @@ export default function Step2() {
     );
   };
 
+  const navigationButtons = (
+    <>
+      <Button
+        type="button"
+        variant="outline"
+        onClick={() => router.push("/onboarding/step1")}
+        className="border-gray-200 text-gray-600 hover:bg-gray-50 h-12"
+      >
+        Retour
+      </Button>
+      <Button
+        type="submit"
+        size="sm"
+        className="bg-black hover:bg-gray-900 w-36 h-12"
+      >
+        Continuer <ArrowRightIcon className="w-4 h-4 ml-2" />
+      </Button>
+    </>
+  );
+
   return (
-    <div className="flex-1 flex flex-col">
-      <div className="space-y-8 flex-1">
-        <StepIndicator step={2} label="Profil Recherché" />
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <div className="space-y-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Intitulé de poste précis
-              </label>
-              <KeywordInput
-                keywords={form.watch("jobTitle") || []}
-                defaultValue={data.step2?.jobTitle}
-                onAdd={(keyword) => {
-                  const currentTitles = form.getValues("jobTitle") || [];
-                  if (!currentTitles.includes(keyword)) {
-                    form.setValue("jobTitle", [...currentTitles, keyword]);
-                  }
-                }}
-                onRemove={(keyword) => {
-                  const currentTitles = form.getValues("jobTitle") || [];
-                  form.setValue(
-                    "jobTitle",
-                    currentTitles.filter((title) => title !== keyword)
-                  );
-                }}
-                placeholder="Ex : Développeur, Directeur, etc..."
-                helperText="Appuyez sur Entrée pour ajouter un mot-clé"
-              />
-            </div>
+    <StepLayout navigationButtons={navigationButtons}>
+			<div className="flex flex-col gap-3 w-3/4">
+				<StepIndicator step={2} label="Profil Recherché" className="mb-0"/>
+				<div className="w-3/4">
+					<Stepper value={2} className="gap-1">
+						{steps.map((step) => (
+							<StepperItem key={step} step={Number(step)} className="flex-1">
+								<StepperTrigger className="w-full flex-col items-start gap-2" asChild>
+									<StepperIndicator 
+										asChild 
+										className="h-1 w-full bg-black/10 data-[active=true]:bg-black"
+									>
+										<span className="sr-only">{step}</span>
+									</StepperIndicator>
+								</StepperTrigger>
+							</StepperItem>
+						))}
+					</Stepper>
+				</div>
+			</div>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="my-16">
+        {/* Form Fields Container */}
+        <div className="flex-1 space-y-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Intitulé de poste précis
+            </label>
+            <KeywordInput
+              keywords={form.watch("jobTitle") || []}
+              defaultValue={data.step2?.jobTitle}
+              onAdd={(keyword) => {
+                const currentTitles = form.getValues("jobTitle") || [];
+                if (!currentTitles.includes(keyword)) {
+                  form.setValue("jobTitle", [...currentTitles, keyword]);
+                }
+              }}
+              onRemove={(keyword) => {
+                const currentTitles = form.getValues("jobTitle") || [];
+                form.setValue(
+                  "jobTitle",
+                  currentTitles.filter((title) => title !== keyword)
+                );
+              }}
+              placeholder="Ex : Développeur, Directeur, etc..."
+              helperText="Appuyez sur Entrée pour ajouter un mot-clé"
+            />
+          </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Niveaux hiérarchiques
-              </label>
-              <Combobox
-                options={managementLevels.map((level) => ({
-                  id: level.value,
-                  label: level.label,
-				  desc: level.label,
-                }))}
-                value={selectedLevel}
-                onChange={setSelectedLevel}
-                placeholder="Sélectionner un niveau..."
-                searchPlaceholder="Rechercher un niveau..."
-                icon={<UserIcon className="w-4 h-4" />}
-              />
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Niveaux hiérarchiques
+            </label>
+            <Combobox
+              options={managementLevels.map((level) => ({
+                id: level.value,
+                label: level.label,
+                desc: level.label,
+              }))}
+              value={selectedLevel}
+              onChange={setSelectedLevel}
+              placeholder="Sélectionner un niveau..."
+              searchPlaceholder="Rechercher un niveau..."
+              icon={<UserIcon className="w-4 h-4" />}
+            />
 
-              <div className="flex flex-wrap gap-2 mt-3">
-                {form.watch("managementLevel")?.map((level) => (
-                  <Badge
-                    key={level}
-                    variant="secondary"
-                    className="px-3 py-1 flex items-center gap-1"
+            <div className="flex flex-wrap gap-2 mt-3">
+              {form.watch("managementLevel")?.map((level) => (
+                <Badge
+                  key={level}
+                  variant="secondary"
+                  className="px-3 py-1 flex items-center gap-1"
+                >
+                  {managementLevels.find((l) => l.value === level)?.label}
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleRemoveLevel(level);
+                    }}
+                    className="focus:outline-none"
                   >
-                    {managementLevels.find((l) => l.value === level)?.label}
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleRemoveLevel(level);
-                      }}
-                      className="focus:outline-none"
-                    >
-                      <X
-                        className="h-3 w-3 cursor-pointer hover:text-red-500"
-                      />
-                    </button>
-                  </Badge>
-                ))}
-              </div>
+                    <X
+                      className="h-3 w-3 cursor-pointer hover:text-red-500"
+                    />
+                  </button>
+                </Badge>
+              ))}
             </div>
           </div>
-
-          <div className="flex gap-6 mt-auto pt-8 justify-between">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => router.push("/onboarding/step1")}
-              className="border-gray-200 text-gray-600 hover:bg-gray-50 h-12"
-            >
-              Retour
-            </Button>
-            <Button
-              type="submit"
-							size="sm"
-              className="bg-black hover:bg-gray-900 w-36 h-12"
-            >
-              Continuer <ArrowRightIcon className="w-4 h-4" />
-            </Button>
-          </div>
-        </form>
-      </div>
-    </div>
+        </div>
+      </form>
+    </StepLayout>
   );
 }
