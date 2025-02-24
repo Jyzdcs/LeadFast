@@ -3,7 +3,14 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { HoverButton } from "@/components/ui/hover-button";
-import { ArrowRightIcon, MailIcon, Rocket, Sparkle, Zap, Star } from "lucide-react";
+import {
+  ArrowRightIcon,
+  MailIcon,
+  Rocket,
+  Sparkle,
+  Zap,
+  Star,
+} from "lucide-react";
 import { LinkedinIcon } from "lucide-react";
 import DisplayCards from "@/components/ui/display-cards";
 import { TvIcon } from "lucide-react";
@@ -65,9 +72,9 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
         <div className="relative w-full rounded-2xl shadow-lg overflow-hidden">
           {/* Background with image and overlay */}
           <div className="absolute inset-0">
-            <div 
+            <div
               className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-              style={{ backgroundImage: 'url(/background-V2.jpg)' }}
+              style={{ backgroundImage: "url(/background-V2.jpg)" }}
             />
             {/* Overlay gradients pour une meilleure lisibilité */}
             <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-black/80 to-black/60" />
@@ -123,40 +130,76 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
             <div className="flex-1 flex flex-col justify-center max-w-xl">
               <div className="space-y-6">
                 {/* Badge */}
-                <div 
-                  className="inline-flex items-center gap-2 rounded-full 
-                           bg-emerald-500/10 backdrop-blur-sm px-3 py-1.5 
-                           text-sm text-emerald-400 border border-emerald-500/20"
-                >
-                  <div className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                  Accompagnement
-                </div>
+                <div className="space-y-3">
+                  <div className="inline-flex items-center rounded-full border border-zinc-700/50 p-1 shadow-sm backdrop-blur-sm bg-black/20">
+                    <div className="flex -space-x-1.5">
+                      <img
+                        className="ring-background rounded-full ring-1"
+                        src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"
+                        width={20}
+                        height={20}
+                        alt="Avatar 01"
+                      />
+                      <img
+                        className="ring-background rounded-full ring-1"
+                        src="https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka"
+                        width={20}
+                        height={20}
+                        alt="Avatar 02"
+                      />
+                      <img
+                        className="ring-background rounded-full ring-1"
+                        src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sophie"
+                        width={20}
+                        height={20}
+                        alt="Avatar 03"
+                      />
+                      <img
+                        className="ring-background rounded-full ring-1"
+                        src="https://api.dicebear.com/7.x/avataaars/svg?seed=Max"
+                        width={20}
+                        height={20}
+                        alt="Avatar 04"
+                      />
+                    </div>
+                    <p className="text-zinc-400 px-2 text-xs">
+                      Trusted by{" "}
+                      <strong className="text-white font-medium">60K+</strong>{" "}
+                      developers.
+                    </p>
+                  </div>
 
-                {/* Title & Description */}
-                <div className="space-y-4">
-                  <h1 className="text-4xl font-light text-white leading-[1.1] tracking-tight">
-                    Besoin d'un accompagnement pour vos{" "}
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-white/40 to-white">
-                      campagnes
-                    </span>
-                  </h1>
-                  <p className="text-base text-zinc-300 font-light">
-                    Maximisez l'impact de vos leads avec des campagnes de cold mailing 
-                    et de prospection LinkedIn sur-mesure.
-                  </p>
+                  {/* Title & Description */}
+                  <div>
+                    <h1 className="text-4xl font-light text-white leading-[1.1] tracking-tight mt-2">
+                      Des milliers de propects
+                    </h1>
+                    <h1 className="text-4xl font-light text-white leading-[1.1] tracking-tight mt-2">
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-white/40 to-white">
+                        {" "}
+                        en quelques clics
+                      </span>
+                    </h1>
+                    <p className="text-base text-zinc-300 font-light mt-6">
+                      Une liste de prospects ultra-segmentée selon vos besoins
+                    </p>
+                    <p className="text-base text-zinc-300 font-light mt-1">
+                      +275M de contacts, 1 formulaire, 0 casse-tête.
+                    </p>
+                  </div>
                 </div>
               </div>
 
               {/* Feature Cards avec HoverButton optimisé */}
-			  <div className="flex min-h-[400px] w-full items-center justify-center py-20">
-				<div className="w-full max-w-3xl">
-					<div className="space-y-10">
-						<div className="-ml-12 dark">
-							<TreeCards />
-						</div>
-					</div>
-				</div>
-			  </div>
+              <div className="flex min-h-[400px] w-full items-center justify-center py-20">
+                <div className="w-full max-w-3xl">
+                  <div className="space-y-10">
+                    <div className="-ml-12 dark">
+                      <TreeCards />
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
