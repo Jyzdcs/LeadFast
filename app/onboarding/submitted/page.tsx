@@ -4,68 +4,49 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { useOnboarding } from "@/contexts/OnboardingContext";
+import Image from "next/image";
 
 export default function SubmittedPage() {
   const router = useRouter();
   const { data } = useOnboarding();
 
-  console.log(data);
-	
   return (
     <div className="space-y-8 text-center">
       {/* Logo SVG */}
-      <div className="flex justify-center">
-        <svg
-          id="Layer_2"
-          data-name="Layer 2"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 100.21 108.89"
-          width="64"
-          height="64"
-          className="text-primary"
-        >
-          <defs>
-            <style>
-              {`.cls-1 {
-                fill: #000;
-                stroke-width: 0px;
-              }`}
-            </style>
-          </defs>
-          <g id="Layer_1-2" data-name="Layer 1">
-            <g>
-              <path
-                className="cls-1"
-                d="M53.71.72c-1.64-.96-3.66-.96-5.3,0l-25.19,14.74,49.26,28.78v58.27l25.13-14.7c1.61-.94,2.6-2.66,2.6-4.53V27.93L53.71.72Z"
-              />
-              <path
-                className="cls-1"
-                d="M23.27,30.91L0,44.28l36.57,21.36v43.25l23.22-13.35c1.19-.7,1.93-1.98,1.93-3.36v-41.08L27.2,30.91c-1.21-.71-2.72-.71-3.93,0Z"
-              />
-              <polygon
-                className="cls-1"
-                points="25.5 100.82 25.5 71.64 .56 86.23 25.5 100.82"
-              />
-            </g>
-          </g>
-        </svg>
-      </div>
-      {/* Message de confirmation */}
-      <div className="space-y-4">
-        <h1 className="text-3xl font-bold">Merci pour votre confiance !</h1>
-        <p className="text-muted-foreground">
-          Nous avons bien reçu vos critères de recherche. Notre équipe va
-          commencer à générer vos leads qualifiés.
-        </p>
-      </div>
-
-      <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/5 backdrop-blur-sm border border-white/rounded-full">
-        <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
-        <span className="text-xs text-black tracking-wide uppercase">
-          Configuration terminée
-        </span>
-      </div>
-
+			<div className="flex-1 flex flex-col items-center justify-center text-center">
+				<div className="relative mb-8">
+					<div className="absolute inset-0 bg-gradient-to-r from-black/20 to-black/0 rounded-sm blur-xl" />
+					<Image
+						src="/leadfast.png"
+						alt="LeadFast.io"
+						width={100}
+						height={100}
+						className="rounded-xl relative"
+					/>
+				</div>
+				<h2 className="text-3xl font-medium mb-4">
+					Merci pour votre confiance !
+				</h2>
+				<p className="text-lg text-black/60 mb-8 max-w-md">
+					Nous avons bien reçu vos critères de recherche. Notre équipe
+					va commencer à générer vos leads qualifiés.
+				</p>
+				<div className="inline-flex items-center gap-2 px-4 py-2 bg-green-50 rounded-full text-green-600 text-sm">
+					<svg
+						className="w-4 h-4"
+						xmlns="http://www.w3.org/2000/svg"
+						viewBox="0 0 24 24"
+						fill="currentColor"
+					>
+						<path
+							fillRule="evenodd"
+							d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
+							clipRule="evenodd"
+						/>
+					</svg>
+					Configuration terminée
+				</div>
+			</div>
       {/* Boutons d'action */}
       <div className="flex flex-col gap-4 items-center">
         <Button
