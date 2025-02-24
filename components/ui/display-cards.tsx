@@ -28,7 +28,7 @@ interface DisplayCardProps {
 }
 
 function DisplayCard({
-  className,
+	className,
   icon = <Sparkles className="size-4 text-blue-300" />,
   title = "Featured",
   description = "Discover amazing content",
@@ -114,7 +114,7 @@ export default function DisplayCards({ cards, onRowClick }: DisplayCardsProps) {
 
   return (
     <>
-      <div className="grid [grid-template-areas:'stack'] place-items-center opacity-100 animate-in fade-in-0 duration-700">
+			<div className="grid [grid-template-areas:'stack'] place-items-center opacity-100 animate-in fade-in-0 duration-700">
         {displayCards.map((cardProps, index) => (
           <DisplayCard
             key={cardProps.id || index}

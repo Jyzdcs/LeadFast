@@ -18,7 +18,7 @@ import TreeCards from "@/components/ui/tree-cards";
 
 export function ClientLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex min-h-screen lg:min-h-[100dvh] bg-zinc-50 font-['Arial, Helvetica, sans-serif']">
+    <div className="flex min-h-screen lg:min-h-[100dvh] font-['Arial, Helvetica, sans-serif']">
       {/* Left Section - Form */}
       <div className="w-full lg:w-2/3 flex flex-col">
         <nav className="md:hidden w-full bg-black px-4 py-2">
@@ -133,39 +133,32 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
                 <div className="space-y-3">
                   <div className="inline-flex items-center rounded-full border border-zinc-700/50 p-1 shadow-sm backdrop-blur-sm bg-black/20">
                     <div className="flex -space-x-1.5">
-                      <img
+					  <img
                         className="ring-background rounded-full ring-1"
-                        src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"
-                        width={20}
-                        height={20}
-                        alt="Avatar 01"
-                      />
-                      <img
-                        className="ring-background rounded-full ring-1"
-                        src="https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka"
-                        width={20}
-                        height={20}
-                        alt="Avatar 02"
-                      />
-                      <img
-                        className="ring-background rounded-full ring-1"
-                        src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sophie"
+                        src="ocom-logo.png"
                         width={20}
                         height={20}
                         alt="Avatar 03"
                       />
                       <img
                         className="ring-background rounded-full ring-1"
-                        src="https://api.dicebear.com/7.x/avataaars/svg?seed=Max"
+                        src="artntreal-logo.png"
                         width={20}
                         height={20}
-                        alt="Avatar 04"
+                        alt="Avatar 02"
+                      />
+					  <img
+                        className="ring-background rounded-full ring-1 bg-black"
+                        src="chataigne-logo.png"
+                        width={20}
+                        height={20}
+                        alt="Avatar 01"
                       />
                     </div>
                     <p className="text-zinc-400 px-2 text-xs">
-                      Trusted by{" "}
-                      <strong className="text-white font-medium">60K+</strong>{" "}
-                      developers.
+                      Approuvé par{" "}
+                      <strong className="text-white font-medium">10+</strong>{" "}
+                      start-ups.
                     </p>
                   </div>
 

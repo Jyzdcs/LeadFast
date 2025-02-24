@@ -6,9 +6,11 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { useOnboarding } from '@/contexts/OnboardingContext';
 import { Badge } from '@/components/ui/badge';
-import { X, Building2, Users, ArrowRightIcon } from 'lucide-react';
+import { X, Building2, Users, ArrowRightIcon, InfoIcon } from 'lucide-react';
 import { Combobox } from '@/components/ui/combobox';
 import { StepIndicator } from '@/components/ui/step-indicator';
+import { Stepper, StepperIndicator, StepperItem, StepperTrigger } from "@/components/ui/stepper";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 type Step3FormValues = {
   activitySector: string[];
@@ -181,6 +183,9 @@ const industries = [
 	{ value: 'wholesale', label: 'Vente en gros' },
 ];
 
+// Constants
+const steps = ["1", "2", "3", "4", "5", "6"];
+
 export default function Step3() {
   const { data, setData } = useOnboarding();
   const router = useRouter();
@@ -239,21 +244,65 @@ export default function Step3() {
   };
 
   return (
-    <div className="flex-1 flex flex-col w-[85%]">
-      <div className="space-y-8 flex-1">
-        <StepIndicator step={3} label="Entreprises Cibles" />
-
-        <div>
-          <h1 className="text-2xl font-semibold text-gray-900 mb-3">
-            Profil des entreprises
-          </h1>
+    <div className="flex flex-col h-screen w-[85%]">
+      {/* Header Section */}
+      <div className="w-full border-b border-zinc-100">
+        <div className="w-full px-6 py-3">
+          <div className="flex flex-col gap-2">
+            <StepIndicator 
+              step={3} 
+              label="Entreprises Cibles" 
+              className="text-base font-medium text-zinc-900"
+            />
+            <Stepper value={3} className="w-full gap-1">
+              {steps.map((step) => (
+                <StepperItem key={step} step={Number(step)} className="flex-1">
+                  <StepperTrigger className="w-full" asChild>
+                    <StepperIndicator 
+                      asChild 
+                      className="relative h-1 w-full rounded-full bg-zinc-100 overflow-hidden"
+                    >
+                      <div>
+                        <div className="absolute inset-0 bg-black opacity-0 data-[active=true]:opacity-100 transition-opacity duration-300" />
+                        <span className="sr-only">{step}</span>
+                      </div>
+                    </StepperIndicator>
+                  </StepperTrigger>
+                </StepperItem>
+              ))}
+            </Stepper>
+          </div>
         </div>
+      </div>
 
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <div className="space-y-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+      {/* Main Content */}
+      <div className="flex-1 px-6 py-4 flex flex-col h-full">
+        {/* Form Section */}
+        <div className="space-y-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            {/* Activity Sector Input */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-zinc-900 flex items-center gap-2">
                 Secteurs d'activité
+                <TooltipProvider delayDuration={300}>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <button className="inline-flex items-center justify-center rounded-full p-1 transition-colors duration-200 hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-950">
+                        <InfoIcon className="h-4 w-4 text-zinc-500" />
+                        <span className="sr-only">Plus d'informations sur les secteurs d'activité</span>
+                      </button>
+                    </TooltipTrigger>
+                    <TooltipContent 
+                      className="max-w-[280px] rounded-lg bg-zinc-900 px-4 py-3 text-sm text-zinc-50 shadow-lg animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2"
+                      sideOffset={8}
+                    >
+                      <div className="flex flex-col gap-1">
+                        <p className="font-medium">Secteurs d'activité</p>
+                        <p className="text-zinc-300">Sélectionnez les secteurs d'activité qui correspondent à vos cibles pour une prospection ciblée et efficace.</p>
+                      </div>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </label>
               <Combobox
                 options={industries.map((industry) => ({
@@ -265,29 +314,52 @@ export default function Step3() {
                 onChange={setSelectedSector}
                 placeholder="Sélectionner un secteur..."
                 searchPlaceholder="Rechercher un secteur..."
-                icon={<Building2 className="w-4 h-4" />}
+                icon={<Building2 className="w-4 h-4 text-zinc-500" />}
+                className="w-full"
               />
-
-              <div className="flex flex-wrap gap-2 mt-3">
+              <div className="flex flex-wrap gap-2">
                 {form.watch("activitySector")?.map((sector) => (
                   <Badge
                     key={sector}
                     variant="secondary"
-                    className="px-3 py-1 flex items-center gap-1"
+                    className="px-2.5 py-0.5 bg-zinc-100 hover:bg-zinc-200 text-zinc-900 flex items-center gap-1.5 transition-colors duration-200"
                   >
                     {industries.find((i) => i.value === sector)?.label}
-                    <X
-                      className="h-3 w-3 cursor-pointer hover:text-red-500"
+                    <button
+                      type="button"
                       onClick={() => handleRemoveSector(sector)}
-                    />
+                      className="focus:outline-none group"
+                    >
+                      <X className="h-3 w-3 text-zinc-500 group-hover:text-zinc-700" />
+                    </button>
                   </Badge>
                 ))}
               </div>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+            {/* Company Size Input */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-zinc-900 flex items-center gap-2">
                 Tailles d'entreprise
+                <TooltipProvider delayDuration={300}>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <button className="inline-flex items-center justify-center rounded-full p-1 transition-colors duration-200 hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-950">
+                        <InfoIcon className="h-4 w-4 text-zinc-500" />
+                        <span className="sr-only">Plus d'informations sur les tailles d'entreprise</span>
+                      </button>
+                    </TooltipTrigger>
+                    <TooltipContent 
+                      className="max-w-[280px] rounded-lg bg-zinc-900 px-4 py-3 text-sm text-zinc-50 shadow-lg animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2"
+                      sideOffset={8}
+                    >
+                      <div className="flex flex-col gap-1">
+                        <p className="font-medium">Tailles d'entreprise</p>
+                        <p className="text-zinc-300">Affinez votre ciblage en sélectionnant les tailles d'entreprises qui correspondent à votre marché idéal.</p>
+                      </div>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </label>
               <Combobox
                 options={employeeRanges.map((range) => ({
@@ -299,45 +371,55 @@ export default function Step3() {
                 onChange={setSelectedSize}
                 placeholder="Sélectionner une taille..."
                 searchPlaceholder="Rechercher une taille..."
-                icon={<Users className="w-4 h-4" />}
+                icon={<Users className="w-4 h-4 text-zinc-500" />}
+                className="w-full"
               />
-
-              <div className="flex flex-wrap gap-2 mt-3">
+              <div className="flex flex-wrap gap-2">
                 {form.watch("companySize")?.map((size) => (
                   <Badge
                     key={size}
                     variant="secondary"
-                    className="px-3 py-1 flex items-center gap-1"
+                    className="px-2.5 py-0.5 bg-zinc-100 hover:bg-zinc-200 text-zinc-900 flex items-center gap-1.5 transition-colors duration-200"
                   >
                     {employeeRanges.find((s) => s.value === size)?.label}
-                    <X
-                      className="h-3 w-3 cursor-pointer hover:text-red-500"
+                    <button
+                      type="button"
                       onClick={() => handleRemoveSize(size)}
-                    />
+                      className="focus:outline-none group"
+                    >
+                      <X className="h-3 w-3 text-zinc-500 group-hover:text-zinc-700" />
+                    </button>
                   </Badge>
                 ))}
               </div>
             </div>
-          </div>
+          </form>
+        </div>
 
-          <div className="flex gap-6 mt-auto pt-8 justify-between">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => router.push("/onboarding/step2")}
-              className="border-gray-200 text-gray-600 hover:bg-gray-50 h-12"
-            >
-              Retour
-            </Button>
-            <Button
-              type="submit"
-							size="sm"
-              className="bg-black hover:bg-gray-900 w-36 h-12"
-            >
-              Continuer <ArrowRightIcon className="w-4 h-4" />
-            </Button>
-          </div>
-        </form>
+        {/* Feature Section - You can add your feature section here */}
+        <div className="flex-1 relative mt-4 min-h-0">
+          {/* Add your feature section component here */}
+        </div>
+
+        {/* Navigation Buttons */}
+        <div className="flex justify-between py-4 border-t border-zinc-100 mt-4">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => router.push("/onboarding/step2")}
+            className="border-zinc-200 text-zinc-600 hover:bg-zinc-50 h-9"
+          >
+            Retour
+          </Button>
+          <Button
+            type="submit"
+            onClick={form.handleSubmit(onSubmit)}
+            className="bg-black hover:bg-black/90 text-white h-9 px-6"
+          >
+            Continuer
+            <ArrowRightIcon className="w-4 h-4 ml-2" />
+          </Button>
+        </div>
       </div>
     </div>
   );

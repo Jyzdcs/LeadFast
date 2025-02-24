@@ -6,7 +6,7 @@ import { useOnboarding } from "@/contexts/OnboardingContext";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
-import { X, UserIcon, ArrowRightIcon } from "lucide-react";
+import { X, UserIcon, ArrowRightIcon, InfoIcon } from "lucide-react";
 import { Combobox } from "@/components/ui/combobox";
 import { KeywordInput } from "@/components/ui/keyword-input";
 import { StepIndicator } from "@/components/ui/step-indicator";
@@ -76,14 +76,14 @@ export default function Step2() {
     <div className="flex flex-col h-screen w-[85%]">
       {/* Header Section */}
       <div className="w-full border-b border-zinc-100">
-        <div className="w-full px-6 py-4">
-          <div className="flex flex-col gap-3">
+        <div className="w-full px-6 py-3">
+          <div className="flex flex-col gap-2">
             <StepIndicator 
               step={2} 
               label="Profil Recherché" 
               className="text-base font-medium text-zinc-900"
             />
-            <Stepper value={2} className="w-full gap-1.5">
+            <Stepper value={2} className="w-full gap-1">
               {steps.map((step) => (
                 <StepperItem key={step} step={Number(step)} className="flex-1">
                   <StepperTrigger className="w-full" asChild>
@@ -105,119 +105,138 @@ export default function Step2() {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 px-6 py-6">
-        <div className="h-full flex flex-col">
-          {/* Form Section */}
-          <div className="space-y-6">
-            <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
-              {/* Job Title Input */}
-              <div className="space-y-3">
-                <label className="block text-sm font-medium text-zinc-900">
-                  Intitulé de poste précis
-									<TooltipProvider>
-										<Tooltip>
-											<TooltipTrigger>💡</TooltipTrigger>
-											<TooltipContent>
-												<p>Indiquez les intitulés exacts des postes ciblés pour une recherche ultra-précise</p>
-											</TooltipContent>
-										</Tooltip>
-									</TooltipProvider>
-                </label>
-                <KeywordInput
-                  keywords={form.watch("jobTitle") || []}
-                  defaultValue={data.step2?.jobTitle}
-                  onAdd={(keyword) => {
-                    const currentTitles = form.getValues("jobTitle") || [];
-                    if (!currentTitles.includes(keyword)) {
-                      form.setValue("jobTitle", [...currentTitles, keyword]);
-                    }
-                  }}
-                  onRemove={(keyword) => {
-                    const currentTitles = form.getValues("jobTitle") || [];
-                    form.setValue(
-                      "jobTitle",
-                      currentTitles.filter((title) => title !== keyword)
-                    );
-                  }}
-                  placeholder="Ex : Développeur, Directeur, marketing, CEO..."
-                  helperText="Appuyez sur Entrée pour ajouter un mot-clé"
-                  className="w-full"
-                />
-              </div>
-
-              {/* Management Level Input */}
-              <div className="space-y-3">
-                <label className="block text-sm font-medium text-zinc-900">
-                  Niveaux hiérarchiques
-									<TooltipProvider>
-										<Tooltip>
-											{/* <TooltipTrigger>💡</TooltipTrigger> */}
-											<TooltipContent>
-												<p>Pour maximiser l'impact, ciblez Senior, Lead, Manager, Directeur, VP et C-Level selon vos besoins en prospection</p>
-											</TooltipContent>
-										</Tooltip>
-									</TooltipProvider>
-                </label>
-                <Combobox
-                  options={managementLevels.map((level) => ({
-                    id: level.value,
-                    label: level.label,
-                    desc: level.label,
-                  }))}
-                  value={selectedLevel}
-                  onChange={setSelectedLevel}
-                  placeholder="Sélectionner un niveau..."
-                  searchPlaceholder="Rechercher un niveau..."
-                  icon={<UserIcon className="w-4 h-4 text-zinc-500" />}
-                  className="w-full"
-                />
-                <div className="flex flex-wrap gap-2">
-                  {form.watch("managementLevel")?.map((level) => (
-                    <Badge
-                      key={level}
-                      variant="secondary"
-                      className="px-2.5 py-1 bg-zinc-100 hover:bg-zinc-200 text-zinc-900 flex items-center gap-1.5 transition-colors duration-200"
-                    >
-                      {managementLevels.find((l) => l.value === level)?.label}
-                      <button
-                        type="button"
-                        onClick={() => handleRemoveLevel(level)}
-                        className="focus:outline-none group"
-                      >
-                        <X className="h-3 w-3 text-zinc-500 group-hover:text-zinc-700" />
+      <div className="flex-1 px-6 py-4 flex flex-col h-full">
+        {/* Form Section */}
+        <div className="space-y-4">
+          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
+            {/* Job Title Input */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-zinc-900 flex items-center gap-2">
+                Intitulé de poste précis
+                <TooltipProvider delayDuration={300}>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <button className="inline-flex items-center justify-center rounded-full p-1 transition-colors duration-200 hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-950">
+                        <InfoIcon className="h-4 w-4 text-zinc-500" />
+                        <span className="sr-only">Plus d'informations sur les intitulés de poste</span>
                       </button>
-                    </Badge>
-                  ))}
-                </div>
+                    </TooltipTrigger>
+                    <TooltipContent 
+                      className="max-w-[280px] rounded-lg bg-zinc-900 px-4 py-3 text-sm text-zinc-50 shadow-lg animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2"
+                      sideOffset={8}
+                    >
+                      <div className="flex flex-col gap-1">
+                        <p className="font-medium">Intitulé de poste</p>
+                        <p className="text-zinc-300">Indiquez les intitulés exacts des postes ciblés pour une recherche ultra-précise</p>
+                      </div>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </label>
+              <KeywordInput
+                keywords={form.watch("jobTitle") || []}
+                defaultValue={data.step2?.jobTitle}
+                onAdd={(keyword) => {
+                  const currentTitles = form.getValues("jobTitle") || [];
+                  if (!currentTitles.includes(keyword)) {
+                    form.setValue("jobTitle", [...currentTitles, keyword]);
+                  }
+                }}
+                onRemove={(keyword) => {
+                  const currentTitles = form.getValues("jobTitle") || [];
+                  form.setValue(
+                    "jobTitle",
+                    currentTitles.filter((title) => title !== keyword)
+                  );
+                }}
+                placeholder="Ex : Développeur, Directeur, marketing, CEO..."
+                helperText="Appuyez sur Entrée pour ajouter un mot-clé"
+                className="w-full"
+              />
+            </div>
+
+            {/* Management Level Input */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-zinc-900 flex items-center gap-2">
+                Niveaux hiérarchiques
+                <TooltipProvider delayDuration={300}>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <button className="inline-flex items-center justify-center rounded-full p-1 transition-colors duration-200 hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-950">
+                        <InfoIcon className="h-4 w-4 text-zinc-500" />
+                        <span className="sr-only">Plus d'informations sur les niveaux hiérarchiques</span>
+                      </button>
+                    </TooltipTrigger>
+                    <TooltipContent 
+                      className="max-w-[280px] rounded-lg bg-zinc-900 px-4 py-3 text-sm text-zinc-50 shadow-lg animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2"
+                      sideOffset={8}
+                    >
+                      <div className="flex flex-col gap-1">
+                        <p className="font-medium">Niveaux hiérarchiques</p>
+                        <p className="text-zinc-300">Pour maximiser l'impact, ciblez Senior, Lead, Manager, Directeur, VP et C-Level selon vos besoins en prospection</p>
+                      </div>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </label>
+              <Combobox
+                options={managementLevels.map((level) => ({
+                  id: level.value,
+                  label: level.label,
+                  desc: level.label,
+                }))}
+                value={selectedLevel}
+                onChange={setSelectedLevel}
+                placeholder="Sélectionner un niveau..."
+                searchPlaceholder="Rechercher un niveau..."
+                icon={<UserIcon className="w-4 h-4 text-zinc-500" />}
+                className="w-full"
+              />
+              <div className="flex flex-wrap gap-2">
+                {form.watch("managementLevel")?.map((level) => (
+                  <Badge
+                    key={level}
+                    variant="secondary"
+                    className="px-2.5 py-0.5 bg-zinc-100 hover:bg-zinc-200 text-zinc-900 flex items-center gap-1.5 transition-colors duration-200"
+                  >
+                    {managementLevels.find((l) => l.value === level)?.label}
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveLevel(level)}
+                      className="focus:outline-none group"
+                    >
+                      <X className="h-3 w-3 text-zinc-500 group-hover:text-zinc-700" />
+                    </button>
+                  </Badge>
+                ))}
               </div>
-            </form>
-          </div>
+            </div>
+          </form>
+        </div>
 
-          {/* Profile Features Section */}
-          <div className="relative mt-8">
-            {/* Features Grid */}
-            <FeaturesSectionWithHoverEffects />
-          </div>
+        {/* Feature Section */}
+        <div className="flex-1 relative mt-4 min-h-0">
+          <FeaturesSectionWithHoverEffects />
+        </div>
 
-          {/* Navigation Buttons */}
-          <div className="flex justify-between pt-6 mt-auto">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => router.push("/onboarding/step1")}
-              className="border-zinc-200 text-zinc-600 hover:bg-zinc-50 h-10"
-            >
-              Retour
-            </Button>
-            <Button
-              type="submit"
-              onClick={form.handleSubmit(handleSubmit)}
-              className="bg-black hover:bg-black/90 text-white h-10 px-6"
-            >
-              Continuer
-              <ArrowRightIcon className="w-4 h-4 ml-2" />
-            </Button>
-          </div>
+        {/* Navigation Buttons */}
+        <div className="flex justify-between py-4 border-t border-zinc-100 mt-4">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => router.push("/onboarding/step1")}
+            className="border-zinc-200 text-zinc-600 hover:bg-zinc-50 h-9"
+          >
+            Retour
+          </Button>
+          <Button
+            type="submit"
+            onClick={form.handleSubmit(handleSubmit)}
+            className="bg-black hover:bg-black/90 text-white h-9 px-6"
+          >
+            Continuer
+            <ArrowRightIcon className="w-4 h-4 ml-2" />
+          </Button>
         </div>
       </div>
     </div>
