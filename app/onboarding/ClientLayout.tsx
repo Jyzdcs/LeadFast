@@ -3,44 +3,13 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { HoverButton } from "@/components/ui/hover-button";
-import { ArrowRightIcon, MailIcon, Sparkles } from "lucide-react";
+import { ArrowRightIcon, MailIcon, Rocket, Sparkle, Zap, Star } from "lucide-react";
 import { LinkedinIcon } from "lucide-react";
 import DisplayCards from "@/components/ui/display-cards";
 import { TvIcon } from "lucide-react";
-export function ClientLayout({ children }: { children: React.ReactNode }) {
-	const defaultCards = [
-		{
-			icon: <Sparkles className="size-4 text-blue-300" />,
-			title: "Mailing",
-			description: "Campagnes de cold mailing",
-			date: "Just now",
-			iconClassName: "text-blue-500",
-			titleClassName: "text-blue-500",
-			className:
-				"[grid-area:stack] hover:-translate-y-10 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration-700 hover:grayscale-0 before:left-0 before:top-0",
-		},
-		{
-			icon: <Sparkles className="size-4 text-blue-300" />,
-			title: "LinkedIn",
-			description: "Prospection automatisée",
-			date: "2 days ago",
-			iconClassName: "text-blue-500",
-			titleClassName: "text-blue-500",
-			className:
-				"[grid-area:stack] translate-x-12 translate-y-10 hover:-translate-y-1 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-opacity before:duration-700 hover:grayscale-0 before:left-0 before:top-0",
-		},
-		{
-			icon: <Sparkles className="size-4 text-blue-300" />,
-			title: "New",
-			description: "Latest updates and features",
-			date: "Today",
-			iconClassName: "text-blue-500",
-			titleClassName: "text-blue-500",
-			className:
-				"[grid-area:stack] translate-x-24 translate-y-20 hover:translate-y-10",
-		},
-	];
+import TreeCards from "@/components/ui/tree-cards";
 
+export function ClientLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen lg:min-h-[100dvh] bg-zinc-50 font-['Arial, Helvetica, sans-serif']">
       {/* Left Section - Form */}
@@ -179,9 +148,15 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
               </div>
 
               {/* Feature Cards avec HoverButton optimisé */}
-              <div className="grid grid-cols-2 gap-4 mt-12">
-								<DisplayCards cards={defaultCards}/>
-              </div>
+			  <div className="flex min-h-[400px] w-full items-center justify-center py-20">
+				<div className="w-full max-w-3xl">
+					<div className="space-y-10">
+						<div className="-ml-12 dark">
+							<TreeCards />
+						</div>
+					</div>
+				</div>
+			  </div>
             </div>
           </div>
         </div>
