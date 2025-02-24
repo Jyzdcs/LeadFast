@@ -63,7 +63,7 @@ const CONTACTS = [
 export default function Page() {
 	return (
 		<>
-			<div className="flex flex-col min-h-screen bg-white">
+			<div className="flex flex-col min-h-screen">
 				{/* Section principale avec AnimatedBackground */}
 				<div className="flex-1 flex flex-col">
 					{/* Contenu principal centré */}
