@@ -21,7 +21,7 @@ export const NavigationButtons: React.FC<NavigationButtonsProps> = ({
       <Button
         type="button"
         variant="outline"
-        onClick={() => router.push("/3")}
+        onClick={() => router.push("/2")}
         className="border-zinc-200 text-zinc-600 hover:bg-zinc-50 h-9"
       >
         Retour

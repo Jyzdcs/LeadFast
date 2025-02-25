@@ -3,11 +3,11 @@ import { ArrowRightIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { UseFormReturn } from "react-hook-form";
-import { Step6FormValues } from "../mocks/constants";
+import { Step5FormValues } from "../mocks/constants";
 
 interface NavigationButtonsProps {
-  form: UseFormReturn<Step6FormValues>;
-  onSubmit: (values: Step6FormValues) => void;
+  form: UseFormReturn<Step5FormValues>;
+  onSubmit: (values: Step5FormValues) => void;
 }
 
 export const NavigationButtons: React.FC<NavigationButtonsProps> = ({
@@ -21,7 +21,7 @@ export const NavigationButtons: React.FC<NavigationButtonsProps> = ({
       <Button
         type="button"
         variant="outline"
-        onClick={() => router.push("/5")}
+        onClick={() => router.push("/4")}
         className="border-zinc-200 text-zinc-600 hover:bg-zinc-50 h-9"
       >
         Retour
