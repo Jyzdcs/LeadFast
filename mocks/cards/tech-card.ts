@@ -3,9 +3,10 @@ export const techCard = {
   title: "Notification",
   description: "C-level, Tech, Nantes",
   date: "Il y a 5 jours",
-  iconClassName: "text-yellow-500",
-  titleClassName: "text-yellow-500",
-	className: "[grid-area:stack] cursor-pointer w-96 hover:-translate-y-10 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-all before:duration-700 before:left-0 before:top-0 text-white hover:bg-blue-500/10 transition-all duration-700",
+  iconClassName: "text-blue-500",
+  titleClassName: "text-blue-500",
+	className: "[grid-area:stack] hover:-translate-y-10 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-all before:duration-700 before:left-0 before:top-0 text-white hover:bg-blue-500/10 transition-all duration-700",
+	// className: "[grid-area:stack] cursor-pointer w-96 hover:-translate-y-10 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-all before:duration-700 before:left-0 before:top-0 text-white hover:bg-blue-500/10 transition-all duration-700",
   data: [
     {
 			"id": "50",
@@ -402,7 +403,7 @@ export const techCard = {
 		{
 			"id": "78",
 			"name": "Simon Brichet",
-			"position": "Dirigeant d’entreprise",
+			"position": "Dirigeant d'entreprise",
 			"company": "BRIVET MECANO SOUDURE",
 			"email": "",
 			"phone": "",
@@ -556,7 +557,7 @@ export const techCard = {
 		{
 			"id": "89",
 			"name": "Christian Paillat",
-			"position": "Dirigeant d’entreprise",
+			"position": "Dirigeant d'entreprise",
 			"company": "DL SYSTEM",
 			"email": "",
 			"phone": "+33 2 51 67 24 23",
@@ -584,7 +585,7 @@ export const techCard = {
 		{
 			"id": "91",
 			"name": "Clement Gicquel",
-			"position": "Dirigeant d’entreprise",
+			"position": "Dirigeant d'entreprise",
 			"company": "NAOMED",
 			"email": "",
 			"phone": "",

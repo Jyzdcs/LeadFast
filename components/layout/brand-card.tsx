@@ -22,7 +22,6 @@ export function BrandCard() {
             {/* Badge */}
             <div className="space-y-3">
               <ApprovalBadge />
-
               {/* Title & Description */}
               <HeroContent />
             </div>

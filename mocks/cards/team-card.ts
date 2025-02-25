@@ -5,7 +5,7 @@ export const teamCard = {
 	date: "Il y a 2 jours",
 	iconClassName: "text-yellow-500",
 	titleClassName: "text-yellow-500",
-    className: "[grid-area:stack] cursor-pointer w-96 translate-x-12 translate-y-10 hover:-translate-y-1 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-all before:duration-700 before:left-0 before:top-0 text-white hover:bg-yellow-500/10 transition-all duration-700",
+    className: "[grid-area:stack] translate-x-16 translate-y-10 hover:-translate-y-1 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-all before:duration-700 before:left-0 before:top-0 text-white hover:bg-yellow-500/10 transition-all duration-700",
 	data: [
 		{
 			"id": "1",

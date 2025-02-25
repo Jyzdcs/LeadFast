@@ -5,8 +5,9 @@ export const restaurantCard = {
   title: "Notification",
   description: "C-Level, Restauration, France",
   date: "Il y a 1 minute",
-  titleClassName: "text-yellow-500",
-	className: "[grid-area:stack] cursor-pointer w-96 translate-x-24 translate-y-20 hover:-translate-y-1 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-all before:duration-700 before:left-0 before:top-0 text-white hover:bg-purple-500/10 transition-all duration-700",
+  iconClassName: "text-purple-500",
+  titleClassName: "text-purple-500",
+	className: "[grid-area:stack] translate-x-32 translate-y-20 hover:translate-y-10 before:absolute before:w-[100%] before:outline-1 before:rounded-xl before:outline-border before:h-[100%] before:content-[''] before:bg-blend-overlay before:bg-background/50 grayscale-[100%] hover:before:opacity-0 before:transition-all before:duration-700 before:left-0 before:top-0 text-white hover:bg-purple-500/10 transition-all duration-700",
   data: [
     {
 			"id": "101",
@@ -277,7 +278,7 @@ export const restaurantCard = {
 		{
 			"id": "120",
 			"name": "Dominique Potier",
-			"position": "Directeur d’exploitation",
+			"position": "Directeur d'exploitation",
 			"company": "OGATA Paris",
 			"email": "",
 			"phone": "+33 1 80 97 76 80",
@@ -725,7 +726,7 @@ export const restaurantCard = {
 		{
 			"id": "152",
 			"name": "Audrey Rodrigues",
-			"position": "Directeur d’exploitation",
+			"position": "Directeur d'exploitation",
 			"company": "Monsieur Bleu",
 			"email": "a.rodrigues@monsieurbleu.com",
 			"phone": "+33 1 47 20 90 47",
@@ -790,7 +791,7 @@ export const restaurantCard = {
 			"country": "Tunisia",
 			"region": "Sfax",
 			"city": "Sfax",
-			"image": "https://api.dicebear.com/7.x/shapes/svg?seed=InesDammak"
+			"image": "https://media.licdn.com/dms/image/D4D03AQFnkJibKf0gWw/profile-displayphoto-shrink_200_200/0/1702837483555?e=2147483647&v=beta&t=4ZncpTGv3PuuTulPce2QTnm4Ol5sX-hxYA6WAd439Ds"
 		},
 		{
 			"id": "157",
@@ -804,7 +805,7 @@ export const restaurantCard = {
 			"country": "France",
 			"region": "Bourgogne-Franche-Comte",
 			"city": "Macon",
-			"image": "https://api.dicebear.com/7.x/shapes/svg?seed=ManonPelloux"
+			"image": "https://media.licdn.com/dms/image/D4D03AQFt57IibHO6Ow/profile-displayphoto-shrink_200_200/0/1701026365112?e=2147483647&v=beta&t=QcdWvQF1eNW-XX4NtPUKDdJTxcWfuRnarwGj_8E0vLQ"
 		},
 		{
 			"id": "158",
@@ -832,7 +833,7 @@ export const restaurantCard = {
 			"country": "South Africa",
 			"region": "Gauteng",
 			"city": "Johannesburg",
-			"image": "https://api.dicebear.com/7.x/shapes/svg?seed=SavannahLivie"
+			"image": "https://media.licdn.com/dms/image/D4D03AQGNQOTUFJqYkg/profile-displayphoto-shrink_200_200/0/1671029772689?e=2147483647&v=beta&t=1WdbMgVUaD2O78mFTW7XSTMRuTzO58Ex-HMyuWEAARs"
 		},
 		{
 			"id": "160",
