@@ -69,7 +69,7 @@ export function FeaturesSectionWithHoverEffects() {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 relative z-10 gap-4 max-w-7xl mx-auto">
+    <div className="grid grid-cols-1 md:grid-cols-2 relative z-10 gap-3 max-w-7xl mx-auto">
       {features.map((feature, index) => (
         <Feature key={feature.title} {...feature} index={index} />
       ))}
@@ -91,7 +91,7 @@ const Feature = ({
   return (
     <div
       className={cn(
-        "flex flex-col py-10 relative group/feature border border-zinc-200 rounded-xl overflow-hidden",
+        "flex flex-col py-5 relative group/feature border border-zinc-200 rounded-xl overflow-hidden",
         (index === 0 || index === 4) && "lg:border-l",
         index < 4 && "lg:border-b"
       )}
@@ -100,20 +100,20 @@ const Feature = ({
       <div className="opacity-0 group-hover/feature:opacity-100 transition duration-200 absolute inset-0 h-full w-full bg-gradient-to-t from-zinc-100 to-transparent pointer-events-none rounded-xl" />
       
       {/* Icon section */}
-      <div className="mb-4 relative z-10 px-10 text-zinc-600">
+      <div className="mb-2 relative z-10 px-6 text-zinc-600">
         {icon}
       </div>
 
       {/* Title section */}
-      <div className="text-lg mb-2 relative z-10 px-10">
-        <div className="absolute left-0 inset-y-0 h-6 group-hover/feature:h-8 w-1 rounded-tr-full rounded-br-full bg-zinc-200 group-hover/feature:bg-black transition-all duration-200 origin-center" />
-        <span className="group-hover/feature:translate-x-2 transition duration-200 inline-block text-zinc-900">
+      <div className="text-base mb-1 relative z-10 px-6">
+        <div className="absolute left-0 inset-y-0 h-5 group-hover/feature:h-6 w-1 rounded-tr-full rounded-br-full bg-zinc-200 group-hover/feature:bg-black transition-all duration-200 origin-center" />
+        <span className="group-hover/feature:translate-x-2 transition duration-200 inline-block text-zinc-900 font-medium">
           {title}
         </span>
       </div>
 
       {/* Description section */}
-      <p className="text-sm text-zinc-600 max-w-xs relative z-10 px-10">
+      <p className="text-xs text-zinc-600 max-w-xs relative z-10 px-6">
         {description}
       </p>
     </div>

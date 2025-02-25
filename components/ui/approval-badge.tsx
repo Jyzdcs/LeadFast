@@ -8,9 +8,9 @@ interface ApprovalBadgeProps {
 export function ApprovalBadge({ 
   count = 10, 
   logos = [
-    { src: "ocom-logo.png", alt: "OCOM Logo" },
-    { src: "artntreal-logo.png", alt: "ArtNTReal Logo" },
-    { src: "chataigne-logo.png", alt: "Chataigne Logo" }
+    { src: "/ocom-logo.png", alt: "OCOM Logo" },
+    { src: "/artntreal-logo.png", alt: "ArtNTReal Logo" },
+    { src: "/chataigne-logo.png", alt: "Chataigne Logo" }
   ] 
 }: ApprovalBadgeProps) {
   return (
