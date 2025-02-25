@@ -1,5 +1,5 @@
 // Constants for step2 page
-export const steps = ["1", "2", "3", "4", "5", "6"];
+export const steps = ["1", "2", "3", "4", "5"];
 
 export const managementLevels = [
   { value: "junior", label: "Junior" },

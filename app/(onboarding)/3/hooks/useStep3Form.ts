@@ -2,25 +2,24 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useOnboarding } from "@/contexts/OnboardingContext";
-import { Step4FormValues } from "../mocks/constants";
+import { Step3FormValues } from "../mocks/constants";
 
-export const useStep4Form = () => {
+export const useStep3Form = () => {
   const { data, setData } = useOnboarding();
   const router = useRouter();
   const [expertise, setExpertise] = useState("");
 
-  console.log(data);
-  const form = useForm<Step4FormValues>({
+  const form = useForm<Step3FormValues>({
     defaultValues: {
-      company: data.step4?.company || "",
-      expertise: data.step4?.expertise || [],
+      company: data.step3?.company || "",
+      expertise: data.step3?.expertise || [],
     },
   });
 
   // Event Handlers
-  const handleSubmit = async (values: Step4FormValues) => {
-    setData({ ...data, step4: values });
-    router.push("/5");
+  const handleSubmit = async (values: Step3FormValues) => {
+    setData({ ...data, step3: values });
+    router.push("/4");
   };
 
   const handleAddExpertise = (keyword: string) => {

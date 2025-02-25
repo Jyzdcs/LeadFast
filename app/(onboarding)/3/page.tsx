@@ -2,13 +2,13 @@
 
 import React from "react";
 import { FeaturesSectionWithHoverEffects } from "@/components/ui/feature-section-with-hover-effects";
-import { useStep4Form } from "./hooks/useStep4Form";
+import { useStep3Form } from "./hooks/useStep3Form";
 import { StepHeader } from "./components/StepHeader";
 import { CompanyInput } from "./components/CompanyInput";
 import { ExpertiseInput } from "./components/ExpertiseInput";
 import { NavigationButtons } from "./components/NavigationButtons";
 
-export default function Step4() {
+export default function Step3() {
   const {
     form,
     expertise,
@@ -16,7 +16,7 @@ export default function Step4() {
     handleSubmit,
     handleAddExpertise,
     handleRemoveExpertise,
-  } = useStep4Form();
+  } = useStep3Form();
 
   return (
     <div className="flex flex-col h-full min-h-[calc(100vh-2rem)] w-[85%] max-w-full relative">

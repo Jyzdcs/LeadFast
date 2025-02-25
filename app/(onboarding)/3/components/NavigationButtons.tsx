@@ -3,11 +3,11 @@ import { ArrowRightIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { UseFormReturn } from "react-hook-form";
-import { Step4FormValues } from "../mocks/constants";
+import { Step3FormValues } from "../mocks/constants";
 
 interface NavigationButtonsProps {
-  form: UseFormReturn<Step4FormValues>;
-  onSubmit: (values: Step4FormValues) => void;
+  form: UseFormReturn<Step3FormValues>;
+  onSubmit: (values: Step3FormValues) => void;
 }
 
 export const NavigationButtons: React.FC<NavigationButtonsProps> = ({

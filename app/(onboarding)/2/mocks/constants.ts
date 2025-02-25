@@ -1,5 +1,5 @@
-// Constants for step3 page
-export const steps = ["1", "2", "3", "4", "5", "6"];
+// Constants for step2 page
+export const steps = ["1", "2", "3", "4", "5"];
 
 // Liste des tailles d'entreprise
 export const employeeRanges = [

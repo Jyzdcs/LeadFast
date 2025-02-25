@@ -14,6 +14,15 @@ import {
   UseFormGetValues,
 } from "react-hook-form";
 
+/**
+ * Interface pour les props du composant PersonalInfoForm
+ *
+ * @property register - Fonction pour enregistrer les champs avec react-hook-form
+ * @property errors - Objet contenant les erreurs de validation
+ * @property clearError - Fonction pour effacer une erreur spécifique
+ * @property handleFieldChange - Fonction pour mettre à jour le contexte à chaque changement
+ * @property getValues - Fonction pour récupérer les valeurs actuelles du formulaire
+ */
 interface PersonalInfoFormProps {
   register: UseFormRegister<Step4FormValues>;
   errors: FieldErrors<Step4FormValues>;
@@ -22,6 +31,15 @@ interface PersonalInfoFormProps {
   getValues: UseFormGetValues<Step4FormValues>;
 }
 
+/**
+ * Composant pour le formulaire d'informations personnelles
+ *
+ * Ce composant gère :
+ * - L'affichage des champs du formulaire (prénom, nom, email, téléphone)
+ * - La validation des champs
+ * - La mise à jour du contexte à chaque changement
+ * - L'affichage des erreurs de validation
+ */
 export const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
   register,
   errors,
@@ -29,6 +47,7 @@ export const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
   handleFieldChange,
   getValues,
 }) => {
+  // Récupération des valeurs actuelles pour les afficher dans les champs
   const values = getValues();
 
   return (
