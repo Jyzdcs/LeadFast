@@ -34,7 +34,7 @@ export const useStep6Form = () => {
   };
 
   const handleSubmit = async (values: Step6FormValues) => {
-    router.push("/onboarding/success");
+    router.push("/submitted");
   };
 
   return {
