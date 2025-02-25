@@ -1,92 +1,54 @@
 "use client";
 
 import React from "react";
-import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { useOnboarding } from "@/contexts/OnboardingContext";
-import { StepIndicator } from "@/components/ui/step-indicator";
-import { KeywordInput } from "@/components/ui/keyword-input";
-import { ArrowRightIcon, Building2Icon } from "lucide-react";
-
-type Step4FormValues = {
-  company: string;
-  expertise: string[];
-};
+import { FeaturesSectionWithHoverEffects } from "@/components/ui/feature-section-with-hover-effects";
+import { useStep4Form } from "./hooks/useStep4Form";
+import { StepHeader } from "./components/StepHeader";
+import { CompanyInput } from "./components/CompanyInput";
+import { ExpertiseInput } from "./components/ExpertiseInput";
+import { NavigationButtons } from "./components/NavigationButtons";
 
 export default function Step4() {
-  const { data, setData } = useOnboarding();
-  const router = useRouter();
-
-
-	console.log(data);
-  const form = useForm<Step4FormValues>({
-    defaultValues: {
-      company: data.step4?.company || "",
-      expertise: data.step4?.expertise || [],
-    },
-  });
-
-  const onSubmit = async (values: Step4FormValues) => {
-    setData({ step4: values });
-    router.push("/onboarding/step5");
-  };
+  const {
+    form,
+    expertise,
+    setExpertise,
+    handleSubmit,
+    handleAddExpertise,
+    handleRemoveExpertise,
+  } = useStep4Form();
 
   return (
-    <div className="flex-1 flex flex-col">
-      <div className="space-y-8 flex-1">
-        <StepIndicator step={4} label="Entreprise spécifique" />
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <div className="space-y-6">
-            <div>
-              <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-2">
-                Nom de l'entreprise
-              </label>
-              <Input
-                id="company"
-                placeholder="Ex : Google, Apple, ..."
-                className="bg-gray-50 border-gray-200"
-								icon={<Building2Icon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />}
-								defaultValue={data.step4?.company}
-								onChange={(e) => {
-									form.setValue("company", e.target.value);
-								}}
-              />
-            </div>
+    <div className="flex flex-col h-full min-h-[calc(100vh-2rem)] w-[85%] max-w-full relative">
+      {/* Header Section */}
+      <StepHeader />
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Mots clés de domaine d'expertise
-              </label>
-              <KeywordInput
-                keywords={form.watch("expertise") || []}
-                onAdd={(keyword) => form.setValue("expertise", [...form.getValues("expertise"), keyword])}
-                onRemove={(keyword) => form.setValue("expertise", form.getValues("expertise").filter((exp) => exp !== keyword))}
-                placeholder="Ex : saas, e-commerce, ..."
-                helperText="Appuyez sur Entrée pour ajouter un mot-clé"
+      {/* Main Content - Using grid for better control */}
+      <div className="grid grid-rows-[1fr_auto] flex-1 px-6 py-4 h-[calc(100%-4rem)] overflow-y-auto">
+        {/* Scrollable Content Area */}
+        <div className="space-y-6 pb-4 overflow-y-auto">
+          {/* Form Section */}
+          <div className="space-y-4">
+            <form
+              onSubmit={form.handleSubmit(handleSubmit)}
+              className="space-y-4"
+            >
+              <CompanyInput
+                value={form.watch("company") || ""}
+                onChange={(value) => form.setValue("company", value)}
               />
-            </div>
+              <ExpertiseInput
+                expertise={form.watch("expertise") || []}
+                onAdd={handleAddExpertise}
+                onRemove={handleRemoveExpertise}
+              />
+            </form>
           </div>
-
-          <div className="flex gap-6 mt-auto pt-8 justify-between">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => router.push("/onboarding/step3")}
-              className="border-gray-200 text-gray-600 hover:bg-gray-50 h-12"
-            >
-              Retour
-            </Button>
-            <Button
-              type="submit"
-							size="sm"
-              className="bg-black hover:bg-gray-900 w-36 h-12"
-            >
-              Continuer <ArrowRightIcon className="w-4 h-4" />
-            </Button>
-          </div>
-        </form>
+        </div>
+        {/* Navigation Buttons - Fixed at bottom */}
+        <div className="sticky bottom-0 bg-white py-4">
+          <NavigationButtons form={form} onSubmit={handleSubmit} />
+        </div>
       </div>
     </div>
   );

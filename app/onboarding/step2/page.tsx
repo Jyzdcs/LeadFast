@@ -20,37 +20,41 @@ export default function Step2() {
 	} = useStep2Form();
 
 	return (
-		<div className="flex flex-col h-screen w-[85%]">
-		{/* Header Section */}
-		<StepHeader />
+		<div className="flex flex-col h-full min-h-[calc(100vh-2rem)] w-[85%] max-w-full relative">
+			{/* Header Section */}
+			<StepHeader />
 
-		{/* Main Content */}
-		<div className="flex-1 px-6 py-4 flex flex-col h-full">
-			{/* Form Section */}
-			<div className="space-y-4">
-				<form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-					<JobTitleInput
-					jobTitles={form.watch("jobTitle") || []}
-					onAdd={handleAddJobTitle}
-					onRemove={handleRemoveJobTitle}
-					/>
-					<ManagementLevelInput
-					selectedLevels={form.watch("managementLevel") || []}
-					selectedLevel={selectedLevel}
-					onLevelChange={setSelectedLevel}
-					onRemoveLevel={handleRemoveLevel}
-					/>
-				</form>
+			{/* Main Content - Using grid for better control */}
+			<div className="grid grid-rows-[1fr_auto] flex-1 px-6 py-4 h-[calc(100%-4rem)] overflow-y-auto">
+				{/* Scrollable Content Area */}
+				<div className="space-y-6 pb-4 overflow-y-auto">
+					{/* Form Section */}
+					<div className="space-y-4">
+						<form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
+							<JobTitleInput
+								jobTitles={form.watch("jobTitle") || []}
+								onAdd={handleAddJobTitle}
+								onRemove={handleRemoveJobTitle}
+							/>
+							<ManagementLevelInput
+								selectedLevels={form.watch("managementLevel") || []}
+								selectedLevel={selectedLevel}
+								onLevelChange={setSelectedLevel}
+								onRemoveLevel={handleRemoveLevel}
+							/>
+						</form>
+					</div>
+					{/* Feature Section - Hidden on small screens */}
+					<div className="relative hidden sm:block">
+						<FeaturesSectionWithHoverEffects />
+					</div>
+				</div>
+
+				{/* Navigation Buttons - Fixed at bottom */}
+				<div className="sticky bottom-0 bg-white py-4">
+					<NavigationButtons form={form} onSubmit={handleSubmit} />
+				</div>
 			</div>
-
-			{/* Feature Section */}
-			<div className="relative mt-4">
-				<FeaturesSectionWithHoverEffects />
-			</div>
-
-			{/* Navigation Buttons */}
-			<NavigationButtons form={form} onSubmit={handleSubmit} />
-		</div>
 		</div>
 	);
 }

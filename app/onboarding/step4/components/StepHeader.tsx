@@ -9,11 +9,11 @@ export const StepHeader: React.FC = () => {
       <div className="w-full px-6 py-3">
         <div className="flex flex-col gap-2 mt-8">
           <StepIndicator 
-            step={2} 
-            label="Profil Recherché" 
+            step={4} 
+            label="Entreprise spécifique" 
             className="text-base font-medium text-zinc-900"
           />
-          <Stepper value={2} className="w-full gap-1">
+          <Stepper value={4} className="w-full gap-1">
             {steps.map((step) => (
               <StepperItem key={step} step={Number(step)} className="flex-1">
                 <StepperTrigger className="w-full" asChild>
