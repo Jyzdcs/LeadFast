@@ -10,15 +10,18 @@ interface NavigationButtonsProps {
   onSubmit: (values: Step3FormValues) => void;
 }
 
-export const NavigationButtons: React.FC<NavigationButtonsProps> = ({ form, onSubmit }) => {
+export const NavigationButtons: React.FC<NavigationButtonsProps> = ({
+  form,
+  onSubmit,
+}) => {
   const router = useRouter();
-  
+
   return (
     <div className="flex justify-between py-4 border-t border-zinc-100 mt-4">
       <Button
         type="button"
         variant="outline"
-        onClick={() => router.push("/onboarding/step2")}
+        onClick={() => router.push("/2")}
         className="border-zinc-200 text-zinc-600 hover:bg-zinc-50 h-9"
       >
         Retour
@@ -33,4 +36,4 @@ export const NavigationButtons: React.FC<NavigationButtonsProps> = ({ form, onSu
       </Button>
     </div>
   );
-}; 
+};

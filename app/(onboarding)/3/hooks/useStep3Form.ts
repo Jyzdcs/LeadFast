@@ -20,7 +20,7 @@ export const useStep3Form = () => {
   // Event Handlers
   const handleSubmit = async (values: Step3FormValues) => {
     setData({ ...data, step3: values });
-    router.push("/onboarding/step4");
+    router.push("/4");
   };
 
   const handleRemoveSector = (valueToRemove: string) => {
@@ -70,4 +70,4 @@ export const useStep3Form = () => {
     handleRemoveSector,
     handleRemoveSize,
   };
-}; 
+};

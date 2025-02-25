@@ -29,8 +29,11 @@ const quantityPricing = [
 export default function Step5() {
   const { data, setData } = useOnboarding();
   const router = useRouter();
-  const [selectedQuantity, setSelectedQuantity] = React.useState(data.step5?.leadQuantity || "");
+  const [selectedQuantity, setSelectedQuantity] = React.useState(
+    data.step5?.leadQuantity || ""
+  );
 
+  console.log(data);
   const form = useForm<Step5FormValues>({
     defaultValues: {
       leadQuantity: data.step5?.leadQuantity || "",
@@ -38,18 +41,18 @@ export default function Step5() {
   });
 
   const selectedPrice = React.useMemo(() => {
-    const pricing = quantityPricing.find(p => p.value === selectedQuantity);
+    const pricing = quantityPricing.find((p) => p.value === selectedQuantity);
     return pricing?.price || null;
   }, [selectedQuantity]);
 
   const handleQuantityChange = (quantity: string) => {
     setSelectedQuantity(quantity);
     form.setValue("leadQuantity", quantity);
-    
-    setData({ 
+
+    setData({
       step5: {
-        leadQuantity: quantity
-      }
+        leadQuantity: quantity,
+      },
     });
   };
 
@@ -90,8 +93,12 @@ export default function Step5() {
               {selectedPrice && (
                 <div className="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
                   <div className="flex justify-between items-center">
-                    <span className="text-sm font-medium text-gray-600">Prix total :</span>
-                    <span className="text-lg font-semibold text-gray-900">{selectedPrice}€</span>
+                    <span className="text-sm font-medium text-gray-600">
+                      Prix total :
+                    </span>
+                    <span className="text-lg font-semibold text-gray-900">
+                      {selectedPrice}€
+                    </span>
                   </div>
                 </div>
               )}
@@ -109,7 +116,7 @@ export default function Step5() {
             </Button>
             <Button
               type="submit"
-							size="sm"
+              size="sm"
               className="bg-black hover:bg-gray-900 w-36 h-12"
             >
               Continuer <ArrowRightIcon className="w-4 h-4" />
@@ -119,4 +126,4 @@ export default function Step5() {
       </div>
     </div>
   );
-} 
+}

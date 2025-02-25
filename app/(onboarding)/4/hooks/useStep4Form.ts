@@ -20,7 +20,7 @@ export const useStep4Form = () => {
   // Event Handlers
   const handleSubmit = async (values: Step4FormValues) => {
     setData({ ...data, step4: values });
-    router.push("/onboarding/step5");
+    router.push("/5");
   };
 
   const handleAddExpertise = (keyword: string) => {

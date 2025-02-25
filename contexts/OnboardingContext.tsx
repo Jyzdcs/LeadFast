@@ -1,14 +1,12 @@
 "use client";
 
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState } from "react";
 
 type OnboardingData = {
   step1?: {
-    // Informations personnelles
-    firstName: string;
-    lastName: string;
-    email: string;
-    phoneNumber: string;
+    // Informations de base
+    company: string;
+    expertise: Array<string>;
   };
   step2?: {
     jobTitle: string[];
@@ -19,18 +17,19 @@ type OnboardingData = {
     companySize: string[];
   };
   step4?: {
-    // Informations professionnelles
-    company: string;
-	expertise: Array<string>;
+    emailType: string[];
+    emailStatus: string[];
   };
   step5?: {
-    leadQuantity: string;
+    // Informations personnelles
+    firstName: string;
+    lastName: string;
+    email: string;
+    phoneNumber: string;
   };
   step6?: {
-	emailType: string[];
-	emailStatus: string[];
-  }
-  // Ajoute d'autres étapes au besoin...
+    leadQuantity: string;
+  };
 };
 
 interface OnboardingContextType {
@@ -38,13 +37,19 @@ interface OnboardingContextType {
   setData: (update: Partial<OnboardingData>) => void;
 }
 
-const OnboardingContext = createContext<OnboardingContextType | undefined>(undefined);
+const OnboardingContext = createContext<OnboardingContextType | undefined>(
+  undefined
+);
 
-export function OnboardingProvider({ children }: { children: React.ReactNode }) {
+export function OnboardingProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [data, setFormData] = useState<OnboardingData>({});
 
   const setData = (newData: Partial<OnboardingData>) => {
-    setFormData(prevData => ({ ...prevData, ...newData }));
+    setFormData((prevData) => ({ ...prevData, ...newData }));
   };
 
   return (
@@ -57,7 +62,7 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
 export function useOnboarding() {
   const context = useContext(OnboardingContext);
   if (!context) {
-    throw new Error('useOnboarding must be used within an OnboardingProvider');
+    throw new Error("useOnboarding must be used within an OnboardingProvider");
   }
   return context;
 }

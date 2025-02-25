@@ -19,7 +19,7 @@ export const useStep2Form = () => {
   // Event Handlers
   const handleSubmit = async (values: Step2FormValues) => {
     setData({ ...data, step2: values });
-    router.push("/onboarding/step3");
+    router.push("/3");
   };
 
   const handleRemoveLevel = (valueToRemove: string) => {
@@ -65,4 +65,4 @@ export const useStep2Form = () => {
     handleAddJobTitle,
     handleRemoveJobTitle,
   };
-}; 
+};
