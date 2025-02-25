@@ -2,18 +2,18 @@ import { useState, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useOnboarding } from "@/contexts/OnboardingContext";
-import { Step6FormValues, quantityPricing } from "../mocks/constants";
+import { Step5FormValues, quantityPricing } from "../mocks/constants";
 
 export const useStep6Form = () => {
   const { data, setData } = useOnboarding();
   const router = useRouter();
   const [selectedQuantity, setSelectedQuantity] = useState(
-    data.step6?.leadQuantity || ""
+    data.step5?.leadQuantity || ""
   );
 
-  const form = useForm<Step6FormValues>({
+  const form = useForm<Step5FormValues>({
     defaultValues: {
-      leadQuantity: data.step6?.leadQuantity || "",
+      leadQuantity: data.step5?.leadQuantity || "",
     },
   });
 
@@ -27,13 +27,13 @@ export const useStep6Form = () => {
     form.setValue("leadQuantity", quantity);
     setData({
       ...data,
-      step6: {
+      step5: {
         leadQuantity: quantity,
       },
     });
   };
 
-  const handleSubmit = async (values: Step6FormValues) => {
+  const handleSubmit = async (values: Step5FormValues) => {
     router.push("/submitted");
   };
 

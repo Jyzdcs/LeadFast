@@ -7,7 +7,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Step5FormValues } from "../mocks/constants";
+import { Step4FormValues } from "../mocks/constants";
 import {
   UseFormRegister,
   FieldErrors,
@@ -15,11 +15,11 @@ import {
 } from "react-hook-form";
 
 interface PersonalInfoFormProps {
-  register: UseFormRegister<Step5FormValues>;
-  errors: FieldErrors<Step5FormValues>;
-  clearError: (field: keyof Step5FormValues) => void;
-  handleFieldChange: (field: keyof Step5FormValues, value: string) => void;
-  getValues: UseFormGetValues<Step5FormValues>;
+  register: UseFormRegister<Step4FormValues>;
+  errors: FieldErrors<Step4FormValues>;
+  clearError: (field: keyof Step4FormValues) => void;
+  handleFieldChange: (field: keyof Step4FormValues, value: string) => void;
+  getValues: UseFormGetValues<Step4FormValues>;
 }
 
 export const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({

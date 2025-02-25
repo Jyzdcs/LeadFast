@@ -7,12 +7,13 @@ import { Step2FormValues } from "../mocks/constants";
 export const useStep2Form = () => {
   const { data, setData } = useOnboarding();
   const router = useRouter();
-  const [selectedLevel, setSelectedLevel] = useState("");
+  const [selectedSector, setSelectedSector] = useState("");
+  const [selectedSize, setSelectedSize] = useState("");
 
   const form = useForm<Step2FormValues>({
     defaultValues: {
-      jobTitle: data.step2?.jobTitle || [],
-      managementLevel: data.step2?.managementLevel || [],
+      activitySector: data.step2?.activitySector || [],
+      companySize: data.step2?.companySize || [],
     },
   });
 
@@ -22,47 +23,51 @@ export const useStep2Form = () => {
     router.push("/3");
   };
 
-  const handleRemoveLevel = (valueToRemove: string) => {
-    const currentLevels = form.getValues("managementLevel");
+  const handleRemoveSector = (valueToRemove: string) => {
+    const currentSectors = form.getValues("activitySector");
     form.setValue(
-      "managementLevel",
-      currentLevels.filter((level) => level !== valueToRemove)
+      "activitySector",
+      currentSectors.filter((sector: string) => sector !== valueToRemove)
     );
   };
 
-  const handleAddJobTitle = (keyword: string) => {
-    const currentTitles = form.getValues("jobTitle") || [];
-    if (!currentTitles.includes(keyword)) {
-      form.setValue("jobTitle", [...currentTitles, keyword]);
-    }
-  };
-
-  const handleRemoveJobTitle = (keyword: string) => {
-    const currentTitles = form.getValues("jobTitle") || [];
+  const handleRemoveSize = (valueToRemove: string) => {
+    const currentSizes = form.getValues("companySize");
     form.setValue(
-      "jobTitle",
-      currentTitles.filter((title) => title !== keyword)
+      "companySize",
+      currentSizes.filter((size: string) => size !== valueToRemove)
     );
   };
 
   // Effects
   useEffect(() => {
-    if (selectedLevel) {
-      const currentLevels = form.getValues("managementLevel") || [];
-      if (!currentLevels.includes(selectedLevel)) {
-        form.setValue("managementLevel", [...currentLevels, selectedLevel]);
+    if (selectedSector) {
+      const currentSectors = form.getValues("activitySector") || [];
+      if (!currentSectors.includes(selectedSector)) {
+        form.setValue("activitySector", [...currentSectors, selectedSector]);
       }
-      setSelectedLevel("");
+      setSelectedSector("");
     }
-  }, [selectedLevel, form]);
+  }, [selectedSector, form]);
+
+  useEffect(() => {
+    if (selectedSize) {
+      const currentSizes = form.getValues("companySize") || [];
+      if (!currentSizes.includes(selectedSize)) {
+        form.setValue("companySize", [...currentSizes, selectedSize]);
+      }
+      setSelectedSize("");
+    }
+  }, [selectedSize, form]);
 
   return {
     form,
-    selectedLevel,
-    setSelectedLevel,
+    selectedSector,
+    setSelectedSector,
+    selectedSize,
+    setSelectedSize,
     handleSubmit,
-    handleRemoveLevel,
-    handleAddJobTitle,
-    handleRemoveJobTitle,
+    handleRemoveSector,
+    handleRemoveSize,
   };
 };

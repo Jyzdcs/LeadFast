@@ -15,7 +15,7 @@ export const StepHeader: React.FC = () => {
         <div className="flex flex-col gap-2 mt-8">
           <StepIndicator
             step={5}
-            label="Informations personnelles"
+            label="Configuration des leads"
             className="text-base font-medium text-zinc-900"
           />
           <Stepper value={5} className="w-full gap-1">

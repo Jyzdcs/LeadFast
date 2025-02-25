@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, UseFormReturn } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useOnboarding } from "@/contexts/OnboardingContext";
 import { Step4FormValues } from "../mocks/constants";
@@ -7,44 +7,63 @@ import { Step4FormValues } from "../mocks/constants";
 export const useStep4Form = () => {
   const { data, setData } = useOnboarding();
   const router = useRouter();
-  const [expertise, setExpertise] = useState("");
 
-  console.log(data);
-  const form = useForm<Step4FormValues>({
+  const methods = useForm<Step4FormValues>({
     defaultValues: {
-      company: data.step4?.company || "",
-      expertise: data.step4?.expertise || [],
+      firstName: data.step4?.firstName || "",
+      lastName: data.step4?.lastName || "",
+      email: data.step4?.email || "",
+      phoneNumber: data.step4?.phoneNumber || "",
     },
+    mode: "onSubmit",
   });
 
-  // Event Handlers
-  const handleSubmit = async (values: Step4FormValues) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    getValues,
+    setValue,
+    watch,
+  } = methods;
+
+  // Fonction pour mettre à jour le contexte à chaque changement
+  const handleFieldChange = (field: keyof Step4FormValues, value: string) => {
+    const currentValues = getValues();
+    const updatedValues = {
+      ...currentValues,
+      [field]: value,
+    };
+
+    // Mise à jour du contexte
+    setData({
+      ...data,
+      step4: updatedValues,
+    });
+
+    // Mise à jour du formulaire
+    setValue(field, value);
+  };
+
+  const onSubmit = (values: Step4FormValues) => {
+    // Sauvegarde des données dans le contexte (pour être sûr)
     setData({ ...data, step4: values });
+    // Navigation vers l'étape suivante
     router.push("/5");
   };
 
-  const handleAddExpertise = (keyword: string) => {
-    const currentExpertise = form.getValues("expertise") || [];
-    if (keyword && !currentExpertise.includes(keyword)) {
-      form.setValue("expertise", [...currentExpertise, keyword]);
-    }
-    setExpertise("");
-  };
-
-  const handleRemoveExpertise = (keyword: string) => {
-    const currentExpertise = form.getValues("expertise");
-    form.setValue(
-      "expertise",
-      currentExpertise.filter((exp) => exp !== keyword)
-    );
+  const clearError = (field: keyof Step4FormValues) => {
+    // Cette fonction est maintenue pour compatibilité
   };
 
   return {
-    form,
-    expertise,
-    setExpertise,
-    handleSubmit,
-    handleAddExpertise,
-    handleRemoveExpertise,
+    register,
+    errors,
+    handleSubmit: handleSubmit(onSubmit),
+    clearError,
+    getValues,
+    setValue,
+    form: methods,
+    handleFieldChange,
   };
 };

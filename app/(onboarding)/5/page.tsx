@@ -2,21 +2,19 @@
 
 import React from "react";
 import { FeaturesSectionWithHoverEffects } from "@/components/ui/feature-section-with-hover-effects";
-import { useStep5Form } from "./hooks/useStep5Form";
+import { useStep6Form } from "./hooks/useStep6Form";
 import { StepHeader } from "./components/StepHeader";
-import { PersonalInfoForm } from "./components/PersonalInfoForm";
+import { LeadQuantityInput } from "./components/LeadQuantityInput";
 import { NavigationButtons } from "./components/NavigationButtons";
 
-export default function Step5() {
+export default function Step6() {
   const {
-    register,
-    errors,
-    handleSubmit,
-    clearError,
     form,
-    handleFieldChange,
-    getValues,
-  } = useStep5Form();
+    selectedQuantity,
+    selectedPrice,
+    handleQuantityChange,
+    handleSubmit,
+  } = useStep6Form();
 
   return (
     <div className="flex flex-col h-full min-h-[calc(100vh-2rem)] w-[85%] max-w-full relative">
@@ -29,13 +27,14 @@ export default function Step5() {
         <div className="space-y-6 pb-4 overflow-y-auto">
           {/* Form Section */}
           <div className="space-y-4">
-            <form id="step5-form" onSubmit={handleSubmit} className="space-y-4">
-              <PersonalInfoForm
-                register={register}
-                errors={errors}
-                clearError={clearError}
-                handleFieldChange={handleFieldChange}
-                getValues={getValues}
+            <form
+              onSubmit={form.handleSubmit(handleSubmit)}
+              className="space-y-4"
+            >
+              <LeadQuantityInput
+                value={selectedQuantity}
+                onChange={handleQuantityChange}
+                selectedPrice={selectedPrice}
               />
             </form>
           </div>

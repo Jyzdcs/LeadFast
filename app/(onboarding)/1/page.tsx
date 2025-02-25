@@ -2,19 +2,22 @@
 
 import React from "react";
 import { FeaturesSectionWithHoverEffects } from "@/components/ui/feature-section-with-hover-effects";
-import { useStep6Form } from "./hooks/useStep6Form";
+import { useStep1Form } from "./hooks/useStep1Form";
 import { StepHeader } from "./components/StepHeader";
-import { LeadQuantityInput } from "./components/LeadQuantityInput";
+import { JobTitleInput } from "./components/JobTitleInput";
+import { ManagementLevelInput } from "./components/ManagementLevelInput";
 import { NavigationButtons } from "./components/NavigationButtons";
 
-export default function Step6() {
+export default function Step1() {
   const {
     form,
-    selectedQuantity,
-    selectedPrice,
-    handleQuantityChange,
+    selectedLevel,
+    setSelectedLevel,
     handleSubmit,
-  } = useStep6Form();
+    handleRemoveLevel,
+    handleAddJobTitle,
+    handleRemoveJobTitle,
+  } = useStep1Form();
 
   return (
     <div className="flex flex-col h-full min-h-[calc(100vh-2rem)] w-[85%] max-w-full relative">
@@ -31,12 +34,22 @@ export default function Step6() {
               onSubmit={form.handleSubmit(handleSubmit)}
               className="space-y-4"
             >
-              <LeadQuantityInput
-                value={selectedQuantity}
-                onChange={handleQuantityChange}
-                selectedPrice={selectedPrice}
+              <JobTitleInput
+                jobTitles={form.watch("jobTitle") || []}
+                onAdd={handleAddJobTitle}
+                onRemove={handleRemoveJobTitle}
+              />
+              <ManagementLevelInput
+                selectedLevels={form.watch("managementLevel") || []}
+                selectedLevel={selectedLevel}
+                onLevelChange={setSelectedLevel}
+                onRemoveLevel={handleRemoveLevel}
               />
             </form>
+          </div>
+          {/* Feature Section - Hidden on small screens */}
+          <div className="relative hidden sm:block">
+            <FeaturesSectionWithHoverEffects />
           </div>
         </div>
 
