@@ -58,21 +58,6 @@ export const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
           <label className="text-sm font-medium text-zinc-900 flex items-center gap-2">
             Prénom
             <span className="text-red-500">*</span>
-            <TooltipProvider delayDuration={300}>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <span className="hidden sm:inline-flex items-center justify-center rounded-full p-1 transition-colors duration-200 hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-950">
-                    <Info className="h-4 w-4 text-zinc-500" />
-                  </span>
-                </TooltipTrigger>
-                <TooltipContent
-                  className="max-w-[280px] rounded-lg bg-zinc-900 px-4 py-3 text-sm text-zinc-50 shadow-lg animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2"
-                  sideOffset={8}
-                >
-                  <p className="text-zinc-300">Entrez votre prénom</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
           </label>
           <div className="relative">
             <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
@@ -99,21 +84,6 @@ export const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
           <label className="text-sm font-medium text-zinc-900 flex items-center gap-2">
             Nom
             <span className="text-red-500">*</span>
-            <TooltipProvider delayDuration={300}>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <span className="hidden sm:inline-flex items-center justify-center rounded-full p-1 transition-colors duration-200 hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-950">
-                    <Info className="h-4 w-4 text-zinc-500" />
-                  </span>
-                </TooltipTrigger>
-                <TooltipContent
-                  className="max-w-[280px] rounded-lg bg-zinc-900 px-4 py-3 text-sm text-zinc-50 shadow-lg animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2"
-                  sideOffset={8}
-                >
-                  <p className="text-zinc-300">Entrez votre nom</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
           </label>
           <div className="relative">
             <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
@@ -141,21 +111,6 @@ export const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
         <label className="text-sm font-medium text-zinc-900 flex items-center gap-2">
           Email
           <span className="text-red-500">*</span>
-          <TooltipProvider delayDuration={300}>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <span className="hidden sm:inline-flex items-center justify-center rounded-full p-1 transition-colors duration-200 hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-950">
-                  <Info className="h-4 w-4 text-zinc-500" />
-                </span>
-              </TooltipTrigger>
-              <TooltipContent
-                className="max-w-[280px] rounded-lg bg-zinc-900 px-4 py-3 text-sm text-zinc-50 shadow-lg animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2"
-                sideOffset={8}
-              >
-                <p className="text-zinc-300">Entrez votre adresse email</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
         </label>
         <div className="relative">
           <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
@@ -189,23 +144,6 @@ export const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
         <label className="text-sm font-medium text-zinc-900 flex items-center gap-2">
           Numéro de téléphone
           <span className="text-zinc-500 text-sm font-normal">(optionnel)</span>
-          <TooltipProvider delayDuration={300}>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <span className="hidden sm:inline-flex items-center justify-center rounded-full p-1 transition-colors duration-200 hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-950">
-                  <Info className="h-4 w-4 text-zinc-500" />
-                </span>
-              </TooltipTrigger>
-              <TooltipContent
-                className="max-w-[280px] rounded-lg bg-zinc-900 px-4 py-3 text-sm text-zinc-50 shadow-lg animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2"
-                sideOffset={8}
-              >
-                <p className="text-zinc-300">
-                  Entrez votre numéro de téléphone (facultatif)
-                </p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
         </label>
         <div className="relative">
           <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
