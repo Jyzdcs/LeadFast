@@ -49,13 +49,13 @@ const CONTACTS = [
   {
     id: 5,
     title: "Contact",
-    description: "email,\nnuméro",
+    description: "Email & Numéro",
     icon: <EnvelopeIcon className="w-5 h-5" />,
   },
   {
     id: 6,
     title: "LinkedIn",
-    description: "Profil prospect & entreprise",
+    description: "Prospect & entreprise",
     icon: <LinkedinIcon className="w-5 h-5" />,
   },
 ];
