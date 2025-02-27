@@ -1,11 +1,10 @@
 import React from "react";
 import Image from "next/image";
-import { HeaderProps } from "../types";
 
 /**
  * Composant d'en-tête avec logo et message de confirmation
  */
-const Header: React.FC<HeaderProps> = () => {
+const Header: React.FC = () => {
   return (
     <div className="flex-1 flex flex-col items-center justify-center text-center max-w-md mx-auto">
       <div className="relative mb-6">

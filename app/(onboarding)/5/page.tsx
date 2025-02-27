@@ -14,6 +14,7 @@ export default function Step6() {
     selectedPrice,
     handleQuantityChange,
     handleSubmit,
+    isSubmitting,
   } = useStep6Form();
 
   return (
@@ -42,7 +43,11 @@ export default function Step6() {
 
         {/* Navigation Buttons - Fixed at bottom */}
         <div className="sticky bottom-0 bg-white py-4">
-          <NavigationButtons form={form} onSubmit={handleSubmit} />
+          <NavigationButtons
+            form={form}
+            onSubmit={handleSubmit}
+            isSubmitting={isSubmitting}
+          />
         </div>
       </div>
     </div>
