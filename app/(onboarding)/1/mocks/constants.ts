@@ -3,11 +3,13 @@ export const steps = ["1", "2", "3", "4", "5"];
 
 export const managementLevels = [
   { value: "junior", label: "Junior" },
-  { value: "intermediate", label: "Intermédiaire" },
+  { value: "founder", label: "Founder" },
   { value: "senior", label: "Senior" },
-  { value: "lead", label: "Lead" },
+  { value: "head", label: "Head" },
+  { value: "partner", label: "Partner" },
+  { value: "intern", label: "Intern" },
   { value: "manager", label: "Manager" },
-  { value: "director", label: "Directeur" },
+  { value: "director", label: "Director" },
   { value: "vp", label: "VP" },
   { value: "csuite", label: "C-Level" },
 ];

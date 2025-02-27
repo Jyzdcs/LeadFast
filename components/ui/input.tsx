@@ -1,8 +1,13 @@
-import * as React from "react"
-import { cn } from "@/lib/utils"
-import { UserIcon } from "@heroicons/react/24/outline"
+import * as React from "react";
+import { cn } from "@/lib/utils";
+import { UserIcon } from "@heroicons/react/24/outline";
 
-function Input({ icon, className, type, ...props }: React.ComponentProps<"input"> & { icon?: React.ReactNode }) {
+function Input({
+  icon,
+  className,
+  type,
+  ...props
+}: React.ComponentProps<"input"> & { icon?: React.ReactNode }) {
   return (
     <div className="relative w-full">
       {icon}
@@ -25,7 +30,7 @@ function Input({ icon, className, type, ...props }: React.ComponentProps<"input"
         {...props}
       />
     </div>
-  )
+  );
 }
 
-export { Input }
+export { Input };

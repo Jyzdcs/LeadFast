@@ -1,7 +1,7 @@
-import React from 'react';
-import { OnboardingProvider } from '../../contexts/OnboardingContext';
+import React from "react";
+import { OnboardingProvider } from "../../contexts/OnboardingContext";
 import "@/app/globals.css";
-import { ClientLayout } from './ClientLayout';
+import { ClientLayout } from "./ClientLayout";
 
 export const metadata = {
   title: "LeadFast - Génération de Leads",
@@ -17,9 +17,7 @@ export default function OnboardingLayout({
     <html lang="fr">
       <body>
         <OnboardingProvider>
-          <ClientLayout>
-            {children}
-          </ClientLayout>
+          <ClientLayout>{children}</ClientLayout>
         </OnboardingProvider>
       </body>
     </html>

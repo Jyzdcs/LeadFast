@@ -1,16 +1,137 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { useOnboarding } from "@/contexts/OnboardingContext";
+import { useLeadFastApollo } from "@/hooks/useLeadFastApollo";
 import Image from "next/image";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function SubmittedPage() {
   const router = useRouter();
   const { data } = useOnboarding();
+  const { openApolloLink, copyApolloLinkToClipboard } = useLeadFastApollo();
+  const [isGeneratingLink, setIsGeneratingLink] = useState(false);
+  const { toast } = useToast();
 
-  console.log(data);
+  // Fonction pour convertir les données d'onboarding au format attendu par Apollo
+  const prepareApolloData = () => {
+    // Extraction des données pertinentes
+    const company = data.step3?.company || "";
+    const expertise = data.step3?.expertise || [];
+    const jobTitles = data.step1?.jobTitle || [];
+    const seniorities = data.step1?.managementLevel || [];
+    const activitySectors = data.step2?.activitySector || [];
+    const companySizes = data.step2?.companySize || [];
+
+    // Construction du format attendu par notre hook
+    return {
+      // Informations personnelles (step4)
+      firstName: data.step4?.firstName || "",
+      lastName: data.step4?.lastName || "",
+      email: data.step4?.email || "",
+
+      // Positions (step1)
+      positions: jobTitles,
+
+      // Seniority (step1) - conversion des niveaux hiérarchiques
+      seniority: seniorities.map((level) => {
+        // Conversion des niveaux manageriaux au format Apollo
+        switch (level.toLowerCase()) {
+          case "c-level":
+          case "c_level":
+            return "c_suite";
+          case "vp":
+            return "vp";
+          case "director":
+            return "director";
+          case "manager":
+            return "manager";
+          case "senior":
+            return "senior";
+          case "owner":
+            return "owner";
+          default:
+            return level;
+        }
+      }),
+
+      // Secteur d'activité (step2) - conversion des ID secteurs
+      industries: activitySectors,
+
+      // Taille d'entreprise (step2) - formatage des plages d'employés
+      companySize: companySizes.map((size) => {
+        // Format attendu: "min,max" - ex: "501,1000"
+        return size;
+      }),
+
+      // Entreprise spécifique (step3)
+      company: company,
+
+      // Expertise comme tags de recherche (step3)
+      expertise: expertise,
+
+      // Utilisation de l'entreprise comme mot-clé principal
+      keywords: company ? [company] : [],
+
+      // Utilisation de l'expertise comme tags d'organisation
+      organizationTags: expertise,
+    };
+  };
+
+  // Gérer la génération et l'ouverture du lien Apollo
+  const handleOpenApolloLink = () => {
+    setIsGeneratingLink(true);
+    try {
+      const apolloData = prepareApolloData();
+      openApolloLink(apolloData);
+      toast({
+        title: "Lien Apollo généré",
+        description:
+          "Un nouvel onglet a été ouvert avec votre recherche Apollo.",
+        variant: "default",
+      });
+    } catch (error) {
+      console.error("Erreur lors de l'ouverture du lien Apollo:", error);
+      toast({
+        title: "Erreur",
+        description:
+          "Impossible de générer le lien Apollo. Veuillez réessayer.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsGeneratingLink(false);
+    }
+  };
+
+  // Gérer la copie du lien Apollo dans le presse-papiers
+  const handleCopyApolloLink = async () => {
+    setIsGeneratingLink(true);
+    try {
+      const apolloData = prepareApolloData();
+      const success = await copyApolloLinkToClipboard(apolloData);
+
+      if (success) {
+        toast({
+          title: "Lien copié",
+          description: "Le lien Apollo a été copié dans votre presse-papiers.",
+          variant: "default",
+        });
+      } else {
+        throw new Error("Échec de la copie");
+      }
+    } catch (error) {
+      console.error("Erreur lors de la copie du lien Apollo:", error);
+      toast({
+        title: "Erreur",
+        description: "Impossible de copier le lien Apollo. Veuillez réessayer.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsGeneratingLink(false);
+    }
+  };
 
   return (
     <div className="h-screen flex flex-col items-center justify-between py-8">
@@ -47,6 +168,52 @@ export default function SubmittedPage() {
             />
           </svg>
           Configuration terminée
+        </div>
+
+        {/* Boutons Apollo */}
+        <div className="flex flex-col sm:flex-row gap-3 mb-6">
+          <Button
+            onClick={handleOpenApolloLink}
+            disabled={isGeneratingLink}
+            variant="outline"
+            className="flex items-center gap-2"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              className="w-4 h-4"
+            >
+              <path
+                fillRule="evenodd"
+                d="M15.75 2.25H21a.75.75 0 0 1 .75.75v5.25a.75.75 0 0 1-1.5 0V4.81L8.03 17.03a.75.75 0 0 1-1.06-1.06L19.19 3.75h-3.44a.75.75 0 0 1 0-1.5Zm-10.5 4.5a1.5 1.5 0 0 0-1.5 1.5v10.5a1.5 1.5 0 0 0 1.5 1.5h10.5a1.5 1.5 0 0 0 1.5-1.5V10.5a.75.75 0 0 1 1.5 0v8.25a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V8.25a3 3 0 0 1 3-3h8.25a.75.75 0 0 1 0 1.5H5.25Z"
+                clipRule="evenodd"
+              />
+            </svg>
+            Ouvrir dans Apollo
+          </Button>
+          <Button
+            onClick={handleCopyApolloLink}
+            disabled={isGeneratingLink}
+            variant="outline"
+            className="flex items-center gap-2"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              className="w-4 h-4"
+            >
+              <path
+                fillRule="evenodd"
+                d="M17.663 3.118c.225.015.45.032.673.05C19.876 3.298 21 4.604 21 6.109v9.642a3 3 0 0 1-3 3V16.5c0-5.922-4.576-10.775-10.384-11.217.324-1.132 1.3-2.01 2.548-2.114.224-.019.448-.036.673-.051A3 3 0 0 1 13.5 1.5H15a3 3 0 0 1 2.663 1.618ZM12 4.5A1.5 1.5 0 0 1 13.5 3H15a1.5 1.5 0 0 1 1.5 1.5H12Z"
+                clipRule="evenodd"
+              />
+              <path d="M3 8.625c0-1.036.84-1.875 1.875-1.875h.375A3.75 3.75 0 0 1 9 10.5v1.875c0 1.036.84 1.875 1.875 1.875h1.875A3.75 3.75 0 0 1 16.5 18v2.625c0 1.035-.84 1.875-1.875 1.875h-9.75A1.875 1.875 0 0 1 3 20.625v-12Z" />
+              <path d="M10.5 10.5a5.23 5.23 0 0 0-1.279-3.434 9.768 9.768 0 0 1 6.963 6.963 5.23 5.23 0 0 0-3.434-1.279h-1.875a.375.375 0 0 1-.375-.375V10.5Z" />
+            </svg>
+            Copier le lien
+          </Button>
         </div>
       </div>
 
