@@ -1,13 +1,10 @@
 // utils/apolloParameterMap.ts
-import { ApolloFormData, ApolloUrlParams } from "../types/apolloTypes";
-import { getSectorIds } from "./apolloSectorMap";
-
-// Interface pour les objets secteur d'activité
-interface Industry {
-  id: string;
-  value: string;
-  label: string;
-}
+import {
+  ApolloFormData,
+  ApolloUrlParams,
+  Industry,
+} from "../types/apolloTypes";
+import { industries } from "@/app/(onboarding)/2/mocks/constants";
 
 export const mapFormDataToUrlParams = (
   formData: ApolloFormData
@@ -49,21 +46,39 @@ export const mapFormDataToUrlParams = (
 
   // Mappages pour les secteurs d'activité
   if (formData.industries.length) {
-    // Vérifier si nous avons affaire à des chaînes de caractères ou des objets
-    const firstItem = formData.industries[0];
+    const industryIds: string[] = [];
 
-    if (typeof firstItem === "string") {
-      // Cas 1: Nous avons des noms de secteurs (chaînes), les convertir en IDs
-      const industryIds = getSectorIds(formData.industries as string[]);
-      if (industryIds.length > 0) {
-        params.organizationIndustryTagIds = industryIds;
-      }
+    // Déterminer le type de données reçu et extraire les IDs en conséquence
+    if (typeof formData.industries[0] === "string") {
+      // Cas 1: On a reçu des valeurs (value) ou des noms (label)
+      const selectedIndustries = formData.industries as string[];
+
+      // Pour chaque valeur, trouver l'industrie correspondante et récupérer son ID
+      selectedIndustries.forEach((selected) => {
+        // Chercher par value ou par label (insensible à la casse)
+        const match = industries.find(
+          (ind) =>
+            ind.value.toLowerCase() === selected.toLowerCase() ||
+            ind.label.toLowerCase() === selected.toLowerCase()
+        );
+
+        if (match) {
+          industryIds.push(match.id);
+        }
+      });
     } else {
-      // Cas 2: Nous avons des objets avec l'ID directement disponible
-      const industries = formData.industries as unknown as Industry[];
-      params.organizationIndustryTagIds = industries.map(
-        (industry) => industry.id
-      );
+      // Cas 2: On a reçu des objets Industry complets
+      const selectedIndustries = formData.industries as Industry[];
+      selectedIndustries.forEach((industry) => {
+        if (industry.id) {
+          industryIds.push(industry.id);
+        }
+      });
+    }
+
+    // Ajouter les IDs au paramètre de requête s'il y en a
+    if (industryIds.length > 0) {
+      params.organizationIndustryTagIds = industryIds;
     }
   }
 
