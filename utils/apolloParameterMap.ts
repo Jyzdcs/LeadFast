@@ -2,6 +2,13 @@
 import { ApolloFormData, ApolloUrlParams } from "../types/apolloTypes";
 import { getSectorIds } from "./apolloSectorMap";
 
+// Interface pour les objets secteur d'activité
+interface Industry {
+  id: string;
+  value: string;
+  label: string;
+}
+
 export const mapFormDataToUrlParams = (
   formData: ApolloFormData
 ): ApolloUrlParams => {
@@ -40,12 +47,23 @@ export const mapFormDataToUrlParams = (
     params.organizationNumEmployeesRanges = formData.companySize;
   }
 
-  // Mappages pour les secteurs d'activité - conversion des noms en IDs Apollo
+  // Mappages pour les secteurs d'activité
   if (formData.industries.length) {
-    // Utiliser la fonction getSectorIds pour convertir les noms en IDs
-    const industryIds = getSectorIds(formData.industries);
-    if (industryIds.length > 0) {
-      params.organizationIndustryTagIds = industryIds;
+    // Vérifier si nous avons affaire à des chaînes de caractères ou des objets
+    const firstItem = formData.industries[0];
+
+    if (typeof firstItem === "string") {
+      // Cas 1: Nous avons des noms de secteurs (chaînes), les convertir en IDs
+      const industryIds = getSectorIds(formData.industries as string[]);
+      if (industryIds.length > 0) {
+        params.organizationIndustryTagIds = industryIds;
+      }
+    } else {
+      // Cas 2: Nous avons des objets avec l'ID directement disponible
+      const industries = formData.industries as unknown as Industry[];
+      params.organizationIndustryTagIds = industries.map(
+        (industry) => industry.id
+      );
     }
   }
 

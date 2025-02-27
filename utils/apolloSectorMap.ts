@@ -1,4 +1,5 @@
-import { industries_detailled } from "@/app/(onboarding)/2/mocks/detailled-constant";
+import { industries } from "@/app/(onboarding)/2/mocks/constants";
+import { Industry } from "../types/apolloTypes";
 
 /**
  * Interface pour un secteur d'activité Apollo
@@ -21,14 +22,9 @@ const sectorToIdMap = new Map<string, string>();
 const initSectorMap = () => {
   if (sectorToIdMap.size > 0) return; // Déjà initialisé
 
-  // Ne traiter que les éléments de type "linkedin_industry"
-  const industries = industries_detailled.filter(
-    (industry: ApolloIndustry) => industry.kind === "linkedin_industry"
-  );
-
-  // Remplir la map avec les noms normalisés comme clés et les IDs comme valeurs
-  industries.forEach((industry: ApolloIndustry) => {
-    const name = industry.cleaned_name.toLowerCase();
+  // Remplir la map avec les labels comme clés et les IDs comme valeurs
+  industries.forEach((industry) => {
+    const name = industry.label.toLowerCase();
     sectorToIdMap.set(name, industry.id);
   });
 };
@@ -55,4 +51,25 @@ export const getSectorIds = (sectorNames: string[]): string[] => {
   return sectorNames
     .map((name) => getSectorId(name))
     .filter((id): id is string => id !== undefined);
+};
+
+/**
+ * Trouve l'objet secteur complet à partir de son nom
+ * @param sectorName Nom du secteur
+ * @returns Objet secteur complet ou undefined si non trouvé
+ */
+export const findSectorByName = (sectorName: string): Industry | undefined => {
+  const normalizedName = sectorName.toLowerCase();
+  return industries.find(
+    (industry) => industry.label.toLowerCase() === normalizedName
+  );
+};
+
+/**
+ * Trouve un secteur à partir de son ID
+ * @param sectorId ID Apollo du secteur
+ * @returns Objet secteur complet ou undefined si non trouvé
+ */
+export const findSectorById = (sectorId: string): Industry | undefined => {
+  return industries.find((industry) => industry.id === sectorId);
 };

@@ -1,4 +1,11 @@
 // types/apolloTypes.ts
+// Interface pour les objets secteur d'activité
+export interface Industry {
+  id: string;
+  value: string;
+  label: string;
+}
+
 export interface ApolloFormData {
   // Informations personnelles
   firstName: string;
@@ -18,7 +25,7 @@ export interface ApolloFormData {
   // Paramètres d'entreprise
   companyKeywords: string[];
   companySize: string[];
-  industries: string[];
+  industries: string[] | Industry[]; // Peut être soit des chaînes (noms) soit des objets (avec id)
 
   // Autres paramètres
   managementLevels: string[];
