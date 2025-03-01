@@ -2,7 +2,12 @@ import React from "react";
 import { X, UserIcon, InfoIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Combobox } from "@/components/ui/combobox";
-import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+  TooltipProvider,
+} from "@/components/ui/tooltip";
 import { managementLevels } from "../mocks/constants";
 
 interface ManagementLevelInputProps {
@@ -27,16 +32,21 @@ export const ManagementLevelInput: React.FC<ManagementLevelInputProps> = ({
             <TooltipTrigger asChild>
               <span className="hidden sm:inline-flex items-center justify-center rounded-full p-1 transition-colors duration-200 hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-950">
                 <InfoIcon className="h-4 w-4 text-zinc-500" />
-                <span className="sr-only">Plus d'informations sur les niveaux hiérarchiques</span>
+                <span className="sr-only">
+                  Plus d'informations sur les niveaux hiérarchiques
+                </span>
               </span>
             </TooltipTrigger>
-            <TooltipContent 
+            <TooltipContent
               className="max-w-[280px] rounded-lg bg-zinc-900 px-4 py-3 text-sm text-zinc-50 shadow-lg animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2"
               sideOffset={8}
             >
               <div className="flex flex-col gap-1">
                 <p className="font-medium">Niveaux hiérarchiques</p>
-                <p className="text-zinc-300">Pour maximiser l'impact, ciblez Senior, Lead, Manager, Directeur, VP et C-Level selon vos besoins en prospection</p>
+                <p className="text-zinc-300">
+                  Pour maximiser l'impact, ciblez Senior, Lead, Manager,
+                  Directeur, VP et C-Level selon vos besoins en prospection
+                </p>
               </div>
             </TooltipContent>
           </Tooltip>
@@ -75,4 +85,4 @@ export const ManagementLevelInput: React.FC<ManagementLevelInputProps> = ({
       </div>
     </div>
   );
-}; 
+};
