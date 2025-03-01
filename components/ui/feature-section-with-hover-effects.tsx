@@ -13,19 +13,27 @@ import {
 export function FeaturesSectionWithHoverEffects() {
   const features = [
     {
-      title: "Les décideurs stratégiques",
-      description: "Ils définissent la vision et prennent les décisions globales pour l'entreprise.",
+      title: "Les visionnaires",
+      description:
+        "Ils définissent la mission et la vision de l’entreprise, et prennent les décisions stratégiques majeures.",
       icon: (
         <div className="flex items-center gap-2">
           <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-zinc-100 border border-zinc-200">
             C-Level
+          </span>
+          <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-zinc-100 border border-zinc-200">
+            Founder
+          </span>
+          <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-zinc-100 border border-zinc-200">
+            Partner
           </span>
         </div>
       ),
     },
     {
       title: "Les chefs d'orchestre",
-      description: "Ils pilotent la croissance et les stratégies d'acquisition.",
+      description:
+        "Ils pilotent la croissance et les stratégies d'acquisition.",
       icon: (
         <div className="flex items-center gap-2">
           <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-zinc-100 border border-zinc-200">
@@ -52,7 +60,8 @@ export function FeaturesSectionWithHoverEffects() {
     },
     {
       title: "Les influenceurs internes",
-      description: "Ils testent et recommandent les outils de prospection et d'acquisition.",
+      description:
+        "Ils testent et recommandent les outils de prospection et d'acquisition.",
       icon: (
         <div className="flex items-center gap-2">
           <div className="flex gap-1">
@@ -98,11 +107,9 @@ const Feature = ({
     >
       {/* Gradient hover effect */}
       <div className="opacity-0 group-hover/feature:opacity-100 transition duration-200 absolute inset-0 h-full w-full bg-gradient-to-t from-zinc-100 to-transparent pointer-events-none rounded-xl" />
-      
+
       {/* Icon section */}
-      <div className="mb-2 relative z-10 px-6 text-zinc-600">
-        {icon}
-      </div>
+      <div className="mb-2 relative z-10 px-6 text-zinc-600">{icon}</div>
 
       {/* Title section */}
       <div className="text-base mb-1 relative z-10 px-6">

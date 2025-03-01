@@ -57,7 +57,7 @@ const CTASection: React.FC<CTASectionProps> = ({ onNavigate }) => {
   ];
 
   return (
-    <div className="w-full max-w-xl mx-auto px-4">
+    <div className="w-full max-w-xl mx-auto px-4 mb-10">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {ctaCards.map((card, index) => (
           <CTACard

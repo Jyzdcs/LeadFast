@@ -18,6 +18,7 @@ export default function Step2() {
     handleSubmit,
     handleRemoveSector,
     handleRemoveSize,
+    handleSelectAllCompanySizes,
   } = useStep2Form();
 
   return (
@@ -44,6 +45,7 @@ export default function Step2() {
                 sizes={form.watch("companySize") || []}
                 onAdd={setSelectedSize}
                 onRemove={handleRemoveSize}
+                onSelectAll={handleSelectAllCompanySizes}
               />
             </form>
           </div>

@@ -20,27 +20,6 @@ export default function AideCampagnePage() {
 
   return (
     <div className="h-screen flex flex-col">
-      {/* En-tête - Plus compact */}
-      <div className="flex items-center justify-center mb-4 pt-4">
-        <div className="relative mr-4">
-          <div className="absolute inset-0 bg-gradient-to-r from-black/20 to-black/0 rounded-sm blur-xl" />
-          <Image
-            src="/leadfast.png"
-            alt="LeadFast.io"
-            width={60}
-            height={60}
-            className="rounded-xl relative"
-          />
-        </div>
-        <div className="text-left">
-          <h1 className="text-2xl font-medium">Accompagnement Personnalisé</h1>
-          <p className="text-sm text-black/60 max-w-lg">
-            Notre équipe d'experts est à votre disposition pour optimiser vos
-            campagnes lead gen.
-          </p>
-        </div>
-      </div>
-
       {/* Contenu principal */}
       <div className="flex-1 max-w-4xl mx-auto w-full flex items-center justify-center px-4">
         {!formSubmitted ? (

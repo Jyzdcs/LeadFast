@@ -76,7 +76,7 @@ export default function DemandeSurMesurePage() {
                         htmlFor="email"
                         className="block text-sm font-medium mb-1 text-gray-700"
                       >
-                        Email professionnel
+                        Email
                       </label>
                       <input
                         type="email"
@@ -102,58 +102,13 @@ export default function DemandeSurMesurePage() {
                     </div>
                   </div>
                 </div>
-
-                {/* Section description de la demande */}
                 <div className="space-y-4 pt-2">
-                  <div>
-                    <label
-                      htmlFor="sector"
-                      className="block text-sm font-medium mb-1 text-gray-700"
-                    >
-                      Secteur d'activité
-                    </label>
-                    <select
-                      id="sector"
-                      className="w-full px-3 py-2 text-sm rounded-md border border-gray-300 focus:ring-1 focus:ring-black focus:border-black outline-none transition"
-                      required
-                    >
-                      <option value="">Sélectionnez votre secteur</option>
-                      <option value="restauration">Restauration</option>
-                      <option value="retail">Commerce / Retail</option>
-                      <option value="b2b">Services B2B</option>
-                      <option value="tech">Technologie / IT</option>
-                      <option value="sante">Santé / Médical</option>
-                      <option value="autre">Autre</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="volume"
-                      className="block text-sm font-medium mb-1 text-gray-700"
-                    >
-                      Volume de leads mensuel souhaité
-                    </label>
-                    <select
-                      id="volume"
-                      className="w-full px-3 py-2 text-sm rounded-md border border-gray-300 focus:ring-1 focus:ring-black focus:border-black outline-none transition"
-                      required
-                    >
-                      <option value="">Sélectionnez un volume</option>
-                      <option value="50">Moins de 50 leads</option>
-                      <option value="100">50 à 100 leads</option>
-                      <option value="200">100 à 200 leads</option>
-                      <option value="500">200 à 500 leads</option>
-                      <option value="1000">Plus de 500 leads</option>
-                    </select>
-                  </div>
-
                   <div>
                     <label
                       htmlFor="description"
                       className="block text-sm font-medium mb-1 text-gray-700"
                     >
-                      Description de vos besoins
+                      Description détaillée de vos besoins
                     </label>
                     <textarea
                       id="description"

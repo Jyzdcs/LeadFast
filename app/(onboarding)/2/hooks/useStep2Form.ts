@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useOnboarding } from "@/contexts/OnboardingContext";
-import { Step2FormValues } from "../mocks/constants";
+import { Step2FormValues, employeeRanges } from "../mocks/constants";
 
 export const useStep2Form = () => {
   const { data, setData } = useOnboarding();
@@ -39,6 +39,12 @@ export const useStep2Form = () => {
     );
   };
 
+  // Nouvelle fonction pour sélectionner toutes les tailles d'entreprise
+  const handleSelectAllCompanySizes = () => {
+    const allSizes = employeeRanges.map((size) => size.value);
+    form.setValue("companySize", allSizes);
+  };
+
   // Effects
   useEffect(() => {
     if (selectedSector) {
@@ -69,5 +75,6 @@ export const useStep2Form = () => {
     handleSubmit,
     handleRemoveSector,
     handleRemoveSize,
+    handleSelectAllCompanySizes,
   };
 };
