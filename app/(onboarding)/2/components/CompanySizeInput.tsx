@@ -76,9 +76,14 @@ export const CompanySizeInput: React.FC<CompanySizeInputProps> = ({
         options={comboboxOptions}
         placeholder="Sélectionnez une taille d'entreprise"
         onChange={(value: string) => onAdd(value)}
+        onRemove={onRemove}
         icon={<Users className="w-4 h-4 text-zinc-500" />}
         className="w-full"
+        selectedItems={sizes}
       />
+      <p className="mt-2 text-xs text-black/40">
+        Laissez vide pour ajouter toutes les tailles
+      </p>
       {sizes.length > 0 && (
         <div className="flex flex-wrap gap-2 mt-2">
           {sizes.map((size) => {

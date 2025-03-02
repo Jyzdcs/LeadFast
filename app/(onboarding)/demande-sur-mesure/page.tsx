@@ -112,7 +112,7 @@ export default function DemandeSurMesurePage() {
                     </label>
                     <textarea
                       id="description"
-                      className="w-full px-3 py-2 text-sm rounded-md border border-gray-300 focus:ring-1 focus:ring-black focus:border-black outline-none transition"
+                      className="w-full h-[215px] px-3 py-2 text-sm rounded-md border border-gray-300 focus:ring-1 focus:ring-black focus:border-black outline-none transition"
                       rows={5}
                       placeholder="Décrivez précisément vos besoins (critères de ciblage, spécificités, etc.)"
                       required

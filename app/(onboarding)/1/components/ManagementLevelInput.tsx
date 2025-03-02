@@ -60,10 +60,12 @@ export const ManagementLevelInput: React.FC<ManagementLevelInputProps> = ({
         }))}
         value={selectedLevel}
         onChange={onLevelChange}
+        onRemove={onRemoveLevel}
         placeholder="Sélectionner un niveau..."
         searchPlaceholder="Rechercher un niveau..."
         icon={<UserIcon className="w-4 h-4 text-zinc-500" />}
         className="w-full"
+        selectedItems={selectedLevels}
       />
       <div className="flex flex-wrap gap-2">
         {selectedLevels?.map((level) => (

@@ -9,6 +9,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { expertiseSuggestions } from "../mocks/constants";
+import { KeywordInput } from "@/components/ui/keyword-input";
 
 interface ExpertiseInputProps {
   expertise: string[];
@@ -71,68 +72,15 @@ export const ExpertiseInput: React.FC<ExpertiseInputProps> = ({
           </Tooltip>
         </TooltipProvider>
       </label>
-
-      <div className="relative">
-        <Lightbulb className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
-        <Input
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder="Ex : saas, e-commerce, ..."
-          className="pl-10 border-zinc-200 focus:border-zinc-300 focus:ring-zinc-300 w-full"
-        />
-        <div className="text-xs text-zinc-500 mt-1 ml-1">
-          Appuyez sur Entrée pour ajouter un mot-clé
-        </div>
-      </div>
-
-      {/* Suggestions */}
-      {inputValue && availableSuggestions.length > 0 && (
-        <div className="flex flex-wrap gap-2 mt-2">
-          <span className="text-xs text-zinc-500 self-center">
-            Suggestions :
-          </span>
-          {availableSuggestions.map((suggestion) => (
-            <Badge
-              key={suggestion.value}
-              variant="secondary"
-              className="px-2.5 py-0.5 bg-zinc-100 hover:bg-zinc-200 text-zinc-900 flex items-center gap-1.5 transition-colors duration-200 cursor-pointer"
-              onClick={() => handleSuggestionClick(suggestion.value)}
-            >
-              {suggestion.label}
-            </Badge>
-          ))}
-        </div>
-      )}
-
-      {/* Selected expertise */}
-      {expertise.length > 0 && (
-        <div className="flex flex-wrap gap-2 mt-2">
-          {expertise.map((item) => {
-            const suggestionItem = expertiseSuggestions.find(
-              (s) => s.value === item
-            );
-            const displayLabel = suggestionItem ? suggestionItem.label : item;
-
-            return (
-              <Badge
-                key={item}
-                variant="secondary"
-                className="px-2.5 py-0.5 bg-zinc-100 hover:bg-zinc-200 text-zinc-900 flex items-center gap-1.5 transition-colors duration-200"
-              >
-                {displayLabel}
-                <button
-                  type="button"
-                  onClick={() => onRemove(item)}
-                  className="focus:outline-none group"
-                >
-                  <X className="h-3 w-3 text-zinc-500 group-hover:text-zinc-700" />
-                </button>
-              </Badge>
-            );
-          })}
-        </div>
-      )}
+      <KeywordInput
+        keywords={expertise}
+        defaultValue={expertise}
+        onAdd={onAdd}
+        onRemove={onRemove}
+        placeholder="AWS, Cloud, Python, ..."
+        helperText="Appuyez sur Entrée pour ajouter un mot-clé"
+        className="w-full"
+      />
     </div>
   );
 };

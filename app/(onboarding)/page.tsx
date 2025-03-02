@@ -14,6 +14,7 @@ import AnimatedBackground from "@/components/ui/animated-background";
 import { LinkedinIcon } from "lucide-react";
 import { ProfileCard } from "@/components/ui/profile-card";
 import { HoverButton } from "@/components/ui/hover-button";
+import { NavigationButtons } from "./NavigationButtons";
 // Types
 interface TargetInfo {
   icon: React.ReactNode;
@@ -108,16 +109,17 @@ export default function Page() {
             <div className="max-w-4xl mx-auto space-y-6">
               {/* Actions */}
               <div className="flex justify-between items-center">
-                <Link href="/demande-sur-mesure">
-                  <HoverButton className="border-zinc-200 text-zinc-600 hover:bg-zinc-50 h-12 px-6">
+                {/* <Link href="/demande-sur-mesure"> */}
+                <NavigationButtons />
+                {/* <HoverButton className="border-zinc-200 text-zinc-600 hover:bg-zinc-50 h-12 px-6">
                     Demande sur mesure
                   </HoverButton>
                 </Link>
                 <Link href="/1">
                   <HoverButton className="bg-black hover:bg-black/90 text-white h-12 px-6">
                     Commencer
-                  </HoverButton>
-                </Link>
+                  </HoverButton> */}
+                {/* </Link> */}
               </div>
             </div>
           </div>

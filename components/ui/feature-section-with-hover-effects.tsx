@@ -14,8 +14,7 @@ export function FeaturesSectionWithHoverEffects() {
   const features = [
     {
       title: "Les visionnaires",
-      description:
-        "Ils définissent la mission et la vision de l’entreprise, et prennent les décisions stratégiques majeures.",
+      description: "Ils prennent les décisions stratégiques majeures.",
       icon: (
         <div className="flex items-center gap-2">
           <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-zinc-100 border border-zinc-200">
@@ -31,25 +30,30 @@ export function FeaturesSectionWithHoverEffects() {
       ),
     },
     {
-      title: "Les chefs d'orchestre",
-      description:
-        "Ils pilotent la croissance et les stratégies d'acquisition.",
+      title: "Les stratèges",
+      description: "Ils orchestrent la croissance et dirigent les équipes.",
       icon: (
         <div className="flex items-center gap-2">
           <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-zinc-100 border border-zinc-200">
             VP
           </span>
+          <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-zinc-100 border border-zinc-200">
+            Head
+          </span>
+          <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-zinc-100 border border-zinc-200">
+            Director
+          </span>
         </div>
       ),
     },
     {
-      title: "Les responsables",
-      description: "Ils gèrent les opérations et implémentent les stratégies.",
+      title: "Les bâtisseurs",
+      description: "Ils assurent la mise en œuvre des stratégies.",
       icon: (
         <div className="flex items-center gap-2">
           <div className="flex gap-1">
             <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-zinc-100 border border-zinc-200">
-              Directeur
+              Senior
             </span>
             <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-zinc-100 border border-zinc-200">
               Manager
@@ -59,17 +63,17 @@ export function FeaturesSectionWithHoverEffects() {
       ),
     },
     {
-      title: "Les influenceurs internes",
+      title: "Les explorateurs",
       description:
-        "Ils testent et recommandent les outils de prospection et d'acquisition.",
+        "Ils participent à l’évolution des outils et des méthodes au sein de l’entreprises.",
       icon: (
         <div className="flex items-center gap-2">
           <div className="flex gap-1">
             <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-zinc-100 border border-zinc-200">
-              Lead
+              Junior
             </span>
             <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-zinc-100 border border-zinc-200">
-              Senior
+              Intern
             </span>
           </div>
         </div>

@@ -20,7 +20,6 @@ export default function Step2() {
     handleRemoveSize,
     handleSelectAllCompanySizes,
   } = useStep2Form();
-
   return (
     <div className="flex flex-col h-full min-h-[calc(100vh-2rem)] w-[85%] max-w-full relative">
       {/* Header Section */}
@@ -45,7 +44,6 @@ export default function Step2() {
                 sizes={form.watch("companySize") || []}
                 onAdd={setSelectedSize}
                 onRemove={handleRemoveSize}
-                onSelectAll={handleSelectAllCompanySizes}
               />
             </form>
           </div>

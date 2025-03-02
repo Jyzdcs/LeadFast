@@ -3,35 +3,26 @@ import { ArrowRightIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { UseFormReturn } from "react-hook-form";
-import { Step1FormValues } from "../mocks/constants";
 
-interface NavigationButtonsProps {
-  form: UseFormReturn<Step1FormValues>;
-  onSubmit: (values: Step1FormValues) => void;
-}
-
-export const NavigationButtons: React.FC<NavigationButtonsProps> = ({
-  form,
-  onSubmit,
-}) => {
+export const NavigationButtons = () => {
   const router = useRouter();
 
   return (
-    <div className="flex justify-between py-4 border-t border-zinc-100 mt-4">
+    <div className="flex justify-between py-4 border-t border-zinc-100 mt-4 w-full">
       <Button
         type="button"
         variant="outline"
-        onClick={() => router.push("/")}
+        onClick={() => router.push("/demande-sur-mesure")}
         className="border-zinc-200 text-zinc-600 hover:bg-zinc-50 h-9"
       >
-        Retour
+        Demande sur mesure
       </Button>
       <Button
         type="submit"
-        onClick={form.handleSubmit(onSubmit)}
         className="bg-black hover:bg-black/90 text-white h-9 px-6"
+        onClick={() => router.push("/1")}
       >
-        Continuer
+        Commencer
         <ArrowRightIcon className="w-4 h-4 ml-2" />
       </Button>
     </div>

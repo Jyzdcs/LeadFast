@@ -23,7 +23,7 @@ export default function AideCampagnePage() {
       {/* Contenu principal */}
       <div className="flex-1 max-w-4xl mx-auto w-full flex items-center justify-center px-4">
         {!formSubmitted ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full h-2/3">
             {/* Côté gauche : Comment pouvons-nous vous aider */}
             <div className="bg-white/50 backdrop-blur-sm rounded-lg shadow-sm border p-5 flex flex-col justify-between h-full">
               <div>
@@ -154,13 +154,13 @@ export default function AideCampagnePage() {
                 </div>
                 <div>
                   <textarea
-                    className="w-full px-3 py-2 text-sm rounded-lg border border-gray-300 focus:ring-1 focus:ring-gray-500 focus:border-gray-500 outline-none transition"
+                    className="w-full h-[317px] px-3 pt-2 text-sm rounded-lg border border-gray-300 focus:ring-1 focus:ring-gray-500 focus:border-gray-500 outline-none transition"
                     rows={4}
                     placeholder="Décrivez vos besoins spécifiques"
                     required
                   ></textarea>
                 </div>
-                <div className="pt-1">
+                <div className="pt-0">
                   <Button type="submit" className="w-full">
                     Demander un accompagnement
                   </Button>

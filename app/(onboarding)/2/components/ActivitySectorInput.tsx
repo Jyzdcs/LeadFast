@@ -58,8 +58,10 @@ export const ActivitySectorInput: React.FC<ActivitySectorInputProps> = ({
         options={comboboxOptions}
         placeholder="Sélectionnez un secteur d'activité"
         onChange={(value: string) => onAdd(value)}
+        onRemove={onRemove}
         icon={<Building2 className="w-4 h-4 text-zinc-500" />}
         className="w-full"
+        selectedItems={sectors}
       />
 
       {sectors.length > 0 && (
