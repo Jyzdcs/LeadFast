@@ -185,11 +185,11 @@ export default function AideCampagnePage() {
       </div>
 
       {/* Boutons d'action */}
-      <div className="flex justify-center gap-3 pb-4 pt-2 mt-auto">
+      <div className="flex justify-center gap-4 pb-4 pt-2 mt-auto px-4">
         <Button
           variant="outline"
           onClick={() => router.push("/submitted")}
-          className="px-6"
+          className="px-6 flex-1 sm:flex-initial"
           size="sm"
         >
           Retour
@@ -197,7 +197,7 @@ export default function AideCampagnePage() {
         <Button
           variant="outline"
           onClick={() => router.push("/")}
-          className="px-6"
+          className="px-6 flex-1 sm:flex-initial"
           size="sm"
         >
           Accueil

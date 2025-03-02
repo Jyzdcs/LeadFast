@@ -109,17 +109,7 @@ export default function Page() {
             <div className="max-w-4xl mx-auto space-y-6">
               {/* Actions */}
               <div className="flex justify-between items-center">
-                {/* <Link href="/demande-sur-mesure"> */}
                 <NavigationButtons />
-                {/* <HoverButton className="border-zinc-200 text-zinc-600 hover:bg-zinc-50 h-12 px-6">
-                    Demande sur mesure
-                  </HoverButton>
-                </Link>
-                <Link href="/1">
-                  <HoverButton className="bg-black hover:bg-black/90 text-white h-12 px-6">
-                    Commencer
-                  </HoverButton> */}
-                {/* </Link> */}
               </div>
             </div>
           </div>

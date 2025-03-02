@@ -35,17 +35,17 @@ export default function DemandeSurMesurePage() {
               </div>
             )}
 
-            <div className="pt-6 flex justify-between">
+            <div className="pt-6 flex flex-row gap-4 justify-between">
               <button
                 onClick={() => router.back()}
-                className="px-6 py-2.5 bg-black hover:bg-gray-800 text-white rounded-md font-medium text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-4 py-2 bg-black hover:bg-gray-800 text-white rounded-md font-medium text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed sm:flex-initial"
               >
                 Retour
               </button>
               <button
                 onClick={handleSubmit}
                 disabled={isSubmitting}
-                className="px-6 py-2.5 bg-black hover:bg-gray-800 text-white rounded-md font-medium text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-4 py-2 bg-black hover:bg-gray-800 text-white rounded-md font-medium text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed sm:flex-initial"
               >
                 {isSubmitting ? "Envoi en cours..." : "Envoyer ma demande"}
               </button>

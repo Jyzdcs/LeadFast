@@ -30,13 +30,13 @@ export const NavigationButtons: React.FC<NavigationButtonsProps> = ({
   const router = useRouter();
 
   return (
-    <div className="flex justify-between py-4 border-t border-zinc-100 mt-4">
+    <div className="flex flex-row gap-4 justify-between py-4 border-t border-zinc-100 mt-4">
       {/* Bouton Retour - Navigation vers l'étape précédente */}
       <Button
         type="button"
         variant="outline"
         onClick={() => router.push("/3")}
-        className="border-zinc-200 text-zinc-600 hover:bg-zinc-50 h-9"
+        className="border-zinc-200 text-zinc-600 hover:bg-zinc-50 h-9 flex-1 sm:flex-initial"
       >
         Retour
       </Button>
@@ -45,7 +45,7 @@ export const NavigationButtons: React.FC<NavigationButtonsProps> = ({
       <Button
         type="submit"
         form="step4-form"
-        className="bg-black hover:bg-black/90 text-white h-9 px-6"
+        className="bg-black hover:bg-black/90 text-white h-9 px-6 flex-1 sm:flex-initial"
       >
         Continuer
         <ArrowRightIcon className="w-4 h-4 ml-2" />
