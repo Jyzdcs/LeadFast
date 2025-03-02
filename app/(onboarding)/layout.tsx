@@ -6,6 +6,9 @@ import { ClientLayout } from "./ClientLayout";
 export const metadata = {
   title: "LeadFast - Génération de Leads",
   description: "Solution de prospection B2B",
+  icons: {
+    icon: "/leadfast.png",
+  },
 };
 
 export default function OnboardingLayout({
