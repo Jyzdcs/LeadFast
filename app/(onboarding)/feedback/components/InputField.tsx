@@ -19,8 +19,8 @@ export const InputField: React.FC<InputFieldProps> = ({
   disabled = false,
 }) => {
   return (
-    <div className="space-y-2">
-      <label htmlFor={id} className="block text-sm font-medium">
+    <div className="space-y-1 sm:space-y-2">
+      <label htmlFor={id} className="block text-xs sm:text-sm font-medium">
         {label}
       </label>
       <input
@@ -29,7 +29,7 @@ export const InputField: React.FC<InputFieldProps> = ({
         value={value}
         disabled={disabled}
         className={cn(
-          "w-full px-4 py-2.5 rounded-lg border outline-none transition",
+          "w-full px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg border outline-none transition text-sm",
           disabled
             ? "bg-gray-50 text-gray-500 border-gray-200 cursor-not-allowed"
             : "border-gray-300 focus:ring-2 focus:ring-black focus:border-black"

@@ -2,9 +2,11 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { submitDemandeSurMesure } from "@/utils/api";
 import { DemandeSurMesureFormData } from "../mocks/constants";
+import { useOnboarding } from "@/contexts/OnboardingContext";
 
 export const useDemandeSurMesureForm = () => {
   const router = useRouter();
+  const { data: onboardingData, setData } = useOnboarding();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -29,6 +31,27 @@ export const useDemandeSurMesureForm = () => {
     }));
   };
 
+  // Fonction pour extraire prénom/nom du format "Nom Prénom"
+  const extractNameParts = (
+    fullName: string
+  ): { firstName: string; lastName: string } => {
+    const nameParts = fullName.trim().split(/\s+/);
+
+    // Si un seul mot, on le considère comme nom de famille
+    if (nameParts.length === 1) {
+      return {
+        lastName: nameParts[0],
+        firstName: "",
+      };
+    }
+
+    // Si deux mots ou plus, le premier est le nom de famille, le reste est le prénom
+    return {
+      lastName: nameParts[0],
+      firstName: nameParts.slice(1).join(" "),
+    };
+  };
+
   // Gestionnaire de soumission du formulaire
   const handleSubmit = async () => {
     // Validation basique
@@ -49,6 +72,23 @@ export const useDemandeSurMesureForm = () => {
       const response = await submitDemandeSurMesure(formData);
 
       if (response.success) {
+        // Extraire le prénom et le nom
+        const { firstName, lastName } = extractNameParts(formData.fullName);
+
+        // Stocker les données utilisateur dans le contexte d'onboarding
+        setData({
+          step3: {
+            company: formData.company,
+            expertise: [], // Valeur par défaut vide
+          },
+          step4: {
+            firstName,
+            lastName,
+            email: formData.email,
+            phoneNumber: formData.phone,
+          },
+        });
+
         setIsSubmitted(true);
         setTimeout(() => {
           router.push("/submitted");

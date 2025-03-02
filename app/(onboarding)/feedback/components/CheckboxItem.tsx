@@ -19,7 +19,7 @@ export const CheckboxItem: React.FC<CheckboxItemProps> = ({
       />
       <label
         htmlFor={label}
-        className="flex h-full w-full cursor-pointer items-center justify-center rounded-md border p-2 text-sm 
+        className="flex h-full w-full cursor-pointer items-center justify-center rounded-md border p-2 text-xs sm:text-sm 
                   peer-checked:border-black peer-checked:bg-black peer-checked:text-white
                   transition-all duration-200"
       >

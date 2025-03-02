@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useOnboarding } from "@/contexts/OnboardingContext";
 import { submitFeedback } from "@/utils/api";
@@ -15,17 +15,27 @@ export const useFeedbackForm = () => {
 
   // Récupération des données utilisateur depuis le contexte d'onboarding
   const { data: onboardingData } = useOnboarding();
+
+  // S'assurer que userData a toujours une structure valide
   const userData = onboardingData.step4 || {
     firstName: "",
     lastName: "",
     email: "",
+    phoneNumber: "",
   };
 
   // Création du nom complet à partir du prénom et du nom
   const fullName =
-    userData.firstName && userData.lastName
+    userData.lastName && userData.firstName
       ? `${userData.lastName} ${userData.firstName}`
-      : "";
+      : userData.lastName || "";
+
+  // Afficher dans la console les données pour le débogage
+  useEffect(() => {
+    console.log("Données d'onboarding:", onboardingData);
+    console.log("Données utilisateur:", userData);
+    console.log("Nom complet:", fullName);
+  }, [onboardingData, userData, fullName]);
 
   const handleAspectChange = (aspect: string, checked: boolean) => {
     if (checked) {

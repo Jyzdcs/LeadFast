@@ -11,21 +11,21 @@ export const StarRating: React.FC<StarRatingProps> = ({
   setRating,
 }) => {
   return (
-    <div className="flex justify-center space-x-4 py-4">
+    <div className="flex justify-center space-x-2 sm:space-x-4 py-3 sm:py-4">
       {[1, 2, 3, 4, 5].map((star) => (
         <button
           key={star}
           type="button"
           onClick={() => setRating(star)}
           className={cn(
-            "w-12 h-12 rounded-full flex items-center justify-center transition-all",
+            "w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all",
             rating && rating >= star
               ? "bg-black text-white"
               : "bg-gray-100 text-gray-400 hover:bg-gray-200"
           )}
         >
           <svg
-            className="w-6 h-6"
+            className="w-5 h-5 sm:w-6 sm:h-6"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="currentColor"

@@ -5,12 +5,13 @@ import { FormHeader } from "./components/FormHeader";
 import { FormFields } from "./components/FormFields";
 import { SuccessMessage } from "./components/SuccessMessage";
 import { useDemandeSurMesureForm } from "./hooks/useDemandeSurMesureForm";
-
+import { useRouter } from "next/navigation";
 /**
  * Page de demande sur mesure avec design minimaliste
  * Centrée sur l'expérience utilisateur avec uniquement les inputs essentiels
  */
 export default function DemandeSurMesurePage() {
+  const router = useRouter();
   const {
     formData,
     handleChange,
@@ -34,7 +35,13 @@ export default function DemandeSurMesurePage() {
               </div>
             )}
 
-            <div className="pt-6 flex justify-end">
+            <div className="pt-6 flex justify-between">
+              <button
+                onClick={() => router.back()}
+                className="px-6 py-2.5 bg-black hover:bg-gray-800 text-white rounded-md font-medium text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Retour
+              </button>
               <button
                 onClick={handleSubmit}
                 disabled={isSubmitting}
