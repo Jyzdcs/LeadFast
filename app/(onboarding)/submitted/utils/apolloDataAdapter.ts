@@ -23,6 +23,10 @@ interface OnboardingData {
     email?: string;
     [key: string]: any;
   };
+  step5?: {
+    leadQuantity?: string;
+    [key: string]: any;
+  };
   [key: string]: any;
 }
 
@@ -39,6 +43,10 @@ export const prepareApolloData = (data: OnboardingData): ApolloRequestData => {
   const seniorities = data.step1?.managementLevel || [];
   const activitySectors = data.step2?.activitySector || [];
   const companySizes = data.step2?.companySize || [];
+
+  // Récupération et conversion du nombre de leads
+  const leadQuantityStr = data.step5?.leadQuantity || "";
+  const numberOfLeads = leadQuantityStr ? parseInt(leadQuantityStr, 10) : 0;
 
   // Construction du format attendu
   return {
@@ -89,5 +97,8 @@ export const prepareApolloData = (data: OnboardingData): ApolloRequestData => {
 
     // Utilisation de l'expertise comme tags d'organisation
     organizationTags: expertise,
+
+    // Nombre de leads (step5)
+    numberOfLeads,
   };
 };

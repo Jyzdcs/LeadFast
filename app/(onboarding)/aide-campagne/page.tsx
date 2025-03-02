@@ -55,11 +55,12 @@ export default function AideCampagnePage() {
                     </div>
                     <div>
                       <span className="font-medium text-sm">
-                        Stratégie de ciblage
+                        Mise en place d’un système de prospection mailing
                       </span>
                       <p className="text-xs text-black/60 mt-0.5">
-                        Identifiez efficacement votre audience idéale et affinez
-                        vos critères.
+                        Automatisez et optimisez vos campagnes d’emailing pour
+                        toucher efficacement vos prospects et maximiser vos
+                        conversions.
                       </p>
                     </div>
                   </li>
@@ -80,10 +81,12 @@ export default function AideCampagnePage() {
                     </div>
                     <div>
                       <span className="font-medium text-sm">
-                        Optimisation des résultats
+                        Stratégie et automatisation LinkedIn{" "}
                       </span>
                       <p className="text-xs text-black/60 mt-0.5">
-                        Maximisez la qualité et la pertinence des leads générés.
+                        Déployez une stratégie performante sur LinkedIn avec des
+                        campagnes automatisées et ciblées pour générer des leads
+                        qualifiés.
                       </p>
                     </div>
                   </li>
@@ -104,11 +107,12 @@ export default function AideCampagnePage() {
                     </div>
                     <div>
                       <span className="font-medium text-sm">
-                        Support technique
+                        Accompagnement personnalisé
                       </span>
                       <p className="text-xs text-black/60 mt-0.5">
-                        Assistance complète pour intégrer les leads dans votre
-                        CRM.
+                        Bénéficiez d’un suivi sur mesure pour structurer et
+                        améliorer votre stratégie de prospection selon vos
+                        besoins spécifiques.
                       </p>
                     </div>
                   </li>
@@ -116,9 +120,10 @@ export default function AideCampagnePage() {
               </div>
               <div className="mt-4 pt-3 border-t border-gray-100">
                 <p className="text-xs text-black/60 italic">
-                  "Notre équipe a aidé plus de 200 entreprises à optimiser leurs
-                  campagnes de génération de leads, avec une amélioration
-                  moyenne de 40% du taux de conversion."
+                  "Nous avons accompagné plus de 200 entreprises dans la
+                  structuration de leur prospection, leur permettant d’augmenter
+                  significativement leur taux de conversion et d'optimiser leur
+                  acquisition client."
                 </p>
               </div>
             </div>
@@ -157,12 +162,9 @@ export default function AideCampagnePage() {
                     required
                   >
                     <option value="">Sélectionnez un service</option>
-                    <option value="targeting">Stratégie de ciblage</option>
-                    <option value="optimization">
-                      Optimisation des résultats
-                    </option>
-                    <option value="support">Support technique</option>
-                    <option value="complete">Accompagnement complet</option>
+                    <option value="mailing">Mailing</option>
+                    <option value="linkedin">LinkedIn</option>
+                    <option value="support">Accompagnement</option>
                   </select>
                 </div>
                 <div>
