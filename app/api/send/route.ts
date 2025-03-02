@@ -5,11 +5,8 @@ import ApolloLinkEmail from "@/components/emails/ApolloLinkEmail";
 // Initialisation de Resend avec la clé API depuis les variables d'environnement
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-// Adresse d'email de test Resend (utilisée lorsqu'aucun domaine n'est vérifié)
-const TEST_EMAIL = "delivered@resend.dev";
-
-// Email de l'équipe interne pour vérification
-const TEAM_EMAIL = process.env.TEAM_VERIFICATION_EMAIL || "equipe@leadfast.com";
+// Adresse email unique pour toutes les communications
+const TARGET_EMAIL = "ky.claudant@gmail.com";
 
 /**
  * Type pour les données requises dans le corps de la requête
@@ -28,9 +25,7 @@ interface EmailRequestBody {
   company?: string; // Nom de l'entreprise
   expertise?: string[]; // Domaine d'expertise
   // Informations personnelles et contextuelles
-  position?: string;
   phone?: string;
-  industry?: string;
   goals?: string;
   source?: string;
   additionalInfo?: string;
@@ -104,9 +99,6 @@ function generateFormSummary(data: EmailRequestBody): string {
         <li><strong>Nom:</strong> ${data.lastName} ${data.firstName}</li>
         <li><strong>Email:</strong> ${data.email}</li>
         <li><strong>Téléphone:</strong> ${data.phone || "Non renseigné"}</li>
-        <li><strong>Entreprise:</strong> ${data.company || "Non renseignée"}</li>
-        <li><strong>Poste:</strong> ${data.position || "Non renseigné"}</li>
-        <li><strong>Secteur:</strong> ${data.industry || "Non renseigné"}</li>
       </ul>
       
       <h3 style="color: #555;">Critères de recherche</h3>
@@ -159,10 +151,6 @@ export async function POST(request: Request) {
       company,
       expertise,
       phone,
-      industry,
-      goals,
-      source,
-      additionalInfo,
     } = body;
 
     console.log("Requête d'envoi d'email reçue:", {
@@ -196,42 +184,11 @@ export async function POST(request: Request) {
         { status: 500 }
       );
     }
-    console.log(email);
-    // 1. Envoyer l'email au client avec toutes les informations de ses critères
-    const clientEmailResult = await resend.emails.send({
-      from: "LeadFast <onboarding@resend.dev>",
-      //   to: process.env.NODE_ENV === "production" ? email : TEST_EMAIL,
-      to: email,
-      subject: `${firstName}, votre recherche Apollo avec ${numberOfLeads} leads est prête !`,
-      react: ApolloLinkEmail({
-        firstName,
-        lastName,
-        apolloLink,
-        numberOfLeads,
-        positions,
-        seniority,
-        industries,
-        companySize,
-        company,
-        expertise,
-      }),
-    });
 
-    if (clientEmailResult.error) {
-      console.error(
-        "Erreur lors de l'envoi de l'email au client:",
-        clientEmailResult.error
-      );
-      return NextResponse.json(
-        { success: false, error: clientEmailResult.error.message },
-        { status: 500 }
-      );
-    }
-
-    // 2. Envoyer un email de notification à l'équipe avec toutes les données
+    // 1. Envoyer un email de notification avec toutes les données
     const teamEmailResult = await resend.emails.send({
       from: "LeadFast System <notifications@resend.dev>",
-      to: process.env.NODE_ENV === "production" ? TEAM_EMAIL : TEST_EMAIL,
+      to: TARGET_EMAIL,
       subject: `[VERIFICATION] Nouvelle demande Apollo de ${firstName} ${lastName} - ${numberOfLeads} leads`,
       html: generateFormSummary(body),
     });
@@ -245,13 +202,13 @@ export async function POST(request: Request) {
     }
 
     console.log("Emails envoyés avec succès:", {
-      clientEmailId: clientEmailResult.data?.id,
+      //   clientEmailId: clientEmailResult.data?.id,
       teamEmailId: teamEmailResult.data?.id || "échec",
     });
 
     return NextResponse.json({
       success: true,
-      data: clientEmailResult.data,
+      //   data: clientEmailResult.data,
       message:
         "Email envoyé avec succès au client et à l'équipe de vérification",
     });

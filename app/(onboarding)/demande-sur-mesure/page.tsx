@@ -3,40 +3,83 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { useEmailForm } from "@/hooks/useEmailForm";
-import { CustomRequestEmailData } from "@/types/email";
+import { submitDemandeSurMesure } from "@/utils/api";
 
 /**
  * Page de demande sur mesure avec design minimaliste
  * Centrée sur l'expérience utilisateur avec uniquement les inputs essentiels
- * Intègre le système d'envoi d'emails automatisé
  */
 export default function DemandeSurMesurePage() {
   const router = useRouter();
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  // Définir les champs du formulaire sans 'to' et 'subject' qui seront ajoutés par le service
-  type FormData = Omit<CustomRequestEmailData, "to" | "subject">;
-
-  // Utilisation du hook useEmailForm pour gérer l'état et la soumission du formulaire
-  const {
-    formData,
-    updateField,
-    handleSubmit,
-    isSubmitting,
-    isSubmitted,
-    error,
-  } = useEmailForm<FormData>({
-    template: "custom-request",
-    redirectPath: "/submitted",
+  // État pour chaque champ du formulaire
+  const [formData, setFormData] = useState({
+    fullName: "",
+    company: "",
+    email: "",
+    phone: "",
+    description: "",
   });
+
+  // Mise à jour des champs du formulaire
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { id, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [id]: value,
+    }));
+  };
+
+  // Gestionnaire de soumission du formulaire
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Validation basique
+    if (
+      !formData.fullName.trim() ||
+      !formData.email.trim() ||
+      !formData.company.trim() ||
+      !formData.description.trim()
+    ) {
+      setError("Veuillez remplir tous les champs obligatoires");
+      return;
+    }
+
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const response = await submitDemandeSurMesure(formData);
+
+      if (response.success) {
+        setFormSubmitted(true);
+        setTimeout(() => {
+          router.push("/submitted");
+        }, 2000);
+      } else {
+        setError(
+          response.error || "Une erreur est survenue. Veuillez réessayer."
+        );
+      }
+    } catch (err) {
+      setError("Une erreur est survenue lors de l'envoi de votre demande");
+      console.error("Erreur lors de l'envoi de la demande:", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="flex flex-col h-full min-h-[calc(100vh-2rem)] w-[85%] max-w-full mx-auto relative">
-      {!isSubmitted ? (
+      {!formSubmitted ? (
         <>
           <div className="text-center py-6">
             <h1 className="text-2xl font-medium">Votre demande sur mesure</h1>
-            {error && <div className="mt-2 text-red-500 text-sm">{error}</div>}
           </div>
 
           {/* Main Content - Using grid for better control */}
@@ -57,12 +100,10 @@ export default function DemandeSurMesurePage() {
                       <input
                         type="text"
                         id="fullName"
+                        value={formData.fullName}
+                        onChange={handleChange}
                         className="w-full px-3 py-2 text-sm rounded-md border border-gray-300 focus:ring-1 focus:ring-black focus:border-black outline-none transition"
                         placeholder="Votre nom et prénom"
-                        value={formData.fullName || ""}
-                        onChange={(e) =>
-                          updateField("fullName", e.target.value)
-                        }
                         required
                       />
                     </div>
@@ -76,10 +117,10 @@ export default function DemandeSurMesurePage() {
                       <input
                         type="text"
                         id="company"
+                        value={formData.company}
+                        onChange={handleChange}
                         className="w-full px-3 py-2 text-sm rounded-md border border-gray-300 focus:ring-1 focus:ring-black focus:border-black outline-none transition"
                         placeholder="Nom de votre entreprise"
-                        value={formData.company || ""}
-                        onChange={(e) => updateField("company", e.target.value)}
                         required
                       />
                     </div>
@@ -96,10 +137,10 @@ export default function DemandeSurMesurePage() {
                       <input
                         type="email"
                         id="email"
+                        value={formData.email}
+                        onChange={handleChange}
                         className="w-full px-3 py-2 text-sm rounded-md border border-gray-300 focus:ring-1 focus:ring-black focus:border-black outline-none transition"
                         placeholder="nom@entreprise.com"
-                        value={formData.email || ""}
-                        onChange={(e) => updateField("email", e.target.value)}
                         required
                       />
                     </div>
@@ -113,10 +154,10 @@ export default function DemandeSurMesurePage() {
                       <input
                         type="tel"
                         id="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
                         className="w-full px-3 py-2 text-sm rounded-md border border-gray-300 focus:ring-1 focus:ring-black focus:border-black outline-none transition"
                         placeholder="Votre numéro de téléphone"
-                        value={formData.phone || ""}
-                        onChange={(e) => updateField("phone", e.target.value)}
                       />
                     </div>
                   </div>
@@ -131,17 +172,21 @@ export default function DemandeSurMesurePage() {
                     </label>
                     <textarea
                       id="description"
+                      value={formData.description}
+                      onChange={handleChange}
                       className="w-full h-[215px] px-3 py-2 text-sm rounded-md border border-gray-300 focus:ring-1 focus:ring-black focus:border-black outline-none transition"
                       rows={5}
                       placeholder="Décrivez précisément vos besoins (critères de ciblage, spécificités, etc.)"
-                      value={formData.description || ""}
-                      onChange={(e) =>
-                        updateField("description", e.target.value)
-                      }
                       required
                     ></textarea>
                   </div>
                 </div>
+
+                {error && (
+                  <div className="p-3 bg-red-50 text-red-600 rounded-md text-sm">
+                    {error}
+                  </div>
+                )}
               </form>
             </div>
 
@@ -159,10 +204,10 @@ export default function DemandeSurMesurePage() {
                 <Button
                   type="submit"
                   onClick={handleSubmit}
-                  disabled={isSubmitting}
+                  disabled={isLoading}
                   className="px-6 bg-black hover:bg-black/90 text-white"
                 >
-                  {isSubmitting ? "Envoi en cours..." : "Envoyer ma demande"}
+                  {isLoading ? "Envoi en cours..." : "Envoyer ma demande"}
                 </Button>
               </div>
             </div>

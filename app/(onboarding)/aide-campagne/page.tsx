@@ -4,32 +4,90 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { useEmailForm } from "@/hooks/useEmailForm";
-import type { CampaignHelpEmailData } from "@/types/email";
-
-type FormData = Omit<CampaignHelpEmailData, "to" | "subject">;
+import { submitAideCampagne } from "@/utils/api";
 
 export default function AideCampagnePage() {
   const router = useRouter();
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const {
-    formData,
-    updateField,
-    handleSubmit,
-    isSubmitting,
-    isSubmitted,
-    error,
-  } = useEmailForm<FormData>({
-    template: "campaign-help",
-    redirectPath: "/submitted",
-    onError: (err) => console.error("Form error:", err),
+  const [formData, setFormData] = useState({
+    fullName: "",
+    company: "",
+    email: "",
+    phone: "",
+    campaignType: "",
+    targetAudience: "",
+    goals: "",
+    additionalInfo: "",
   });
+
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    const { id, name, value } = e.target;
+    const fieldName = id || name;
+    setFormData((prev) => ({
+      ...prev,
+      [fieldName]: value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (
+      !formData.fullName ||
+      !formData.email ||
+      !formData.campaignType ||
+      !formData.goals
+    ) {
+      setError("Veuillez remplir tous les champs obligatoires");
+      return;
+    }
+
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const campaignTypeValue = formData.campaignType;
+
+      const targetAudience = formData.targetAudience || "Non spécifié";
+
+      const dataToSend = {
+        ...formData,
+        campaignType: campaignTypeValue,
+        targetAudience,
+      };
+
+      const response = await submitAideCampagne(dataToSend);
+
+      if (response.success) {
+        setFormSubmitted(true);
+        setTimeout(() => {
+          router.push("/submitted");
+        }, 2000);
+      } else {
+        setError(
+          response.error || "Une erreur est survenue. Veuillez réessayer."
+        );
+      }
+    } catch (err) {
+      setError("Une erreur est survenue lors de l'envoi de votre demande");
+      console.error("Erreur lors de l'envoi de la demande d'aide:", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="h-screen flex flex-col">
       {/* Contenu principal */}
       <div className="flex-1 max-w-4xl mx-auto w-full flex items-center justify-center px-4">
-        {!isSubmitted ? (
+        {!formSubmitted ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full h-2/3">
             {/* Côté gauche : Comment pouvons-nous vous aider */}
             <div className="bg-white/50 backdrop-blur-sm rounded-lg shadow-sm border p-5 flex flex-col justify-between h-full">
@@ -55,12 +113,11 @@ export default function AideCampagnePage() {
                     </div>
                     <div>
                       <span className="font-medium text-sm">
-                        Mise en place d’un système de prospection mailing
+                        Stratégie de ciblage
                       </span>
                       <p className="text-xs text-black/60 mt-0.5">
-                        Automatisez et optimisez vos campagnes d’emailing pour
-                        toucher efficacement vos prospects et maximiser vos
-                        conversions.
+                        Identifiez efficacement votre audience idéale et affinez
+                        vos critères.
                       </p>
                     </div>
                   </li>
@@ -81,12 +138,10 @@ export default function AideCampagnePage() {
                     </div>
                     <div>
                       <span className="font-medium text-sm">
-                        Stratégie et automatisation LinkedIn{" "}
+                        Optimisation des résultats
                       </span>
                       <p className="text-xs text-black/60 mt-0.5">
-                        Déployez une stratégie performante sur LinkedIn avec des
-                        campagnes automatisées et ciblées pour générer des leads
-                        qualifiés.
+                        Maximisez la qualité et la pertinence des leads générés.
                       </p>
                     </div>
                   </li>
@@ -107,12 +162,11 @@ export default function AideCampagnePage() {
                     </div>
                     <div>
                       <span className="font-medium text-sm">
-                        Accompagnement personnalisé
+                        Support technique
                       </span>
                       <p className="text-xs text-black/60 mt-0.5">
-                        Bénéficiez d’un suivi sur mesure pour structurer et
-                        améliorer votre stratégie de prospection selon vos
-                        besoins spécifiques.
+                        Assistance complète pour intégrer les leads dans votre
+                        CRM.
                       </p>
                     </div>
                   </li>
@@ -120,10 +174,9 @@ export default function AideCampagnePage() {
               </div>
               <div className="mt-4 pt-3 border-t border-gray-100">
                 <p className="text-xs text-black/60 italic">
-                  "Nous avons accompagné plus de 200 entreprises dans la
-                  structuration de leur prospection, leur permettant d’augmenter
-                  significativement leur taux de conversion et d'optimiser leur
-                  acquisition client."
+                  "Notre équipe a aidé plus de 200 entreprises à optimiser leurs
+                  campagnes de génération de leads, avec une amélioration
+                  moyenne de 40% du taux de conversion."
                 </p>
               </div>
             </div>
@@ -137,60 +190,84 @@ export default function AideCampagnePage() {
                 <div>
                   <input
                     type="text"
+                    id="fullName"
+                    value={formData.fullName}
+                    onChange={handleChange}
                     className="w-full px-3 py-2 text-sm rounded-lg border border-gray-300 focus:ring-1 focus:ring-gray-500 focus:border-gray-500 outline-none transition"
                     placeholder="Nom complet"
-                    value={formData.fullName || ""}
-                    onChange={(e) => updateField("fullName", e.target.value)}
+                    required
+                  />
+                </div>
+                <div>
+                  <input
+                    type="text"
+                    id="company"
+                    value={formData.company}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 text-sm rounded-lg border border-gray-300 focus:ring-1 focus:ring-gray-500 focus:border-gray-500 outline-none transition"
+                    placeholder="Entreprise"
                     required
                   />
                 </div>
                 <div>
                   <input
                     type="email"
+                    id="email"
+                    value={formData.email}
+                    onChange={handleChange}
                     className="w-full px-3 py-2 text-sm rounded-lg border border-gray-300 focus:ring-1 focus:ring-gray-500 focus:border-gray-500 outline-none transition"
                     placeholder="Email professionnel"
-                    value={formData.email || ""}
-                    onChange={(e) => updateField("email", e.target.value)}
                     required
                   />
                 </div>
                 <div>
-                  <select
+                  <input
+                    type="tel"
+                    id="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
                     className="w-full px-3 py-2 text-sm rounded-lg border border-gray-300 focus:ring-1 focus:ring-gray-500 focus:border-gray-500 outline-none transition"
-                    value={formData.service || ""}
-                    onChange={(e) => updateField("service", e.target.value)}
+                    placeholder="Téléphone"
+                  />
+                </div>
+                <div>
+                  <select
+                    id="campaignType"
+                    value={formData.campaignType}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 text-sm rounded-lg border border-gray-300 focus:ring-1 focus:ring-gray-500 focus:border-gray-500 outline-none transition"
                     required
                   >
                     <option value="">Sélectionnez un service</option>
-                    <option value="mailing">Mailing</option>
-                    <option value="linkedin">LinkedIn</option>
-                    <option value="support">Accompagnement</option>
+                    <option value="targeting">Stratégie de ciblage</option>
+                    <option value="optimization">
+                      Optimisation des résultats
+                    </option>
+                    <option value="support">Support technique</option>
+                    <option value="complete">Accompagnement complet</option>
                   </select>
                 </div>
                 <div>
                   <textarea
+                    id="goals"
+                    value={formData.goals}
+                    onChange={handleChange}
                     className="w-full h-[317px] px-3 pt-2 text-sm rounded-lg border border-gray-300 focus:ring-1 focus:ring-gray-500 focus:border-gray-500 outline-none transition"
                     rows={4}
                     placeholder="Décrivez vos besoins spécifiques"
-                    value={formData.needs || ""}
-                    onChange={(e) => updateField("needs", e.target.value)}
                     required
                   ></textarea>
                 </div>
 
                 {error && (
-                  <div className="text-red-500 text-sm p-2 bg-red-50 rounded">
+                  <div className="p-3 bg-red-50 text-red-600 rounded-md text-sm">
                     {error}
                   </div>
                 )}
 
                 <div className="pt-0">
-                  <Button
-                    type="submit"
-                    className="w-full"
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting
+                  <Button type="submit" className="w-full" disabled={isLoading}>
+                    {isLoading
                       ? "Envoi en cours..."
                       : "Demander un accompagnement"}
                   </Button>
@@ -209,18 +286,20 @@ export default function AideCampagnePage() {
               >
                 <path
                   fillRule="evenodd"
-                  d="M9 1.5H5.625c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0016.5 9h-1.875a1.875 1.875 0 01-1.875-1.875V5.25A3.75 3.75 0 009 1.5zm6.61 10.936a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 14.47a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
+                  d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
                   clipRule="evenodd"
                 />
-                <path d="M12.971 1.816A5.23 5.23 0 0114.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 013.434 1.279 9.768 9.768 0 00-6.963-6.963z" />
               </svg>
             </div>
-            <h3 className="text-xl font-medium text-gray-900 mb-1">
-              Demande envoyée !
+            <h3 className="text-lg font-medium mb-2">
+              Demande reçue avec succès !
             </h3>
-            <p className="text-gray-500 mb-4">
-              Merci pour votre demande d'accompagnement. <br />
-              Notre équipe vous contactera dans les 24 heures.
+            <p className="text-sm text-black/60">
+              Notre équipe vous contactera sous 24h pour échanger sur vos
+              besoins.
+            </p>
+            <p className="text-xs mt-3 text-black/40">
+              Redirection automatique...
             </p>
           </div>
         )}

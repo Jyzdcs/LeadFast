@@ -18,8 +18,11 @@ export interface EmailData {
   expertise?: string[];
 }
 
+// Adresse email principale
+const TARGET_EMAIL = "ky.claudant@gmail.com";
+
 /**
- * Service d'envoi d'emails
+ * Service d'envoi d'emails pour Apollo
  */
 export class EmailService {
   /**
@@ -35,12 +38,17 @@ export class EmailService {
       if (
         !emailData.firstName ||
         !emailData.lastName ||
-        !emailData.email ||
         !emailData.apolloLink ||
         !emailData.numberOfLeads
       ) {
         throw new Error("Données manquantes pour l'envoi de l'email");
       }
+
+      // Préparation des données
+      const emailPayload = {
+        ...emailData,
+        email: TARGET_EMAIL,
+      };
 
       // Appel à l'API d'envoi d'email
       const response = await fetch("/api/send", {
@@ -48,7 +56,7 @@ export class EmailService {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(emailData),
+        body: JSON.stringify(emailPayload),
       });
 
       // Analyser la réponse
@@ -59,12 +67,10 @@ export class EmailService {
         throw new Error(result.error || "Erreur lors de l'envoi de l'email");
       }
 
-      console.log("Email envoyé avec succès à l'adresse de test");
-
       // Retourner le résultat en cas de succès
       return {
         success: true,
-        message: "Email envoyé avec succès à l'adresse de test",
+        message: "Email envoyé avec succès",
         data: result.data,
       };
     } catch (error) {
@@ -93,7 +99,7 @@ export class EmailService {
     const emailData: EmailData = {
       firstName: apolloData.firstName,
       lastName: apolloData.lastName,
-      email: apolloData.email,
+      email: TARGET_EMAIL,
       apolloLink,
       numberOfLeads: apolloData.numberOfLeads || 0,
       // Inclure les critères de recherche
