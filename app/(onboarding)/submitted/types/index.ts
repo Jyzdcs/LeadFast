@@ -13,6 +13,7 @@ export interface ApolloRequestData {
   expertise: string[];
   keywords: string[];
   organizationTags: string[];
+  numberOfLeads?: number; // Nombre de leads sélectionné par l'utilisateur
 }
 
 /**

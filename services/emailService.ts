@@ -8,6 +8,14 @@ export interface EmailData {
   lastName: string;
   email: string;
   apolloLink: string;
+  numberOfLeads: number;
+  // Données supplémentaires des critères
+  positions?: string[];
+  seniority?: string[];
+  industries?: string[] | any[];
+  companySize?: string[];
+  company?: string;
+  expertise?: string[];
 }
 
 /**
@@ -28,7 +36,8 @@ export class EmailService {
         !emailData.firstName ||
         !emailData.lastName ||
         !emailData.email ||
-        !emailData.apolloLink
+        !emailData.apolloLink ||
+        !emailData.numberOfLeads
       ) {
         throw new Error("Données manquantes pour l'envoi de l'email");
       }
@@ -86,6 +95,14 @@ export class EmailService {
       lastName: apolloData.lastName,
       email: apolloData.email,
       apolloLink,
+      numberOfLeads: apolloData.numberOfLeads || 0,
+      // Inclure les critères de recherche
+      positions: apolloData.positions,
+      seniority: apolloData.seniority,
+      industries: apolloData.industries,
+      companySize: apolloData.companySize,
+      company: apolloData.company,
+      expertise: apolloData.expertise,
     };
 
     // Utiliser la méthode d'envoi d'email

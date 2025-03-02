@@ -17,6 +17,8 @@ export const NavigationButtons: React.FC<NavigationButtonsProps> = ({
   isSubmitting = false,
 }) => {
   const router = useRouter();
+  const formValues = form.getValues();
+  const isLeadQuantitySelected = !!formValues.leadQuantity;
 
   return (
     <div className="flex justify-between py-4 border-t border-zinc-100 mt-4">
@@ -33,7 +35,12 @@ export const NavigationButtons: React.FC<NavigationButtonsProps> = ({
         type="submit"
         onClick={form.handleSubmit(onSubmit)}
         className="bg-black hover:bg-black/90 text-white h-9 px-6"
-        disabled={isSubmitting}
+        disabled={isSubmitting || !isLeadQuantitySelected}
+        title={
+          !isLeadQuantitySelected
+            ? "Veuillez sélectionner une quantité de leads"
+            : ""
+        }
       >
         {isSubmitting ? (
           <>

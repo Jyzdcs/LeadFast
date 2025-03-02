@@ -8,23 +8,55 @@ import {
   Link,
   Preview,
   Text,
+  Section,
+  Hr,
+  Row,
+  Column,
 } from "@react-email/components";
 
 interface ApolloLinkEmailProps {
   firstName: string;
   lastName: string;
   apolloLink: string;
+  numberOfLeads?: number; // Nombre de leads choisis par l'utilisateur
+  // Informations supplémentaires de l'utilisateur
+  positions?: string[]; // Intitulé de poste précis
+  seniority?: string[]; // Niveau hiérarchique
+  industries?: string[] | any[]; // Secteur d'activité
+  companySize?: string[]; // Taille d'entreprise
+  company?: string; // Nom de l'entreprise
+  expertise?: string[]; // Domaine d'expertise
 }
 
 export const ApolloLinkEmail = ({
   firstName,
   lastName,
   apolloLink,
+  numberOfLeads = 0, // Valeur par défaut pour éviter undefined
+  positions = [],
+  seniority = [],
+  industries = [],
+  companySize = [],
+  company = "",
+  expertise = [],
 }: ApolloLinkEmailProps) => {
+  // Formatage pour l'affichage
+  const leadsCount = numberOfLeads || "plusieurs";
+
+  // Formatage des tableaux pour l'affichage
+  const formatArray = (arr: any[]): string => {
+    if (!arr || arr.length === 0) return "Non spécifié";
+    return arr
+      .map((item) =>
+        typeof item === "object" ? item.label || item.value || item : item
+      )
+      .join(", ");
+  };
+
   return (
     <Html>
       <Head />
-      <Preview>Votre recherche Apollo est prête !</Preview>
+      <Preview>{`Votre recherche Apollo avec ${leadsCount} leads est prête !`}</Preview>
       <Body style={main}>
         <Container style={container}>
           <Heading style={h1}>
@@ -32,8 +64,72 @@ export const ApolloLinkEmail = ({
           </Heading>
           <Text style={paragraph}>
             Nous avons préparé votre recherche Apollo en fonction de vos
-            critères.
+            critères, contenant <strong>{numberOfLeads}</strong> leads
+            qualifiés.
           </Text>
+
+          <Section style={criteriaSection}>
+            <Heading style={h2}>Récapitulatif de vos critères</Heading>
+
+            <Row>
+              <Column>
+                <Text style={criteriaLabel}>Recherche de :</Text>
+              </Column>
+              <Column>
+                <Text style={criteriaValue}>{formatArray(positions)}</Text>
+              </Column>
+            </Row>
+
+            <Row>
+              <Column>
+                <Text style={criteriaLabel}>Niveau hiérarchique :</Text>
+              </Column>
+              <Column>
+                <Text style={criteriaValue}>{formatArray(seniority)}</Text>
+              </Column>
+            </Row>
+
+            <Row>
+              <Column>
+                <Text style={criteriaLabel}>Secteur d'activité :</Text>
+              </Column>
+              <Column>
+                <Text style={criteriaValue}>{formatArray(industries)}</Text>
+              </Column>
+            </Row>
+
+            <Row>
+              <Column>
+                <Text style={criteriaLabel}>Taille d'entreprise :</Text>
+              </Column>
+              <Column>
+                <Text style={criteriaValue}>{formatArray(companySize)}</Text>
+              </Column>
+            </Row>
+
+            {company && (
+              <Row>
+                <Column>
+                  <Text style={criteriaLabel}>Entreprise :</Text>
+                </Column>
+                <Column>
+                  <Text style={criteriaValue}>{company}</Text>
+                </Column>
+              </Row>
+            )}
+
+            <Row>
+              <Column>
+                <Text style={criteriaLabel}>Domaine d'expertise :</Text>
+              </Column>
+              <Column>
+                <Text style={criteriaValue}>{formatArray(expertise)}</Text>
+              </Column>
+            </Row>
+          </Section>
+
+          <Hr style={divider} />
+
           <Text style={paragraph}>
             Vous pouvez accéder à votre recherche avec le lien ci-dessous :
           </Text>
@@ -87,6 +183,14 @@ const h1 = {
   textAlign: "center" as const,
 };
 
+const h2 = {
+  color: "#1f2937",
+  fontSize: "18px",
+  fontWeight: "bold",
+  margin: "20px 0 10px",
+  padding: "0",
+};
+
 const paragraph = {
   color: "#4b5563",
   fontSize: "16px",
@@ -111,6 +215,31 @@ const button = {
 const link = {
   color: "#2563eb",
   textDecoration: "underline",
+};
+
+const criteriaSection = {
+  backgroundColor: "#f9fafb",
+  borderRadius: "4px",
+  padding: "15px",
+  margin: "20px 0",
+};
+
+const criteriaLabel = {
+  color: "#6b7280",
+  fontSize: "14px",
+  fontWeight: "bold",
+  margin: "8px 0",
+};
+
+const criteriaValue = {
+  color: "#1f2937",
+  fontSize: "14px",
+  margin: "8px 0",
+};
+
+const divider = {
+  borderTop: "1px solid #e5e7eb",
+  margin: "20px 0",
 };
 
 export default ApolloLinkEmail;
