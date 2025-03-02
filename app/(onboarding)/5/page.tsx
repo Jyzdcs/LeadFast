@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { FeaturesSectionWithHoverEffects } from "@/components/ui/feature-section-with-hover-effects";
 import { useStep6Form } from "./hooks/useStep6Form";
 import { StepHeader } from "./components/StepHeader";
 import { LeadQuantityInput } from "./components/LeadQuantityInput";

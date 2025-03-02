@@ -3,31 +3,40 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { useEmailForm } from "@/hooks/useEmailForm";
+import { CustomRequestEmailData } from "@/types/email";
 
 /**
  * Page de demande sur mesure avec design minimaliste
  * Centrée sur l'expérience utilisateur avec uniquement les inputs essentiels
+ * Intègre le système d'envoi d'emails automatisé
  */
 export default function DemandeSurMesurePage() {
   const router = useRouter();
-  const [formSubmitted, setFormSubmitted] = useState(false);
 
-  // Gestionnaire de soumission du formulaire
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setFormSubmitted(true);
-    // Redirection après un court délai (ici on simule une soumission de formulaire)
-    setTimeout(() => {
-      router.push("/submitted");
-    }, 2000);
-  };
+  // Définir les champs du formulaire sans 'to' et 'subject' qui seront ajoutés par le service
+  type FormData = Omit<CustomRequestEmailData, "to" | "subject">;
+
+  // Utilisation du hook useEmailForm pour gérer l'état et la soumission du formulaire
+  const {
+    formData,
+    updateField,
+    handleSubmit,
+    isSubmitting,
+    isSubmitted,
+    error,
+  } = useEmailForm<FormData>({
+    template: "custom-request",
+    redirectPath: "/submitted",
+  });
 
   return (
     <div className="flex flex-col h-full min-h-[calc(100vh-2rem)] w-[85%] max-w-full mx-auto relative">
-      {!formSubmitted ? (
+      {!isSubmitted ? (
         <>
           <div className="text-center py-6">
             <h1 className="text-2xl font-medium">Votre demande sur mesure</h1>
+            {error && <div className="mt-2 text-red-500 text-sm">{error}</div>}
           </div>
 
           {/* Main Content - Using grid for better control */}
@@ -40,16 +49,20 @@ export default function DemandeSurMesurePage() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label
-                        htmlFor="name"
+                        htmlFor="fullName"
                         className="block text-sm font-medium mb-1 text-gray-700"
                       >
                         Nom complet
                       </label>
                       <input
                         type="text"
-                        id="name"
+                        id="fullName"
                         className="w-full px-3 py-2 text-sm rounded-md border border-gray-300 focus:ring-1 focus:ring-black focus:border-black outline-none transition"
                         placeholder="Votre nom et prénom"
+                        value={formData.fullName || ""}
+                        onChange={(e) =>
+                          updateField("fullName", e.target.value)
+                        }
                         required
                       />
                     </div>
@@ -65,6 +78,8 @@ export default function DemandeSurMesurePage() {
                         id="company"
                         className="w-full px-3 py-2 text-sm rounded-md border border-gray-300 focus:ring-1 focus:ring-black focus:border-black outline-none transition"
                         placeholder="Nom de votre entreprise"
+                        value={formData.company || ""}
+                        onChange={(e) => updateField("company", e.target.value)}
                         required
                       />
                     </div>
@@ -83,6 +98,8 @@ export default function DemandeSurMesurePage() {
                         id="email"
                         className="w-full px-3 py-2 text-sm rounded-md border border-gray-300 focus:ring-1 focus:ring-black focus:border-black outline-none transition"
                         placeholder="nom@entreprise.com"
+                        value={formData.email || ""}
+                        onChange={(e) => updateField("email", e.target.value)}
                         required
                       />
                     </div>
@@ -98,6 +115,8 @@ export default function DemandeSurMesurePage() {
                         id="phone"
                         className="w-full px-3 py-2 text-sm rounded-md border border-gray-300 focus:ring-1 focus:ring-black focus:border-black outline-none transition"
                         placeholder="Votre numéro de téléphone"
+                        value={formData.phone || ""}
+                        onChange={(e) => updateField("phone", e.target.value)}
                       />
                     </div>
                   </div>
@@ -115,6 +134,10 @@ export default function DemandeSurMesurePage() {
                       className="w-full h-[215px] px-3 py-2 text-sm rounded-md border border-gray-300 focus:ring-1 focus:ring-black focus:border-black outline-none transition"
                       rows={5}
                       placeholder="Décrivez précisément vos besoins (critères de ciblage, spécificités, etc.)"
+                      value={formData.description || ""}
+                      onChange={(e) =>
+                        updateField("description", e.target.value)
+                      }
                       required
                     ></textarea>
                   </div>
@@ -136,9 +159,10 @@ export default function DemandeSurMesurePage() {
                 <Button
                   type="submit"
                   onClick={handleSubmit}
+                  disabled={isSubmitting}
                   className="px-6 bg-black hover:bg-black/90 text-white"
                 >
-                  Envoyer ma demande
+                  {isSubmitting ? "Envoi en cours..." : "Envoyer ma demande"}
                 </Button>
               </div>
             </div>

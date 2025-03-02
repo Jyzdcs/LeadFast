@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useOnboarding } from "@/contexts/OnboardingContext"; // Utilisation du contexte existant
+import { useEmailForm } from "@/hooks/useEmailForm";
+import { FeedbackEmailData } from "@/types/email";
 
 // Composants réutilisables
 const StarRating = ({
@@ -46,13 +48,23 @@ const StarRating = ({
   );
 };
 
-const CheckboxItem = ({ label }: { label: string }) => {
+const CheckboxItem = ({
+  label,
+  checked = false,
+  onChange,
+}: {
+  label: string;
+  checked?: boolean;
+  onChange?: (checked: boolean) => void;
+}) => {
   return (
     <div className="relative">
       <input
         type="checkbox"
         id={label}
         className="peer absolute h-0 w-0 opacity-0"
+        checked={checked}
+        onChange={(e) => onChange && onChange(e.target.checked)}
       />
       <label
         htmlFor={label}
@@ -99,6 +111,7 @@ interface InputFieldProps {
   placeholder: string;
   value?: string;
   disabled?: boolean;
+  onChange?: (value: string) => void;
 }
 
 const InputField = ({
@@ -108,6 +121,7 @@ const InputField = ({
   placeholder,
   value = "",
   disabled = false,
+  onChange,
 }: InputFieldProps) => {
   return (
     <div className="space-y-2">
@@ -119,6 +133,7 @@ const InputField = ({
         id={id}
         value={value}
         disabled={disabled}
+        onChange={(e) => onChange && onChange(e.target.value)}
         className={cn(
           "w-full px-4 py-2.5 rounded-lg border outline-none transition",
           disabled
@@ -138,8 +153,6 @@ const InputField = ({
 
 export default function FeedbackPage() {
   const router = useRouter();
-  const [rating, setRating] = useState<number | null>(null);
-  const [submitted, setSubmitted] = useState(false);
 
   // Récupération des données utilisateur depuis le contexte d'onboarding
   const { data: onboardingData } = useOnboarding();
@@ -155,15 +168,13 @@ export default function FeedbackPage() {
       ? `${userData.lastName} ${userData.firstName}`
       : "";
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Ici, vous pourriez envoyer les données à une API
-    setSubmitted(true);
-    setTimeout(() => {
-      router.push("/submitted");
-    }, 2000);
-  };
+  // Définir le type pour les données de feedback sans 'to' et 'subject'
+  type FormData = Omit<FeedbackEmailData, "to" | "subject">;
 
+  const [selectedRating, setSelectedRating] = useState<number | null>(null);
+  const [selectedAspects, setSelectedAspects] = useState<string[]>([]);
+
+  // Liste des aspects d'appréciation
   const appreciationAspects = [
     "Interface",
     "Simplicité",
@@ -173,12 +184,64 @@ export default function FeedbackPage() {
     "Support client",
   ];
 
+  // Gestion des cases à cocher
+  const handleAspectToggle = (aspect: string, checked: boolean) => {
+    if (checked) {
+      setSelectedAspects((prev) => [...prev, aspect]);
+    } else {
+      setSelectedAspects((prev) => prev.filter((item) => item !== aspect));
+    }
+  };
+
+  // Utilisation du hook useEmailForm
+  const {
+    formData,
+    updateField,
+    handleSubmit,
+    isSubmitting,
+    isSubmitted,
+    error,
+    setFormData,
+  } = useEmailForm<FormData>({
+    template: "feedback",
+    redirectPath: "/submitted",
+  });
+
+  // Mettre à jour les données de formulaire lors du changement de rating
+  React.useEffect(() => {
+    if (selectedRating !== null) {
+      updateField("rating", selectedRating);
+    }
+  }, [selectedRating]);
+
+  // Mettre à jour les données de formulaire lors du changement des aspects
+  React.useEffect(() => {
+    updateField("appreciatedAspects", selectedAspects);
+  }, [selectedAspects]);
+
+  // Initialiser les données du formulaire avec les données utilisateur
+  React.useEffect(() => {
+    if (fullName || userData.email) {
+      setFormData((prev) => ({
+        ...prev,
+        fullName: fullName || "",
+        email: userData.email || "",
+      }));
+    }
+  }, [fullName, userData.email]);
+
   return (
     <div className="h-full container mx-auto space-y-8 px-4 py-6">
       {/* Contenu principal */}
       <div className="h-full max-w-3xl mx-auto bg-white/50 backdrop-blur-sm rounded-2xl shadow-sm border p-8">
-        {!submitted ? (
+        {!isSubmitted ? (
           <form onSubmit={handleSubmit} className="space-y-6">
+            {error && (
+              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4">
+                {error}
+              </div>
+            )}
+
             {/* Évaluation */}
             <div className="space-y-4">
               <h2 className="text-2xl font-medium mb-2">
@@ -189,7 +252,10 @@ export default function FeedbackPage() {
                 présent ?
               </p>
 
-              <StarRating rating={rating} setRating={setRating} />
+              <StarRating
+                rating={selectedRating}
+                setRating={setSelectedRating}
+              />
             </div>
 
             <div className="border-t pt-10">
@@ -198,7 +264,12 @@ export default function FeedbackPage() {
               </h3>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-10">
                 {appreciationAspects.map((aspect) => (
-                  <CheckboxItem key={aspect} label={aspect} />
+                  <CheckboxItem
+                    key={aspect}
+                    label={aspect}
+                    checked={selectedAspects.includes(aspect)}
+                    onChange={(checked) => handleAspectToggle(aspect, checked)}
+                  />
                 ))}
               </div>
             </div>
@@ -209,33 +280,38 @@ export default function FeedbackPage() {
                 className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-black focus:border-black outline-none transition"
                 rows={4}
                 placeholder="Qu'est-ce que nous pourrions améliorer ? Avez-vous des suggestions ?"
+                value={formData.comments || ""}
+                onChange={(e) => updateField("comments", e.target.value)}
               ></textarea>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-28">
               <InputField
-                id="name"
+                id="fullName"
                 label="Nom"
                 placeholder="Votre nom"
-                value={fullName}
+                value={formData.fullName || fullName}
                 disabled={!!fullName}
+                onChange={(value) => updateField("fullName", value)}
               />
               <InputField
                 id="email"
                 label="Email"
                 type="email"
                 placeholder="vous@exemple.com"
-                value={userData.email}
+                value={formData.email || userData.email}
                 disabled={!!userData.email}
+                onChange={(value) => updateField("email", value)}
               />
             </div>
 
             <div className="pt-2">
               <Button
                 type="submit"
+                disabled={isSubmitting || selectedRating === null}
                 className="w-full bg-black hover:bg-gray-800 text-white"
               >
-                Envoyer mon feedback
+                {isSubmitting ? "Envoi en cours..." : "Envoyer mon feedback"}
               </Button>
             </div>
           </form>

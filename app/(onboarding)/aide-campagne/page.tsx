@@ -4,25 +4,32 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { useEmailForm } from "@/hooks/useEmailForm";
+import type { CampaignHelpEmailData } from "@/types/email";
+
+type FormData = Omit<CampaignHelpEmailData, "to" | "subject">;
 
 export default function AideCampagnePage() {
   const router = useRouter();
-  const [formSubmitted, setFormSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setFormSubmitted(true);
-    // Ici, vous pourriez envoyer les données du formulaire à une API
-    setTimeout(() => {
-      router.push("/submitted");
-    }, 2000);
-  };
+  const {
+    formData,
+    updateField,
+    handleSubmit,
+    isSubmitting,
+    isSubmitted,
+    error,
+  } = useEmailForm<FormData>({
+    template: "campaign-help",
+    redirectPath: "/submitted",
+    onError: (err) => console.error("Form error:", err),
+  });
 
   return (
     <div className="h-screen flex flex-col">
       {/* Contenu principal */}
       <div className="flex-1 max-w-4xl mx-auto w-full flex items-center justify-center px-4">
-        {!formSubmitted ? (
+        {!isSubmitted ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full h-2/3">
             {/* Côté gauche : Comment pouvons-nous vous aider */}
             <div className="bg-white/50 backdrop-blur-sm rounded-lg shadow-sm border p-5 flex flex-col justify-between h-full">
@@ -127,6 +134,8 @@ export default function AideCampagnePage() {
                     type="text"
                     className="w-full px-3 py-2 text-sm rounded-lg border border-gray-300 focus:ring-1 focus:ring-gray-500 focus:border-gray-500 outline-none transition"
                     placeholder="Nom complet"
+                    value={formData.fullName || ""}
+                    onChange={(e) => updateField("fullName", e.target.value)}
                     required
                   />
                 </div>
@@ -135,12 +144,16 @@ export default function AideCampagnePage() {
                     type="email"
                     className="w-full px-3 py-2 text-sm rounded-lg border border-gray-300 focus:ring-1 focus:ring-gray-500 focus:border-gray-500 outline-none transition"
                     placeholder="Email professionnel"
+                    value={formData.email || ""}
+                    onChange={(e) => updateField("email", e.target.value)}
                     required
                   />
                 </div>
                 <div>
                   <select
                     className="w-full px-3 py-2 text-sm rounded-lg border border-gray-300 focus:ring-1 focus:ring-gray-500 focus:border-gray-500 outline-none transition"
+                    value={formData.service || ""}
+                    onChange={(e) => updateField("service", e.target.value)}
                     required
                   >
                     <option value="">Sélectionnez un service</option>
@@ -157,12 +170,27 @@ export default function AideCampagnePage() {
                     className="w-full h-[317px] px-3 pt-2 text-sm rounded-lg border border-gray-300 focus:ring-1 focus:ring-gray-500 focus:border-gray-500 outline-none transition"
                     rows={4}
                     placeholder="Décrivez vos besoins spécifiques"
+                    value={formData.needs || ""}
+                    onChange={(e) => updateField("needs", e.target.value)}
                     required
                   ></textarea>
                 </div>
+
+                {error && (
+                  <div className="text-red-500 text-sm p-2 bg-red-50 rounded">
+                    {error}
+                  </div>
+                )}
+
                 <div className="pt-0">
-                  <Button type="submit" className="w-full">
-                    Demander un accompagnement
+                  <Button
+                    type="submit"
+                    className="w-full"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting
+                      ? "Envoi en cours..."
+                      : "Demander un accompagnement"}
                   </Button>
                 </div>
               </form>
@@ -179,20 +207,18 @@ export default function AideCampagnePage() {
               >
                 <path
                   fillRule="evenodd"
-                  d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
+                  d="M9 1.5H5.625c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0016.5 9h-1.875a1.875 1.875 0 01-1.875-1.875V5.25A3.75 3.75 0 009 1.5zm6.61 10.936a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 14.47a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
                   clipRule="evenodd"
                 />
+                <path d="M12.971 1.816A5.23 5.23 0 0114.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 013.434 1.279 9.768 9.768 0 00-6.963-6.963z" />
               </svg>
             </div>
-            <h3 className="text-lg font-medium mb-2">
-              Demande reçue avec succès !
+            <h3 className="text-xl font-medium text-gray-900 mb-1">
+              Demande envoyée !
             </h3>
-            <p className="text-sm text-black/60">
-              Notre équipe vous contactera sous 24h pour échanger sur vos
-              besoins.
-            </p>
-            <p className="text-xs mt-3 text-black/40">
-              Redirection automatique...
+            <p className="text-gray-500 mb-4">
+              Merci pour votre demande d'accompagnement. <br />
+              Notre équipe vous contactera dans les 24 heures.
             </p>
           </div>
         )}

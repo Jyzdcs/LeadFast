@@ -48,7 +48,8 @@ export async function POST(request: Request) {
     // Envoyer l'email via Resend avec le template React
     const { data, error } = await resend.emails.send({
       from: "LeadFast <onboarding@resend.dev>",
-      to: [TEST_EMAIL], // En développement, utiliser l'adresse email de test
+      //   to: [TEST_EMAIL], // En développement, utiliser l'adresse email de test
+      to: email, // En développement, utiliser l'adresse email de test
       subject: `${firstName}, votre recherche Apollo est prête !`,
       react: ApolloLinkEmail({ firstName, lastName, apolloLink }),
     });
