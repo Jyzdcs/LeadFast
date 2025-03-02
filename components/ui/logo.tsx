@@ -6,7 +6,11 @@ interface LogoProps {
   className?: string;
 }
 
-export function Logo({ width = 32, height = 32, className = "relative" }: LogoProps) {
+export function Logo({
+  width = 20,
+  height = 20,
+  className = "relative",
+}: LogoProps) {
   return (
     <div className="flex items-center space-x-3">
       <svg
@@ -48,4 +52,4 @@ export function Logo({ width = 32, height = 32, className = "relative" }: LogoPr
       </div>
     </div>
   );
-} 
+}

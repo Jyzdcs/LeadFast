@@ -20,13 +20,12 @@ export default function Step1() {
   } = useStep1Form();
 
   return (
-    <div className="flex flex-col h-full min-h-[calc(100vh-2rem)] w-[85%] max-w-full relative">
+    <div className="flex flex-col h-screen w-[85%] max-w-full relative">
       {/* Header Section */}
       <StepHeader />
-
       {/* Main Content - Using grid for better control */}
-      <div className="grid grid-rows-[1fr_auto] flex-1 px-6 py-4 h-[calc(100%-4rem)] overflow-y-auto">
-        {/* Scrollable Content Area */}
+      <div className="grid grid-rows-[1fr_auto] flex-1 px-6 py-4 overflow-hidden">
+        {/* Content Area */}
         <div className="space-y-6 pb-4 overflow-y-auto">
           {/* Form Section */}
           <div className="space-y-4">
