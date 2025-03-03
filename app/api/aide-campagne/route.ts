@@ -84,6 +84,7 @@ export async function POST(request: Request) {
         email: body.email,
         phone: body.phone || "Non renseigné",
         campaignType: body.campaignType,
+        additionalInfo: body.additionalInfo,
       }),
     });
 

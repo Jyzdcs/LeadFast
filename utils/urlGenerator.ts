@@ -1,4 +1,4 @@
-import { ApolloUrlParams } from "../types/apolloTypes";
+import { ApolloUrlParams } from "@/types/apolloTypes";
 
 export const generateApolloUrl = (params: ApolloUrlParams): string => {
   const searchParams = new URLSearchParams();

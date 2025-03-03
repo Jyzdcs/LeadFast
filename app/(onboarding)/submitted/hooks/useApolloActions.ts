@@ -21,17 +21,14 @@ export const useApolloActions = () => {
       const apolloData = prepareEngineData(data);
       openApolloLink(apolloData);
       toast({
-        title: "Lien Apollo généré",
-        description:
-          "Un nouvel onglet a été ouvert avec votre recherche Apollo.",
+        title: "Lien généré",
+        description: "Un nouvel onglet a été ouvert avec votre recherche.",
         variant: "default",
       });
     } catch (error) {
-      console.error("Erreur lors de l'ouverture du lien Apollo:", error);
       toast({
         title: "Erreur",
-        description:
-          "Impossible de générer le lien Apollo. Veuillez réessayer.",
+        description: "Impossible de générer le lien. Veuillez réessayer.",
         variant: "destructive",
       });
     } finally {
@@ -51,7 +48,7 @@ export const useApolloActions = () => {
       if (success) {
         toast({
           title: "Lien copié",
-          description: "Le lien Apollo a été copié dans votre presse-papiers.",
+          description: "Le lien a été copié dans votre presse-papiers.",
           variant: "default",
         });
       } else {
@@ -61,7 +58,7 @@ export const useApolloActions = () => {
       console.error("Erreur lors de la copie du lien Apollo:", error);
       toast({
         title: "Erreur",
-        description: "Impossible de copier le lien Apollo. Veuillez réessayer.",
+        description: "Impossible de copier le lien. Veuillez réessayer.",
         variant: "destructive",
       });
     } finally {

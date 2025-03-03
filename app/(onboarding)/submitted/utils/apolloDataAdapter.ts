@@ -71,7 +71,6 @@ export const prepareEngineData = (
     seniority: ensureArray(seniorities).map((level: string) => {
       // Conversion des niveaux manageriaux au format requis
       switch (level.toLowerCase()) {
-        case "c-level":
         case "c_level":
           return "c_suite";
         case "vp":

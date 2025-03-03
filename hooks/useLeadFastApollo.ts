@@ -1,7 +1,7 @@
 import { useCallback } from "react";
-import { ApolloFormData } from "../types/apolloTypes";
-import { mapFormDataToUrlParams } from "../utils/apolloParameterMap";
-import { generateApolloUrl } from "../utils/urlGenerator";
+import { ApolloFormData } from "@/types/apolloTypes";
+import { mapFormDataToUrlParams } from "@/utils/apolloParameterMap";
+import { generateApolloUrl } from "@/utils/urlGenerator";
 
 /**
  * Hook pour la génération de liens Apollo adapté au workflow de LeadFast

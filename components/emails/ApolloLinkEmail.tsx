@@ -17,7 +17,6 @@ import {
 interface SearchLinkEmailProps {
   firstName: string;
   lastName: string;
-  searchLink: string;
   numberOfLeads?: number; // Nombre de leads choisis par l'utilisateur
   // Informations supplémentaires de l'utilisateur
   positions?: string[]; // Intitulé de poste précis
@@ -28,10 +27,9 @@ interface SearchLinkEmailProps {
   expertise?: string[]; // Domaine d'expertise
 }
 
-export const SearchLinkEmail = ({
+export const ApolloLinkEmail = ({
   firstName,
   lastName,
-  searchLink,
   numberOfLeads = 0, // Valeur par défaut pour éviter undefined
   positions = [],
   seniority = [],
@@ -132,15 +130,6 @@ export const SearchLinkEmail = ({
           <Text style={paragraph}>
             Vous pouvez accéder à votre recherche avec le lien ci-dessous :
           </Text>
-          <Link href={searchLink} style={button}>
-            Accéder à ma recherche
-          </Link>
-          <Text style={paragraph}>
-            Ou copiez ce lien dans votre navigateur :{" "}
-            <Link href={searchLink} style={link}>
-              {searchLink}
-            </Link>
-          </Text>
           <Text style={paragraph}>
             Si vous avez des questions, n'hésitez pas à nous contacter.
           </Text>
@@ -240,5 +229,3 @@ const divider = {
   borderTop: "1px solid #e5e7eb",
   margin: "20px 0",
 };
-
-export default SearchLinkEmail;

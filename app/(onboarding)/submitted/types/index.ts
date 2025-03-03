@@ -1,7 +1,7 @@
 /**
- * Interface pour les données de requête du moteur de génération
+ * Interface pour les données de requête Apollo
  */
-export interface DataEngineRequestData {
+export interface ApolloRequestData {
   firstName: string;
   lastName: string;
   email: string;
@@ -24,12 +24,12 @@ export interface HeaderProps {
 }
 
 /**
- * Props pour le composant d'actions liées au générateur
+ * Props pour le composant ApolloActions
  */
-export interface GeneratorActionsProps {
+export interface ApolloActionsProps {
   isGeneratingLink: boolean;
-  onOpenGenerator: () => void;
-  onCopyGeneratorLink: () => void;
+  onOpenApollo: () => void;
+  onCopyApolloLink: () => void;
 }
 
 /**
