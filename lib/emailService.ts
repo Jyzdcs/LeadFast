@@ -2,7 +2,7 @@ import { Resend } from "resend";
 import SearchLinkEmail from "@/components/emails/SearchLinkEmail";
 
 // Initialize Resend with API key
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.OFFICIAL_API_KEY);
 
 // Target email for notifications
 const TARGET_EMAIL = "ky.claudant@gmail.com";
@@ -87,7 +87,7 @@ export function generateInternalSummary(data: any): string {
 export async function sendSearchLinkEmail(data: any): Promise<EmailResult> {
   try {
     // Validate that Resend API key is configured
-    if (!process.env.RESEND_API_KEY) {
+    if (!process.env.OFFICIAL_API_KEY) {
       console.error("Resend API key not configured");
       return {
         success: false,

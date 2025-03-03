@@ -2,7 +2,7 @@ import { Resend } from "resend";
 import SearchLinkEmail from "@/components/emails/SearchLinkEmail";
 
 // Configuration du service d'email
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.OFFICIAL_API_KEY);
 
 // Email de notification (configurable via variables d'environnement)
 const NOTIFICATION_EMAIL =
@@ -78,7 +78,7 @@ export function generateInternalSummary(formData: any): string {
 export async function sendSearchLinkEmail(formData: any): Promise<EmailResult> {
   try {
     // Vérifier que la clé API est configurée
-    if (!process.env.RESEND_API_KEY) {
+    if (!process.env.OFFICIAL_API_KEY) {
       console.error("La clé API pour l'envoi d'emails n'est pas configurée");
       return {
         success: false,

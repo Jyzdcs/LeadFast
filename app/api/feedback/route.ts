@@ -3,7 +3,7 @@ import { Resend } from "resend";
 import FeedbackEmail from "@/components/emails/FeedbackEmail";
 
 // Initialisation de Resend avec la clé API depuis les variables d'environnement
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.OFFICIAL_API_KEY);
 
 // Adresse email unique pour toutes les communications
 const TARGET_EMAIL = "ky.claudant@gmail.com";
@@ -63,7 +63,7 @@ export async function POST(request: Request) {
     }
 
     // Vérifier que la clé API Resend est configurée
-    if (!process.env.RESEND_API_KEY) {
+    if (!process.env.OFFICIAL_API_KEY) {
       console.error("La clé API Resend n'est pas configurée");
       return NextResponse.json(
         { success: false, error: "Configuration du service d'email manquante" },
