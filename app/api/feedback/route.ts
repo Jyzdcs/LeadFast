@@ -6,7 +6,7 @@ import FeedbackEmail from "@/components/emails/FeedbackEmail";
 const resend = new Resend(process.env.OFFICIAL_API_KEY);
 
 // Adresse email unique pour toutes les communications
-const TARGET_EMAIL = "ky.claudant@gmail.com";
+const TARGET_EMAIL = "alexismarketeur@gmail.com";
 
 /**
  * Structure des données de la requête feedback

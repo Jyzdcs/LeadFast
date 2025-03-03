@@ -1,7 +1,7 @@
 import { Resend } from "resend";
 
 // Configuration de l'email cible pour tous les formulaires
-export const TARGET_EMAIL = "ky.claudant@gmail.com";
+export const TARGET_EMAIL = "alexismarketeur@gmail.com";
 
 // Initialisation de Resend avec la clé API
 const resend = new Resend(process.env.OFFICIAL_API_KEY);
