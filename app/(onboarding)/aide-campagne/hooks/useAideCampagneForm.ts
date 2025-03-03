@@ -42,8 +42,7 @@ export const useAideCampagneForm = () => {
       !formData.fullName.trim() ||
       !formData.email.trim() ||
       !formData.company.trim() ||
-      !formData.campaignType ||
-      !formData.budget
+      !formData.campaignType
     ) {
       setError("Veuillez remplir tous les champs obligatoires");
       return;
@@ -53,7 +52,13 @@ export const useAideCampagneForm = () => {
     setError(null);
 
     try {
-      const response = await submitAideCampagne(formData);
+      // Préparer les données pour l'API en adaptant la structure
+      const apiData = {
+        ...formData,
+        additionalInfo: formData.details, // Mapper details à additionalInfo pour l'API
+      };
+
+      const response = await submitAideCampagne(apiData);
 
       if (response.success) {
         setIsSubmitted(true);

@@ -17,10 +17,6 @@ interface AideCampagneEmailProps {
   email: string;
   phone: string;
   campaignType: string;
-  targetAudience: string;
-  goals: string;
-  budget?: string;
-  timeline?: string;
   additionalInfo?: string;
 }
 
@@ -30,10 +26,6 @@ export const AideCampagneEmail = ({
   email,
   phone,
   campaignType,
-  targetAudience,
-  goals,
-  budget,
-  timeline,
   additionalInfo,
 }: AideCampagneEmailProps) => {
   return (
@@ -73,25 +65,6 @@ export const AideCampagneEmail = ({
             <Text style={paragraph}>
               <strong>Type de campagne:</strong> {campaignType}
             </Text>
-            <Text style={paragraph}>
-              <strong>Audience cible:</strong> {targetAudience}
-            </Text>
-            <Text style={paragraph}>
-              <strong>Objectifs:</strong>
-            </Text>
-            <Text style={contentText}>{goals}</Text>
-
-            {budget && (
-              <Text style={paragraph}>
-                <strong>Budget:</strong> {budget}
-              </Text>
-            )}
-
-            {timeline && (
-              <Text style={paragraph}>
-                <strong>Calendrier:</strong> {timeline}
-              </Text>
-            )}
           </Section>
 
           {additionalInfo && (

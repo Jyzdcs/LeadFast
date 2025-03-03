@@ -29,7 +29,7 @@ function validateRequestData(data: AideCampagneRequestBody): {
   message?: string;
 } {
   // Vérifier les champs obligatoires
-  if (!data.fullName || !data.email || !data.campaignType || !data.goals) {
+  if (!data.fullName || !data.email || !data.company || !data.campaignType) {
     return {
       valid: false,
       message: "Veuillez remplir tous les champs obligatoires",
@@ -84,11 +84,6 @@ export async function POST(request: Request) {
         email: body.email,
         phone: body.phone || "Non renseigné",
         campaignType: body.campaignType,
-        targetAudience: body.targetAudience || "Non spécifié",
-        goals: body.goals,
-        budget: body.budget,
-        timeline: body.timeline,
-        additionalInfo: body.additionalInfo,
       }),
     });
 
