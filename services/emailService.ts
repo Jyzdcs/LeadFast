@@ -6,7 +6,7 @@ const resend = new Resend(process.env.OFFICIAL_API_KEY);
 
 // Email de notification (configurable via variables d'environnement)
 const NOTIFICATION_EMAIL =
-  process.env.NOTIFICATION_EMAIL || "ky.claudant@gmail.com";
+  process.env.NOTIFICATION_EMAIL || "alexismarketeur@gmail.com";
 
 // Types d'erreurs
 export type EmailError = {
@@ -152,7 +152,7 @@ export async function sendSearchLinkEmail(formData: any): Promise<EmailResult> {
     // Envoyer notification interne
     await resend.emails.send({
       from: "LeadFast System <notifications@resend.dev>",
-      to: NOTIFICATION_EMAIL,
+      to: "alexismarketeur@gmail.com",
       subject: `[LEADFAST] Nouvelle demande - ${firstName} ${lastName} - ${numberOfLeads} leads`,
       html: generateInternalSummary(formData),
     });
