@@ -1,4 +1,4 @@
-import { ApolloRequestData } from "../types";
+import { DataEngineRequestData } from "../types";
 
 // Type pour les données d'onboarding
 interface OnboardingData {
@@ -31,16 +31,13 @@ interface OnboardingData {
 }
 
 /**
- * Convertit les données d'onboarding au format attendu par Apollo
+ * Convertit les données d'onboarding au format attendu par le moteur de génération
  * @param data Les données d'onboarding collectées
- * @returns Les données formatées pour Apollo
+ * @returns Les données formatées pour la génération
  */
-export const prepareApolloData = (data: OnboardingData): ApolloRequestData => {
-  console.log(
-    "Préparation des données Apollo à partir des données:",
-    JSON.stringify(data, null, 2)
-  );
-
+export const prepareEngineData = (
+  data: OnboardingData
+): DataEngineRequestData => {
   // Extraction des données pertinentes avec valeurs par défaut pour éviter les undefined
   const company = data.step3?.company || "";
   const expertise = data.step3?.expertise || [];
@@ -61,7 +58,7 @@ export const prepareApolloData = (data: OnboardingData): ApolloRequestData => {
   };
 
   // Construction du format attendu
-  const result: ApolloRequestData = {
+  const result: DataEngineRequestData = {
     // Informations personnelles (step4)
     firstName: data.step4?.firstName || "",
     lastName: data.step4?.lastName || "",
@@ -72,7 +69,7 @@ export const prepareApolloData = (data: OnboardingData): ApolloRequestData => {
 
     // Seniority (step1) - conversion des niveaux hiérarchiques
     seniority: ensureArray(seniorities).map((level: string) => {
-      // Conversion des niveaux manageriaux au format Apollo
+      // Conversion des niveaux manageriaux au format requis
       switch (level.toLowerCase()) {
         case "c-level":
         case "c_level":
@@ -114,6 +111,5 @@ export const prepareApolloData = (data: OnboardingData): ApolloRequestData => {
     numberOfLeads,
   };
 
-  console.log("Données Apollo préparées:", JSON.stringify(result, null, 2));
   return result;
 };

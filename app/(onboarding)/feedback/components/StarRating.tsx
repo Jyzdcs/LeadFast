@@ -3,12 +3,12 @@ import { cn } from "@/lib/utils";
 
 interface StarRatingProps {
   rating: number | null;
-  setRating: (rating: number) => void;
+  onRatingChange: (rating: number) => void;
 }
 
 export const StarRating: React.FC<StarRatingProps> = ({
   rating,
-  setRating,
+  onRatingChange,
 }) => {
   return (
     <div className="flex justify-center space-x-2 sm:space-x-4 py-3 sm:py-4">
@@ -16,7 +16,7 @@ export const StarRating: React.FC<StarRatingProps> = ({
         <button
           key={star}
           type="button"
-          onClick={() => setRating(star)}
+          onClick={() => onRatingChange(star)}
           className={cn(
             "w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all",
             rating && rating >= star

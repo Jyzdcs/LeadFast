@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useOnboarding } from "@/contexts/OnboardingContext";
 import { Step5FormValues, quantityPricing } from "../mocks/constants";
-import { prepareApolloData } from "@/app/(onboarding)/submitted/utils/apolloDataAdapter";
+import { prepareEngineData } from "@/app/(onboarding)/submitted/utils/apolloDataAdapter";
 import { useToast } from "@/components/ui/use-toast";
 
 export const useStep5Form = () => {
@@ -64,30 +64,13 @@ export const useStep5Form = () => {
     try {
       setIsSubmitting(true);
 
-      // Vérifier que les données essentielles sont présentes
-      const validation = validateOnboardingData();
-      if (!validation.isValid) {
-        const message = `Certaines informations sont manquantes : ${validation.missingFields.join(", ")}.`;
-        console.warn("Données d'onboarding incomplètes:", message);
-
-        // On continue quand même pour tester l'API, mais on affiche un avertissement
-        toast({
-          title: "Attention",
-          description: message,
-          variant: "destructive",
-        });
-      }
-
-      // Préparation des données Apollo
-      const apolloData = prepareApolloData(data);
-
-      console.log("Données envoyées:", apolloData);
+      // Préparation des données pour le moteur de génération
+      const engineData = prepareEngineData(data);
 
       // S'assurer que le body de la requête est correctement formaté
-      const requestBody = JSON.stringify(apolloData);
+      const requestBody = JSON.stringify(engineData);
 
       // Envoyer la requête avec le corps correctement formaté
-      console.log("Envoi de la requête à /api/process-onboarding...");
       const response = await fetch("/api/process-onboarding", {
         method: "POST",
         headers: {
@@ -106,8 +89,6 @@ export const useStep5Form = () => {
           "La réponse du serveur n'est pas au format JSON valide"
         );
       }
-
-      console.log("Réponse reçue:", { status: response.status, result });
 
       if (!response.ok || !result.success) {
         throw new Error(result.error || "Une erreur est survenue");

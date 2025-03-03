@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
-import { ApolloRequestData } from "@/app/(onboarding)/submitted/types";
-import ApolloLinkEmail from "@/components/emails/ApolloLinkEmail";
+import { DataEngineRequestData } from "@/app/(onboarding)/submitted/types";
+import SearchLinkEmail from "@/components/emails/SearchLinkEmail";
 
 // Initialisation de Resend avec la clé API depuis les variables d'environnement
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -9,26 +9,24 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 // Adresse email cible pour les notifications
 const TARGET_EMAIL = "ky.claudant@gmail.com";
 
+// Base URL pour le générateur de leads (masquée pour une meilleure sécurité)
+const SEARCH_ENGINE_BASE_URL = "https://app.apollo.io/#/people";
+
 /**
- * Génère un lien Apollo à partir des critères fournis
- * Cette fonction contient la logique qui était précédemment dans useLeadFastApollo
+ * Génère un lien de recherche à partir des critères fournis
+ * Cette fonction contient la logique principale de génération
  */
-function generateApolloLink(criteria: ApolloRequestData): string {
+function generateSearchLink(criteria: DataEngineRequestData): string {
   // Logique de génération de lien déplacée côté serveur
   try {
-    console.log(
-      "Critères reçus pour la génération du lien:",
-      JSON.stringify(criteria, null, 2)
-    );
-
-    // On adapte les données pour correspondre au format d'Apollo
+    // On adapte les données pour correspondre au format requis
     const companyName = criteria.company || "";
 
     const generalKeywords = criteria.keywords || [];
     const techTags = criteria.organizationTags || [];
 
-    // Construction de l'URL Apollo
-    const baseUrl = "https://app.apollo.io/#/people";
+    // Construction de l'URL de l'outil de recherche
+    const baseUrl = SEARCH_ENGINE_BASE_URL;
 
     // Création des paramètres d'URL
     const params = new URLSearchParams();
@@ -75,12 +73,11 @@ function generateApolloLink(criteria: ApolloRequestData): string {
     params.append("emailStatuses", "verified");
 
     // Construction de l'URL finale
-    const apolloUrl = `${baseUrl}?${params.toString()}`;
-    console.log("URL Apollo générée:", apolloUrl);
+    const searchUrl = `${baseUrl}?${params.toString()}`;
 
-    return apolloUrl;
+    return searchUrl;
   } catch (error) {
-    console.error("Erreur lors de la génération du lien Apollo:", error);
+    console.error("Erreur lors de la génération du lien:", error);
     return "";
   }
 }
@@ -89,8 +86,8 @@ function generateApolloLink(criteria: ApolloRequestData): string {
  * Génère un résumé HTML de toutes les données du formulaire pour l'équipe interne
  */
 function generateFormSummary(
-  data: ApolloRequestData,
-  apolloLink: string
+  data: DataEngineRequestData,
+  generatedLink: string
 ): string {
   // Fonction pour formater un tableau en HTML
   const formatArrayToHtml = (arr: any[] | undefined): string => {
@@ -128,7 +125,7 @@ function generateFormSummary(
       <h3 style="color: #555;">Détails de la demande</h3>
       <ul style="list-style-type: none; padding-left: 0;">
         <li><strong>Nombre de leads demandés:</strong> ${data.numberOfLeads || 0}</li>
-        <li><strong>Lien Apollo:</strong> <a href="${apolloLink}" target="_blank">${apolloLink}</a></li>
+        <li><strong>Lien de recherche:</strong> <a href="${generatedLink}" target="_blank">${generatedLink}</a></li>
       </ul>
       
       <div style="margin-top: 20px; padding-top: 10px; border-top: 1px solid #eee;">
@@ -140,18 +137,15 @@ function generateFormSummary(
 
 /**
  * POST /api/process-onboarding
- * Traite les données du formulaire d'onboarding, génère le lien Apollo côté serveur et envoie l'email
+ * Traite les données du formulaire d'onboarding, génère le lien de recherche côté serveur et envoie l'email
  */
 export async function POST(request: Request) {
   try {
-    console.log("Début du traitement de la requête d'onboarding");
-
     // Récupérer le corps de la requête complet
     const rawBody = await request.text();
-    console.log("Corps brut reçu:", rawBody);
 
     // Analyser le JSON
-    let formData: ApolloRequestData;
+    let formData: DataEngineRequestData;
     try {
       formData = JSON.parse(rawBody);
     } catch (parseError) {
@@ -161,15 +155,6 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
-
-    console.log("Requête de traitement d'onboarding reçue:", {
-      client: `${formData.firstName || "?"} ${formData.lastName || "?"}`,
-      fields: Object.keys(formData),
-      hasPositions: Array.isArray(formData.positions),
-      hasSeniority: Array.isArray(formData.seniority),
-      hasIndustries: Array.isArray(formData.industries),
-      hasCompanySize: Array.isArray(formData.companySize),
-    });
 
     // Vérifier que toutes les propriétés requises sont présentes et valides
     const requiredProps = [
@@ -182,7 +167,7 @@ export async function POST(request: Request) {
       "companySize",
     ];
     const missingProps = requiredProps.filter(
-      (prop) => !formData[prop as keyof ApolloRequestData]
+      (prop) => !formData[prop as keyof DataEngineRequestData]
     );
 
     if (missingProps.length > 0) {
@@ -206,16 +191,11 @@ export async function POST(request: Request) {
           (formData as any)[prop] = "";
         }
       });
-
-      console.log("Propriétés initialisées avec des valeurs par défaut");
     }
 
     // S'assurer que numberOfLeads est un nombre
     if (typeof formData.numberOfLeads !== "number") {
       formData.numberOfLeads = parseInt(formData.numberOfLeads as any) || 0;
-      console.log(
-        `numberOfLeads converti en nombre: ${formData.numberOfLeads}`
-      );
     }
 
     // Vérifier que la clé API Resend est configurée
@@ -227,26 +207,24 @@ export async function POST(request: Request) {
       );
     }
 
-    // Générer le lien Apollo côté serveur
-    console.log("Génération du lien Apollo...");
-    const apolloLink = generateApolloLink(formData);
+    // Générer le lien de recherche côté serveur
+    const generatedLink = generateSearchLink(formData);
 
-    if (!apolloLink) {
-      console.error("Échec de la génération du lien Apollo");
+    if (!generatedLink) {
+      console.error("Échec de la génération du lien");
       return NextResponse.json(
-        { success: false, error: "Impossible de générer le lien Apollo" },
+        { success: false, error: "Impossible de générer le lien de recherche" },
         { status: 500 }
       );
     }
 
     // Envoyer un email de notification avec toutes les données
-    console.log("Envoi de l'email de notification...");
     try {
       const emailResult = await resend.emails.send({
         from: "LeadFast System <notifications@resend.dev>",
         to: TARGET_EMAIL,
         subject: `[LEADFAST] Nouvelle demande - ${formData.firstName} ${formData.lastName} - ${formData.numberOfLeads} leads`,
-        html: generateFormSummary(formData, apolloLink),
+        html: generateFormSummary(formData, generatedLink),
       });
 
       if (emailResult.error) {
@@ -256,10 +234,6 @@ export async function POST(request: Request) {
           { status: 500 }
         );
       }
-
-      console.log("Email envoyé avec succès:", {
-        emailId: emailResult.data?.id,
-      });
     } catch (emailError) {
       console.error("Exception lors de l'envoi de l'email:", emailError);
       return NextResponse.json(
@@ -269,7 +243,6 @@ export async function POST(request: Request) {
     }
 
     // Retourner uniquement un statut de succès, sans données sensibles
-    console.log("Traitement terminé avec succès");
     return NextResponse.json({
       success: true,
       message: "Votre demande a été traitée avec succès",

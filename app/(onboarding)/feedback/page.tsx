@@ -19,6 +19,9 @@ export default function FeedbackPage() {
     handleAspectChange,
     fullName,
     userData,
+    isNameEditable,
+    isEmailEditable,
+    register,
     submitted,
     isLoading,
     error,
@@ -41,7 +44,7 @@ export default function FeedbackPage() {
                   présent ?
                 </p>
 
-                <StarRating rating={rating} setRating={setRating} />
+                <StarRating rating={rating} onRatingChange={setRating} />
               </div>
 
               <div className="border-t pt-5">
@@ -53,6 +56,7 @@ export default function FeedbackPage() {
                     <CheckboxItem
                       key={aspect}
                       label={aspect}
+                      checked={selectedAspects.includes(aspect)}
                       onChange={(checked) =>
                         handleAspectChange(aspect, checked)
                       }
@@ -70,8 +74,8 @@ export default function FeedbackPage() {
                   rows={4}
                   placeholder="Qu'est-ce que nous pourrions améliorer ? Avez-vous des suggestions ?"
                   value={feedback}
+                  {...register("feedback")}
                   onChange={(e) => setFeedback(e.target.value)}
-                  required
                 ></textarea>
               </div>
 
@@ -80,16 +84,22 @@ export default function FeedbackPage() {
                   id="name"
                   label="Nom"
                   placeholder="Votre nom"
-                  value={fullName}
-                  disabled={!!fullName}
+                  disabled={!isNameEditable}
+                  isPreFilled={!isNameEditable}
+                  register={register}
+                  name="name"
+                  required
                 />
                 <InputField
                   id="email"
                   label="Email"
                   type="email"
                   placeholder="vous@exemple.com"
-                  value={userData.email}
-                  disabled={!!userData.email}
+                  disabled={!isEmailEditable}
+                  isPreFilled={!isEmailEditable}
+                  register={register}
+                  name="email"
+                  required
                 />
               </div>
 

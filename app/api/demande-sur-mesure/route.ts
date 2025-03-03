@@ -49,12 +49,6 @@ export async function POST(request: Request) {
     // Récupérer les données du corps de la requête
     const body: DemandeSurMesureRequestBody = await request.json();
 
-    console.log("Requête de demande sur mesure reçue:", {
-      fullName: body.fullName,
-      company: body.company,
-      email: body.email,
-    });
-
     // Valider les données
     const validation = validateRequestData(body);
     if (!validation.valid) {
@@ -95,10 +89,6 @@ export async function POST(request: Request) {
         { status: 500 }
       );
     }
-
-    console.log("Email de demande sur mesure envoyé avec succès:", {
-      emailId: emailResult.data?.id,
-    });
 
     return NextResponse.json({
       success: true,

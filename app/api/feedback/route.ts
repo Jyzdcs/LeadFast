@@ -8,6 +8,9 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 // Adresse email unique pour toutes les communications
 const TARGET_EMAIL = "ky.claudant@gmail.com";
 
+/**
+ * Structure des données de la requête feedback
+ */
 interface FeedbackRequestBody {
   name: string;
   email: string;
@@ -24,10 +27,10 @@ function validateRequestData(data: FeedbackRequestBody): {
   message?: string;
 } {
   // Vérifier les champs obligatoires
-  if (!data.name || !data.email || !data.feedback) {
+  if (!data.name || !data.email) {
     return {
       valid: false,
-      message: "Les champs nom, email et feedback sont obligatoires",
+      message: "Les champs nom et email sont obligatoires",
     };
   }
 
@@ -48,12 +51,6 @@ export async function POST(request: Request) {
   try {
     // Récupérer les données du corps de la requête
     const body: FeedbackRequestBody = await request.json();
-
-    console.log("Requête de feedback reçue:", {
-      name: body.name,
-      email: body.email,
-      hasRating: !!body.rating,
-    });
 
     // Valider les données
     const validation = validateRequestData(body);
@@ -98,10 +95,6 @@ export async function POST(request: Request) {
         { status: 500 }
       );
     }
-
-    console.log("Email de feedback envoyé avec succès:", {
-      emailId: emailResult.data?.id,
-    });
 
     return NextResponse.json({
       success: true,

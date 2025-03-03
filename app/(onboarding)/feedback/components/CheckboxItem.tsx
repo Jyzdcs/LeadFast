@@ -2,11 +2,13 @@ import React from "react";
 
 interface CheckboxItemProps {
   label: string;
+  checked: boolean;
   onChange: (checked: boolean) => void;
 }
 
 export const CheckboxItem: React.FC<CheckboxItemProps> = ({
   label,
+  checked,
   onChange,
 }) => {
   return (
@@ -15,6 +17,7 @@ export const CheckboxItem: React.FC<CheckboxItemProps> = ({
         type="checkbox"
         id={label}
         className="peer absolute h-0 w-0 opacity-0"
+        checked={checked}
         onChange={(e) => onChange(e.target.checked)}
       />
       <label

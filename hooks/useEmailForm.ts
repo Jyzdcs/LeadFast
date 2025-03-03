@@ -31,7 +31,6 @@ export function useEmailForm<T extends Record<string, any>>({
     setError(null);
 
     try {
-      console.log(`Submitting ${template} form:`, formData);
       const response = await fetch(`/api/emails/${template}`, {
         method: "POST",
         headers: {
@@ -42,12 +41,6 @@ export function useEmailForm<T extends Record<string, any>>({
 
       // Obtenir le corps de la réponse
       const result = await response.json();
-
-      // Log pour le débogage
-      console.log(`${template} submission response:`, {
-        status: response.status,
-        result,
-      });
 
       if (!response.ok) {
         throw new Error(

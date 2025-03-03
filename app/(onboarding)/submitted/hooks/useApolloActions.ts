@@ -2,8 +2,7 @@ import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { useLeadFastApollo } from "@/hooks/useLeadFastApollo";
 import { useOnboarding } from "@/contexts/OnboardingContext";
-import { prepareApolloData } from "../utils/apolloDataAdapter";
-
+import { prepareEngineData } from "@/app/(onboarding)/submitted/utils/apolloDataAdapter";
 /**
  * Hook personnalisé pour gérer les actions liées à Apollo
  */
@@ -19,7 +18,7 @@ export const useApolloActions = () => {
   const handleOpenApolloLink = () => {
     setIsGeneratingLink(true);
     try {
-      const apolloData = prepareApolloData(data);
+      const apolloData = prepareEngineData(data);
       openApolloLink(apolloData);
       toast({
         title: "Lien Apollo généré",
@@ -46,7 +45,7 @@ export const useApolloActions = () => {
   const handleCopyApolloLink = async () => {
     setIsGeneratingLink(true);
     try {
-      const apolloData = prepareApolloData(data);
+      const apolloData = prepareEngineData(data);
       const success = await copyApolloLinkToClipboard(apolloData);
 
       if (success) {

@@ -54,13 +54,6 @@ export async function POST(request: Request) {
     // Récupérer les données du corps de la requête
     const body: AideCampagneRequestBody = await request.json();
 
-    console.log("Requête d'aide campagne reçue:", {
-      fullName: body.fullName,
-      company: body.company,
-      email: body.email,
-      campaignType: body.campaignType,
-    });
-
     // Valider les données
     const validation = validateRequestData(body);
     if (!validation.valid) {
@@ -106,10 +99,6 @@ export async function POST(request: Request) {
         { status: 500 }
       );
     }
-
-    console.log("Email d'aide campagne envoyé avec succès:", {
-      emailId: emailResult.data?.id,
-    });
 
     return NextResponse.json({
       success: true,
