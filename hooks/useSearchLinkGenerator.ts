@@ -69,9 +69,40 @@ export function useSearchLinkGenerator() {
     return mapFormToEngineParameters(formData);
   };
 
+  /**
+   * Ouvre le lien de recherche dans un nouvel onglet
+   */
+  const openSearchLink = (criteria: LinkGeneratorOptions): void => {
+    const url = generateSearchLink(criteria);
+    if (url) {
+      window.open(url, "_blank");
+    }
+  };
+
+  /**
+   * Copie le lien de recherche dans le presse-papiers
+   */
+  const copyLinkToClipboard = async (
+    criteria: LinkGeneratorOptions
+  ): Promise<boolean> => {
+    const url = generateSearchLink(criteria);
+    if (url) {
+      try {
+        await navigator.clipboard.writeText(url);
+        return true;
+      } catch (error) {
+        console.error("Erreur lors de la copie dans le presse-papiers:", error);
+        return false;
+      }
+    }
+    return false;
+  };
+
   return {
     generateLink,
     prepareDataForEngine,
+    openSearchLink,
+    copyLinkToClipboard,
     isLoading,
     error,
   };

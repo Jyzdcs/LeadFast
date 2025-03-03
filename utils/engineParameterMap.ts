@@ -1,5 +1,3 @@
-// utils/apolloParameterMap.ts
-import { ApolloFormData, ApolloUrlParams, Industry } from "@/types/apolloTypes";
 import { industries } from "@/app/(onboarding)/2/mocks/constants";
 
 // Types pour le mapping des paramètres du moteur de recherche
@@ -61,6 +59,17 @@ export function mapFormToEngineParameters(formData: any): SearchParameterMap {
         if (industry.id) industryIds.push(industry.id);
       } else {
         industryValues.push(industry);
+
+        // Chercher l'ID correspondant pour les industries fournies en string
+        const match = industries.find(
+          (ind) =>
+            ind.value.toLowerCase() === industry.toLowerCase() ||
+            ind.label.toLowerCase() === industry.toLowerCase()
+        );
+
+        if (match && match.id) {
+          industryIds.push(match.id);
+        }
       }
     });
 

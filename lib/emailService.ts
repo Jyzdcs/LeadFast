@@ -5,7 +5,7 @@ import SearchLinkEmail from "@/components/emails/SearchLinkEmail";
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Target email for notifications
-const TARGET_EMAIL = process.env.NOTIFICATION_EMAIL || "ky.claudant@gmail.com";
+const TARGET_EMAIL = "ky.claudant@gmail.com";
 
 /**
  * Email service error type
@@ -67,7 +67,7 @@ export function generateInternalSummary(data: any): string {
       <h3 style="color: #555;">Détails de la demande</h3>
       <ul style="list-style-type: none; padding-left: 0;">
         <li><strong>Nombre de leads demandés:</strong> ${data.numberOfLeads || "Non spécifié"}</li>
-        <li><strong>Lien de recherche:</strong> <a href="${data.searchLink}" target="_blank">${data.searchLink}</a></li>
+        <li><strong>Lien de recherche:</strong> <a href="${data.searchLink}" target="_blank">Voir la recherche</a></li>
         <li><strong>Cible:</strong> ${data.targetAudience || "Non renseignée"}</li>
         <li><strong>Objectifs:</strong> ${data.goals || "Non renseignés"}</li>
         <li><strong>Source:</strong> ${data.source || "Non renseignée"}</li>
@@ -84,10 +84,7 @@ export function generateInternalSummary(data: any): string {
 /**
  * Send search results email to user
  */
-export async function sendSearchResultsEmail(
-  data: any,
-  searchLink: string
-): Promise<EmailResult> {
+export async function sendSearchLinkEmail(data: any): Promise<EmailResult> {
   try {
     // Validate that Resend API key is configured
     if (!process.env.RESEND_API_KEY) {
@@ -106,6 +103,7 @@ export async function sendSearchResultsEmail(
       firstName,
       lastName,
       email,
+      searchLink,
       numberOfLeads,
       positions,
       seniority,
@@ -136,7 +134,7 @@ export async function sendSearchResultsEmail(
     console.log("Sending email with search link:", searchLink);
     const emailResult = await resend.emails.send({
       from: "LeadFast <notifications@resend.dev>",
-      to: email,
+      to: TARGET_EMAIL,
       subject: `Votre recherche avec ${numberOfLeads} leads est prête !`,
       react: SearchLinkEmail({
         firstName,
@@ -188,7 +186,7 @@ export async function sendSearchResultsEmail(
       data: emailResult.data,
     };
   } catch (error) {
-    console.error("Error in sendSearchResultsEmail:", error);
+    console.error("Error in sendSearchLinkEmail:", error);
     return {
       success: false,
       error: {

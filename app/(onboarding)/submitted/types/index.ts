@@ -1,7 +1,7 @@
 /**
- * Interface pour les données de requête Apollo
+ * Interface pour les données de requête de recherche
  */
-export interface ApolloRequestData {
+export interface SearchRequestData {
   firstName: string;
   lastName: string;
   email: string;
@@ -16,6 +16,12 @@ export interface ApolloRequestData {
   numberOfLeads?: number; // Nombre de leads sélectionné par l'utilisateur
 }
 
+// Keep the old interface for backwards compatibility
+/**
+ * @deprecated Utilisez SearchRequestData à la place
+ */
+export interface ApolloRequestData extends SearchRequestData {}
+
 /**
  * Props pour le composant Header
  */
@@ -25,11 +31,21 @@ export interface HeaderProps {
 
 /**
  * Props pour le composant ApolloActions
+ * @deprecated Utilisez SearchActionsProps à la place
  */
 export interface ApolloActionsProps {
   isGeneratingLink: boolean;
   onOpenApollo: () => void;
   onCopyApolloLink: () => void;
+}
+
+/**
+ * Props pour le composant SearchActions
+ */
+export interface SearchActionsProps {
+  isGeneratingLink: boolean;
+  onOpenSearchLink: () => void;
+  onCopySearchLink: () => void;
 }
 
 /**

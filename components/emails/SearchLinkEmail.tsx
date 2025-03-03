@@ -28,7 +28,7 @@ interface SearchLinkEmailProps {
   expertise?: string[]; // Domaine d'expertise
 }
 
-export const SearchLinkEmail = ({
+const SearchLinkEmail = ({
   firstName,
   lastName,
   searchLink,
@@ -138,7 +138,7 @@ export const SearchLinkEmail = ({
           <Text style={paragraph}>
             Ou copiez ce lien dans votre navigateur :{" "}
             <Link href={searchLink} style={link}>
-              {searchLink}
+              Voir ma recherche
             </Link>
           </Text>
           <Text style={paragraph}>
