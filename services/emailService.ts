@@ -56,7 +56,8 @@ export class EmailService {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(emailPayload),
+        body: null,
+        // body: JSON.stringify(emailPayload),
       });
 
       // Analyser la réponse
