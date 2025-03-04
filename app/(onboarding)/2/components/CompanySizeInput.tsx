@@ -53,7 +53,7 @@ export const CompanySizeInput: React.FC<CompanySizeInputProps> = ({
                 <div className="flex flex-col gap-1">
                   <p className="font-medium">Taille d'entreprise</p>
                   <p className="text-zinc-300">
-                    Sélectionnez les tailles d'entreprise qui vous intéressent
+                    Filtrez par taille d'entreprise qui vous intéresse
                   </p>
                 </div>
               </TooltipContent>
@@ -74,7 +74,7 @@ export const CompanySizeInput: React.FC<CompanySizeInputProps> = ({
       </div>
       <Combobox
         options={comboboxOptions}
-        placeholder="Sélectionnez une taille d'entreprise"
+        placeholder="Filtrez par taille d'entreprise"
         onChange={(value: string) => onAdd(value)}
         onRemove={onRemove}
         icon={<Users className="w-4 h-4 text-zinc-500" />}

@@ -21,8 +21,8 @@ const Header: React.FC = () => {
         Merci pour votre confiance !
       </h2>
       <p className="text-base text-black/60 mb-6">
-        Nous avons bien reçu vos critères de recherche. Notre équipe va
-        commencer à générer vos leads qualifiés.
+        Notre équipe va commencer à générer vos leads qualifiés. Nous vous
+        recontacterons dans les meilleurs délais
       </p>
       <div className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-full text-gray-700 text-sm mb-6">
         <svg

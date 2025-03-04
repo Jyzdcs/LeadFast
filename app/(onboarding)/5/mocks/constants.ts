@@ -2,18 +2,12 @@
 export const steps = ["1", "2", "3", "4", "5"];
 
 export const quantityPricing = [
-  { value: "1000", label: "1000 leads", price: 30 },
-  { value: "2000", label: "2000 leads", price: 55 },
-  { value: "3000", label: "3000 leads", price: 80 },
-  { value: "4000", label: "4000 leads", price: 105 },
-  { value: "5000", label: "5000 leads", price: 125 },
-  { value: "6000", label: "6000 leads", price: 140 },
-  { value: "7000", label: "7000 leads", price: 155 },
-  { value: "8000", label: "8000 leads", price: 170 },
-  { value: "9000", label: "9000 leads", price: 185 },
-  { value: "10000", label: "10000 leads", price: 200 },
+  { value: "1000", label: "1000 leads", price: 29 },
+  { value: "3000", label: "3000 leads", price: 79 },
+  { value: "5000", label: "5000 leads", price: 99 },
+  { value: "10000", label: "10000 leads", price: 199 },
+  { value: "50000", label: "50000 leads", price: 500 },
 ] as const;
-
 // Types
 export type Step5FormValues = {
   leadQuantity: string;

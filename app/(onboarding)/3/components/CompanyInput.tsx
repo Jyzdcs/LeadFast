@@ -50,7 +50,7 @@ export const CompanyInput: React.FC<CompanyInputProps> = ({
         <Input
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          placeholder="Ex : Google, Apple, ..."
+          placeholder="Selectionnez une seul entreprise"
           className="h-14 pl-10 border-zinc-200 focus:border-zinc-300 focus:ring-zinc-300 w-full"
         />
       </div>
