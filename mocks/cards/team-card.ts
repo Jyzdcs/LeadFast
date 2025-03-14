@@ -21,18 +21,6 @@ export const teamCard = {
         "https://media.licdn.com/dms/image/v2/C4D03AQHoyD2XkK03ag/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1622840158397?e=1746057600&v=beta&t=I6jUs615qYE5GpOn9FanBWyMPO_pUP5Zjmlk6Hvaytk",
     },
     {
-      id: "2",
-      name: "Marie Torelli",
-      position: "Legal Counsel",
-      company: "Mistral AI",
-      email: "marie.torelli@mistral.ai",
-      linkedin: "www.linkedin.com/in/marie-torelli-27a28112a",
-      country: "France",
-      city: "Paris",
-      image:
-        "https://media.licdn.com/dms/image/D4E03AQFO11_jj0_yKw/profile-displayphoto-shrink_200_200/0/1695044374889?e=2147483647&v=beta&t=my4WYph1p4Px6N3SCqAQahe5hQlukkitoCdx2zGamq0",
-    },
-    {
       id: "4",
       name: "Paul Devillers",
       position: "AI Applied Engineer",
@@ -502,6 +490,17 @@ export const teamCard = {
       country: "USA",
       city: "Mountain View",
       image: "https://api.dicebear.com/7.x/shapes/svg?seed=KhyathiC",
+    },
+    {
+      id: "2",
+      name: "Marie Torelli",
+      position: "Legal Counsel",
+      company: "Mistral AI",
+      email: "marie.torelli@mistral.ai",
+      linkedin: "www.linkedin.com/in/marie-torelli-27a28112a",
+      country: "France",
+      city: "Paris",
+      image: "https://api.dicebear.com/7.x/shapes/svg?seed=MarieT",
     },
     {
       id: "18",
