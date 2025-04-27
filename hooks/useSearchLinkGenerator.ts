@@ -1,6 +1,6 @@
-import { useState } from "react";
 import { mapFormToEngineParameters } from "@/utils/engineParameterMap";
 import { generateSearchLink } from "@/utils/urlGenerator";
+import { useState } from "react";
 
 // Type pour la fonction de génération de lien de recherche
 export interface LinkGeneratorOptions {

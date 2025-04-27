@@ -1,7 +1,7 @@
+import { useOnboarding } from "@/contexts/OnboardingContext";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
-import { useOnboarding } from "@/contexts/OnboardingContext";
 import { Step3FormValues } from "../mocks/constants";
 
 export const useStep3Form = () => {

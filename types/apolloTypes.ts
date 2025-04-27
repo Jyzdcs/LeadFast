@@ -1,4 +1,3 @@
-// types/apolloTypes.ts
 // Interface pour les objets secteur d'activité
 export interface Industry {
   id: string;

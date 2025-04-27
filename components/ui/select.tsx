@@ -1,9 +1,9 @@
-import * as React from "react"
-import { ChevronDownIcon } from "@heroicons/react/24/outline"
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
+import { ChevronDownIcon } from "@heroicons/react/24/outline";
+import * as React from "react";
 
 interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
-  icon?: React.ReactNode
+  icon?: React.ReactNode;
 }
 
 function Select({ className, children, icon, ...props }: SelectProps) {
@@ -11,9 +11,7 @@ function Select({ className, children, icon, ...props }: SelectProps) {
     <div className="relative w-full  sm:max-w-[320px]">
       {icon && (
         <div className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2">
-          <div className="w-4 sm:w-5 h-4 sm:h-5 text-gray-400">
-            {icon}
-          </div>
+          <div className="w-4 sm:w-5 h-4 sm:h-5 text-gray-400">{icon}</div>
         </div>
       )}
       <select
@@ -37,7 +35,7 @@ function Select({ className, children, icon, ...props }: SelectProps) {
       </select>
       <ChevronDownIcon className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-black/40 pointer-events-none" />
     </div>
-  )
+  );
 }
 
-export { Select } 
+export { Select };

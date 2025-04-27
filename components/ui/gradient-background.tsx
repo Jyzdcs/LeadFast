@@ -1,10 +1,10 @@
-import React from "react";
-
 interface GradientBackgroundProps {
   imagePath?: string;
 }
 
-export function GradientBackground({ imagePath = "/background-V2.jpg" }: GradientBackgroundProps) {
+export function GradientBackground({
+  imagePath = "/background-V2.jpg",
+}: GradientBackgroundProps) {
   return (
     <div className="absolute inset-0">
       <div
@@ -18,4 +18,4 @@ export function GradientBackground({ imagePath = "/background-V2.jpg" }: Gradien
       <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:20px_20px]" />
     </div>
   );
-} 
+}

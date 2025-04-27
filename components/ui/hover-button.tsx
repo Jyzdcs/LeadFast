@@ -1,61 +1,64 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
+import * as React from "react";
 
-interface HoverButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  children: React.ReactNode
+interface HoverButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  children: React.ReactNode;
 }
 
 const HoverButton = React.forwardRef<HTMLButtonElement, HoverButtonProps>(
   ({ className, children, ...props }, ref) => {
-    const buttonRef = React.useRef<HTMLButtonElement>(null)
-    const [isListening, setIsListening] = React.useState(false)
-    const [circles, setCircles] = React.useState<Array<{
-      id: number
-      x: number
-      y: number
-      color: string
-      fadeState: "in" | "out" | null
-    }>>([])
-    const lastAddedRef = React.useRef(0)
+    const buttonRef = React.useRef<HTMLButtonElement>(null);
+    const [isListening, setIsListening] = React.useState(false);
+    const [circles, setCircles] = React.useState<
+      Array<{
+        id: number;
+        x: number;
+        y: number;
+        color: string;
+        fadeState: "in" | "out" | null;
+      }>
+    >([]);
+    const lastAddedRef = React.useRef(0);
 
     const createCircle = React.useCallback((x: number, y: number) => {
-      const buttonWidth = buttonRef.current?.offsetWidth || 0
-      const xPos = x / buttonWidth
+      const buttonWidth = buttonRef.current?.offsetWidth || 0;
+      const xPos = x / buttonWidth;
       const color = `linear-gradient(to right, var(--circle-start) ${xPos * 100}%, var(--circle-end) ${
         xPos * 100
-      }%)`
+      }%)`;
 
       setCircles((prev) => [
         ...prev,
         { id: Date.now(), x, y, color, fadeState: null },
-      ])
-    }, [])
+      ]);
+    }, []);
 
     const handlePointerMove = React.useCallback(
       (event: React.PointerEvent<HTMLButtonElement>) => {
-        if (!isListening) return
-        
-        const currentTime = Date.now()
+        if (!isListening) return;
+
+        const currentTime = Date.now();
         if (currentTime - lastAddedRef.current > 100) {
-          lastAddedRef.current = currentTime
-          const rect = event.currentTarget.getBoundingClientRect()
-          const x = event.clientX - rect.left
-          const y = event.clientY - rect.top
-          createCircle(x, y)
+          lastAddedRef.current = currentTime;
+          const rect = event.currentTarget.getBoundingClientRect();
+          const x = event.clientX - rect.left;
+          const y = event.clientY - rect.top;
+          createCircle(x, y);
         }
       },
       [isListening, createCircle]
-    )
+    );
 
     const handlePointerEnter = React.useCallback(() => {
-      setIsListening(true)
-    }, [])
+      setIsListening(true);
+    }, []);
 
     const handlePointerLeave = React.useCallback(() => {
-      setIsListening(false)
-    }, [])
+      setIsListening(false);
+    }, []);
 
     React.useEffect(() => {
       circles.forEach((circle) => {
@@ -65,23 +68,23 @@ const HoverButton = React.forwardRef<HTMLButtonElement, HoverButtonProps>(
               prev.map((c) =>
                 c.id === circle.id ? { ...c, fadeState: "in" } : c
               )
-            )
-          }, 0)
+            );
+          }, 0);
 
           setTimeout(() => {
             setCircles((prev) =>
               prev.map((c) =>
                 c.id === circle.id ? { ...c, fadeState: "out" } : c
               )
-            )
-          }, 1000)
+            );
+          }, 1000);
 
           setTimeout(() => {
-            setCircles((prev) => prev.filter((c) => c.id !== circle.id))
-          }, 2200)
+            setCircles((prev) => prev.filter((c) => c.id !== circle.id));
+          }, 2200);
         }
-      })
-    }, [circles])
+      });
+    }, [circles]);
 
     return (
       <button
@@ -103,10 +106,12 @@ const HoverButton = React.forwardRef<HTMLButtonElement, HoverButtonProps>(
         onPointerEnter={handlePointerEnter}
         onPointerLeave={handlePointerLeave}
         {...props}
-        style={{
-          ["--circle-start" as string]: "var(--tw-gradient-from, #a0d9f8)",
-          ["--circle-end" as string]: "var(--tw-gradient-to, #3a5bbf)",
-        } as React.CSSProperties}
+        style={
+          {
+            ["--circle-start" as string]: "var(--tw-gradient-from, #a0d9f8)",
+            ["--circle-end" as string]: "var(--tw-gradient-to, #3a5bbf)",
+          } as React.CSSProperties
+        }
       >
         {circles.map(({ id, x, y, color, fadeState }) => (
           <div
@@ -127,10 +132,10 @@ const HoverButton = React.forwardRef<HTMLButtonElement, HoverButtonProps>(
         ))}
         {children}
       </button>
-    )
+    );
   }
-)
+);
 
-HoverButton.displayName = "HoverButton"
+HoverButton.displayName = "HoverButton";
 
-export { HoverButton }
+export { HoverButton };

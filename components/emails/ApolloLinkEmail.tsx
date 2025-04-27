@@ -1,17 +1,15 @@
-import * as React from "react";
 import {
   Body,
+  Column,
   Container,
   Head,
   Heading,
-  Html,
-  Link,
-  Preview,
-  Text,
-  Section,
   Hr,
+  Html,
+  Preview,
   Row,
-  Column,
+  Section,
+  Text,
 } from "@react-email/components";
 
 interface SearchLinkEmailProps {

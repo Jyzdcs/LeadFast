@@ -1,6 +1,6 @@
+import AideCampagneEmail from "@/components/emails/AideCampagneEmail";
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
-import AideCampagneEmail from "@/components/emails/AideCampagneEmail";
 
 // Initialisation de Resend avec la clé API depuis les variables d'environnement
 const resend = new Resend(process.env.OFFICIAL_API_KEY);

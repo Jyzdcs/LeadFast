@@ -1,7 +1,5 @@
-// Adapted from https://ui.shadcn.com/
-
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 import {
   Toast,

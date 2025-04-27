@@ -1,5 +1,5 @@
-import { Resend } from "resend";
 import SearchLinkEmail from "@/components/emails/SearchLinkEmail";
+import { Resend } from "resend";
 
 // Initialize Resend with API key
 const resend = new Resend(process.env.OFFICIAL_API_KEY);

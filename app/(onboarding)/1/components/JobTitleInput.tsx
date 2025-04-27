@@ -1,12 +1,12 @@
-import React from "react";
-import { InfoIcon } from "lucide-react";
 import { KeywordInput } from "@/components/ui/keyword-input";
 import {
   Tooltip,
-  TooltipTrigger,
   TooltipContent,
   TooltipProvider,
+  TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { InfoIcon } from "lucide-react";
+import React from "react";
 
 interface JobTitleInputProps {
   jobTitles: string[];

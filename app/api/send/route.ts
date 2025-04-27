@@ -1,11 +1,10 @@
-import { NextResponse } from "next/server";
-import {
-  validateSearchLink,
-  generateSearchLink,
-  adaptRequestToSearchCriteria,
-  SearchCriteria,
-} from "@/lib/searchEngineService";
 import { sendSearchLinkEmail } from "@/lib/emailService";
+import {
+  adaptRequestToSearchCriteria,
+  generateSearchLink,
+  validateSearchLink,
+} from "@/lib/searchEngineService";
+import { NextResponse } from "next/server";
 
 // Interface pour les données de requête
 interface EmailRequestBody {

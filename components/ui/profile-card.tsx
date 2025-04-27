@@ -1,15 +1,15 @@
 "use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
-import { motion } from "framer-motion"
+import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
+import * as React from "react";
 
 interface ProfileCardProps extends React.HTMLAttributes<HTMLDivElement> {
-  title: string
-  description: string
-  tags: string[]
-  icon: string
-  hint: string
+  title: string;
+  description: string;
+  tags: string[];
+  icon: string;
+  hint: string;
 }
 
 const ProfileCard = React.forwardRef<HTMLDivElement, ProfileCardProps>(
@@ -29,7 +29,7 @@ const ProfileCard = React.forwardRef<HTMLDivElement, ProfileCardProps>(
       >
         {/* Gradient Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-zinc-50/50 to-white" />
-        
+
         {/* Content */}
         <div className="relative space-y-3">
           {/* Header */}
@@ -57,19 +57,17 @@ const ProfileCard = React.forwardRef<HTMLDivElement, ProfileCardProps>(
 
           {/* Hint */}
           <div className="pt-1">
-            <p className="text-xs text-zinc-500 italic">
-              {hint}
-            </p>
+            <p className="text-xs text-zinc-500 italic">{hint}</p>
           </div>
         </div>
 
         {/* Hover Effect */}
         <div className="absolute inset-0 bg-gradient-to-br from-black/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       </motion.div>
-    )
+    );
   }
-)
+);
 
-ProfileCard.displayName = "ProfileCard"
+ProfileCard.displayName = "ProfileCard";
 
-export { ProfileCard } 
+export { ProfileCard };

@@ -1,14 +1,14 @@
-import React from "react";
 import { Badge } from "@/components/ui/badge";
-import { X, Building2, InfoIcon } from "lucide-react";
 import { Combobox } from "@/components/ui/combobox";
-import { industries } from "../mocks/constants";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Building2, InfoIcon, X } from "lucide-react";
+import React from "react";
+import { industries } from "../mocks/constants";
 
 interface ActivitySectorInputProps {
   sectors: string[];

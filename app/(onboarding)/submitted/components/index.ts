@@ -1,7 +1,7 @@
-import Header from "./Header";
-import CTASection from "./CTASection";
 import CTACard from "./CTACard";
+import CTASection from "./CTASection";
 import Footer from "./Footer";
+import Header from "./Header";
 import SearchActions from "./SearchActions";
 
-export { Header, CTASection, CTACard, Footer, SearchActions };
+export { CTACard, CTASection, Footer, Header, SearchActions };
