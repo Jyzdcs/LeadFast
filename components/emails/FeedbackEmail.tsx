@@ -1,14 +1,13 @@
-import * as React from "react";
 import {
   Body,
   Container,
   Head,
   Heading,
+  Hr,
   Html,
   Preview,
-  Text,
   Section,
-  Hr,
+  Text,
 } from "@react-email/components";
 
 interface FeedbackEmailProps {

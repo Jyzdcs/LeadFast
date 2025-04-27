@@ -1,4 +1,3 @@
-import React from "react";
 import { Logo } from "@/components/ui/logo";
 
 export function MobileNavbar() {
@@ -7,4 +6,4 @@ export function MobileNavbar() {
       <Logo width={28} height={28} />
     </nav>
   );
-} 
+}

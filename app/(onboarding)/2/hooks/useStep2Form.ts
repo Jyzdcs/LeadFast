@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
 import { useOnboarding } from "@/contexts/OnboardingContext";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { Step2FormValues, employeeRanges } from "../mocks/constants";
 
 export const useStep2Form = () => {

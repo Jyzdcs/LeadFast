@@ -1,6 +1,6 @@
+import DemandeSurMesureEmail from "@/components/emails/DemandeSurMesureEmail";
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
-import DemandeSurMesureEmail from "@/components/emails/DemandeSurMesureEmail";
 
 // Initialisation de Resend avec la clé API depuis les variables d'environnement
 const resend = new Resend(process.env.OFFICIAL_API_KEY);

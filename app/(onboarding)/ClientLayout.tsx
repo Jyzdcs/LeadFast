@@ -1,7 +1,7 @@
 "use client";
 
-import { MobileNavbar } from "@/components/layout/mobile-navbar";
 import { BrandCard } from "@/components/layout/brand-card";
+import { MobileNavbar } from "@/components/layout/mobile-navbar";
 import { ToastProvider } from "@/components/ui/use-toast";
 
 export function ClientLayout({ children }: { children: React.ReactNode }) {

@@ -1,19 +1,13 @@
-import * as React from "react";
-import {
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-} from "@/components/ui/popover";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
-  ChevronDownIcon,
-  PlusIcon,
-  UserIcon,
-} from "@heroicons/react/24/outline";
-import { CheckIcon } from "@heroicons/react/24/solid";
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
+import { ChevronDownIcon, UserIcon } from "@heroicons/react/24/outline";
 import { X } from "lucide-react";
+import * as React from "react";
 
 interface Option {
   id: string;

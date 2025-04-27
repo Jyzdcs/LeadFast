@@ -1,6 +1,6 @@
-import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { X } from "lucide-react";
+import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -67,4 +67,4 @@ const ToastDescription = React.forwardRef<
 ));
 ToastDescription.displayName = "ToastDescription";
 
-export { Toast, ToastClose, ToastTitle, ToastDescription, ToastVariants };
+export { Toast, ToastClose, ToastDescription, ToastTitle, ToastVariants };

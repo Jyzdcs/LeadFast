@@ -1,12 +1,11 @@
 "use client";
 
-import React from "react";
 import { Button } from "@/components/ui/button";
-import { useFeedbackForm } from "./hooks/useFeedbackForm";
-import { StarRating } from "./components/StarRating";
 import { CheckboxItem } from "./components/CheckboxItem";
-import { SuccessMessage } from "./components/SuccessMessage";
 import { InputField } from "./components/InputField";
+import { StarRating } from "./components/StarRating";
+import { SuccessMessage } from "./components/SuccessMessage";
+import { useFeedbackForm } from "./hooks/useFeedbackForm";
 import { appreciationAspects } from "./mocks/constants";
 
 export default function FeedbackPage() {

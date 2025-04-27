@@ -1,4 +1,3 @@
-import React from "react";
 import { StepIndicator } from "@/components/ui/step-indicator";
 import {
   Stepper,
@@ -6,6 +5,7 @@ import {
   StepperItem,
   StepperTrigger,
 } from "@/components/ui/stepper";
+import React from "react";
 import { steps } from "../mocks/constants";
 
 export const StepHeader: React.FC = () => {

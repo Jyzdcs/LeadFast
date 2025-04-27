@@ -1,5 +1,3 @@
-import Avvvatars from "avvvatars-react";
-
 export const restaurantCard = {
   id: "3",
   title: "Notification",

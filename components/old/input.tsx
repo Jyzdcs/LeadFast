@@ -1,6 +1,6 @@
-import * as React from "react"
-import { cn } from "@/lib/utils"
-import { UserIcon } from "@heroicons/react/24/outline"
+import { cn } from "@/lib/utils";
+import { UserIcon } from "@heroicons/react/24/outline";
+import * as React from "react";
 
 function Input({ className, type, ...props }: React.ComponentProps<"input">) {
   return (
@@ -25,7 +25,7 @@ function Input({ className, type, ...props }: React.ComponentProps<"input">) {
         {...props}
       />
     </div>
-  )
+  );
 }
 
-export { Input }
+export { Input };

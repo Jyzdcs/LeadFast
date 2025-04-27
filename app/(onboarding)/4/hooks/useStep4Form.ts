@@ -1,7 +1,6 @@
-import { useState } from "react";
-import { useForm, UseFormReturn } from "react-hook-form";
-import { useRouter } from "next/navigation";
 import { useOnboarding } from "@/contexts/OnboardingContext";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
 import { Step4FormValues } from "../mocks/constants";
 
 /**

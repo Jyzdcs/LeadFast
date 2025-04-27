@@ -1,7 +1,12 @@
 "use client";
 
-import { cn } from "@/lib/utils";
-import { Sparkles } from "lucide-react";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
 import {
   Table,
   TableBody,
@@ -10,13 +15,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetDescription,
-} from "@/components/ui/sheet";
+import { cn } from "@/lib/utils";
+import { Sparkles } from "lucide-react";
 import { useState } from "react";
 
 interface TableColumn {

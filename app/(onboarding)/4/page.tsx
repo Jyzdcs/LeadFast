@@ -1,10 +1,8 @@
 "use client";
 
-import React from "react";
-import { FeaturesSectionWithHoverEffects } from "@/components/ui/feature-section-with-hover-effects";
-import { StepHeader } from "./components/StepHeader";
-import { PersonalInfoForm } from "./components/PersonalInfoForm";
 import { NavigationButtons } from "./components/NavigationButtons";
+import { PersonalInfoForm } from "./components/PersonalInfoForm";
+import { StepHeader } from "./components/StepHeader";
 import { useStep4Form } from "./hooks/useStep4Form";
 
 /**
