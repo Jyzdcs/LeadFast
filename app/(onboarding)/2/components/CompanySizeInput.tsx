@@ -1,15 +1,15 @@
-import React from "react";
 import { Badge } from "@/components/ui/badge";
-import { X, Users, InfoIcon } from "lucide-react";
-import { Combobox } from "@/components/ui/combobox";
-import { employeeRanges } from "../mocks/constants";
 import { Button } from "@/components/ui/button";
+import { Combobox } from "@/components/ui/combobox";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { InfoIcon, Users, X } from "lucide-react";
+import React from "react";
+import { employeeRanges } from "../mocks/constants";
 
 interface CompanySizeInputProps {
   sizes: string[];

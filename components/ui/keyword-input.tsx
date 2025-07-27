@@ -1,8 +1,8 @@
-import * as React from "react";
-import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { X, PlusIcon } from "lucide-react";
+import { PlusIcon, X } from "lucide-react";
+import * as React from "react";
 
 interface KeywordInputProps {
   keywords: string[];

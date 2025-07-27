@@ -1,6 +1,6 @@
+import "@/app/globals.css";
 import React from "react";
 import { OnboardingProvider } from "../../contexts/OnboardingContext";
-import "@/app/globals.css";
 import { ClientLayout } from "./ClientLayout";
 
 export const metadata = {

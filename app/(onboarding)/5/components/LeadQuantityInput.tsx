@@ -1,5 +1,3 @@
-import React from "react";
-import { Package, InfoIcon } from "lucide-react";
 import { Combobox } from "@/components/ui/combobox";
 import {
   Tooltip,
@@ -7,6 +5,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { InfoIcon, Package } from "lucide-react";
+import React from "react";
 import { quantityPricing } from "../mocks/constants";
 
 interface LeadQuantityInputProps {

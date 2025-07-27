@@ -1,8 +1,6 @@
-import React from "react";
-import { ArrowRightIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ArrowRightIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { UseFormReturn } from "react-hook-form";
 
 export const NavigationButtons = () => {
   const router = useRouter();

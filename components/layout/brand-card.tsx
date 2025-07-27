@@ -1,9 +1,8 @@
-import React from "react";
-import { Logo } from "@/components/ui/logo";
 import { ApprovalBadge } from "@/components/ui/approval-badge";
-import { HeroContent } from "@/components/ui/hero-content";
-import { GradientBackground } from "@/components/ui/gradient-background";
 import { FeatureCardsSection } from "@/components/ui/feature-cards-section";
+import { GradientBackground } from "@/components/ui/gradient-background";
+import { HeroContent } from "@/components/ui/hero-content";
+import { Logo } from "@/components/ui/logo";
 
 export function BrandCard() {
   return (

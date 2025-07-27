@@ -8,9 +8,7 @@ export function StepLayout({ children, navigationButtons }: StepLayoutProps) {
     <div className="flex flex-col h-[calc(100vh-48px)] md:h-[calc(100vh-96px)] overflow-hidden">
       {/* Scrollable content area */}
       <div className="flex-1 overflow-y-auto overflow-x-hidden">
-        <div className="pb-24">
-          {children}
-        </div>
+        <div className="pb-24">{children}</div>
       </div>
 
       {/* Fixed navigation */}
@@ -21,4 +19,4 @@ export function StepLayout({ children, navigationButtons }: StepLayoutProps) {
       </div>
     </div>
   );
-} 
+}

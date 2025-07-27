@@ -1,14 +1,13 @@
-import { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
 import { useOnboarding } from "@/contexts/OnboardingContext";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { Step1FormValues } from "../mocks/constants";
 
 export const useStep1Form = () => {
   const { data, setData } = useOnboarding();
   const router = useRouter();
   const [selectedLevel, setSelectedLevel] = useState("");
-  const [selectedJobTitle, setSelectedJobTitle] = useState("");
 
   const form = useForm<Step1FormValues>({
     defaultValues: {

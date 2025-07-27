@@ -1,12 +1,11 @@
 "use client";
 
-import React from "react";
 import { FeaturesSectionWithHoverEffects } from "@/components/ui/feature-section-with-hover-effects";
-import { useStep1Form } from "./hooks/useStep1Form";
-import { StepHeader } from "./components/StepHeader";
 import { JobTitleInput } from "./components/JobTitleInput";
 import { ManagementLevelInput } from "./components/ManagementLevelInput";
 import { NavigationButtons } from "./components/NavigationButtons";
+import { StepHeader } from "./components/StepHeader";
+import { useStep1Form } from "./hooks/useStep1Form";
 
 export default function Step1() {
   const {

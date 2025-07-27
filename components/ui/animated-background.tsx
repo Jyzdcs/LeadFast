@@ -1,14 +1,7 @@
-'use client';
-import { cn } from '@/lib/utils';
-import { AnimatePresence, Transition, motion } from 'framer-motion';
-import {
-  Children,
-  cloneElement,
-  ReactElement,
-  useEffect,
-  useState,
-  useId,
-} from 'react';
+"use client";
+import { cn } from "@/lib/utils";
+import { AnimatePresence, motion, Transition } from "framer-motion";
+import { useEffect, useId, useState } from "react";
 
 interface ItemProps {
   id: number | string;
@@ -71,14 +64,14 @@ export default function AnimatedBackground({
             key={index}
             className={cn("relative inline-flex")}
             aria-selected={activeId === id}
-            data-checked={activeId === id ? 'true' : 'false'}
+            data-checked={activeId === id ? "true" : "false"}
             {...interactionProps}
           >
             <AnimatePresence initial={false}>
               {activeId === id && (
                 <motion.div
                   layoutId={`background-${uniqueId}`}
-                  className={cn('absolute inset-0', className)}
+                  className={cn("absolute inset-0", className)}
                   transition={transition}
                   initial={{ opacity: defaultValue ? 1 : 0 }}
                   animate={{ opacity: 1 }}
@@ -86,16 +79,16 @@ export default function AnimatedBackground({
                 />
               )}
             </AnimatePresence>
-            <div className='z-10 flex select-none flex-col space-y-1 p-4 w-full'>
+            <div className="z-10 flex select-none flex-col space-y-1 p-4 w-full">
               <div className="flex items-center gap-3">
                 <div className={cn("flex-shrink-0", iconClassName)}>
                   {item.icon}
                 </div>
                 <div>
-                  <h3 className='text-base font-medium text-zinc-800 dark:text-zinc-50'>
+                  <h3 className="text-base font-medium text-zinc-800 dark:text-zinc-50">
                     {item.title}
                   </h3>
-                  <p className='text-base text-zinc-600 dark:text-zinc-400'>
+                  <p className="text-base text-zinc-600 dark:text-zinc-400">
                     {item.description}
                   </p>
                 </div>

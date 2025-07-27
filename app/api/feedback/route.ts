@@ -1,6 +1,6 @@
+import FeedbackEmail from "@/components/emails/FeedbackEmail";
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
-import FeedbackEmail from "@/components/emails/FeedbackEmail";
 
 // Initialisation de Resend avec la clé API depuis les variables d'environnement
 const resend = new Resend(process.env.OFFICIAL_API_KEY);

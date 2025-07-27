@@ -1,7 +1,3 @@
-// utils/apolloParameterMap.ts
-import { ApolloFormData, ApolloUrlParams, Industry } from "@/types/apolloTypes";
-import { industries } from "@/app/(onboarding)/2/mocks/constants";
-
 // Types pour le mapping des paramètres du moteur de recherche
 export interface SearchParameterMap {
   [key: string]: string | string[] | number | boolean | null;

@@ -1,19 +1,14 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import AnimatedBackground from "@/components/ui/animated-background";
 import {
-  UserIcon,
   BriefcaseIcon,
   BuildingOfficeIcon,
   EnvelopeIcon,
   GlobeAltIcon,
-  ArrowRightIcon,
+  UserIcon,
 } from "@heroicons/react/24/outline";
-import AnimatedBackground from "@/components/ui/animated-background";
 import { LinkedinIcon } from "lucide-react";
-import { ProfileCard } from "@/components/ui/profile-card";
-import { HoverButton } from "@/components/ui/hover-button";
 import { NavigationButtons } from "./NavigationButtons";
 // Types
 interface TargetInfo {

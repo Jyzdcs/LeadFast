@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
 import { generateSearchLink } from "@/lib/searchEngineService";
+import { NextRequest, NextResponse } from "next/server";
 
 /**
  * API route pour générer un lien de recherche

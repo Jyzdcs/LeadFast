@@ -1,12 +1,12 @@
-import React from "react";
 import { Input } from "@/components/ui/input";
-import { Building2, InfoIcon } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Building2, InfoIcon } from "lucide-react";
+import React from "react";
 
 interface CompanyInputProps {
   value: string;

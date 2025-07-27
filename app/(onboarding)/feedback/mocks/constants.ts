@@ -1,4 +1,3 @@
-// Constants for feedback page
 export const appreciationAspects = [
   "Interface",
   "Simplicité",
@@ -8,7 +7,6 @@ export const appreciationAspects = [
   "Support client",
 ];
 
-// Types
 export interface FeedbackFormData {
   name: string;
   email: string;

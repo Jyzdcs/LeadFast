@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { useOnboarding } from "@/contexts/OnboardingContext";
 import { submitFeedback } from "@/utils/api";
-import { FeedbackFormData } from "../mocks/constants";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { FeedbackFormData } from "../mocks/constants";
 
 // Type pour les valeurs du formulaire
 interface FeedbackFormValues {

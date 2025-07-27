@@ -1,12 +1,8 @@
-import { Resend } from "resend";
 import SearchLinkEmail from "@/components/emails/SearchLinkEmail";
+import { Resend } from "resend";
 
 // Configuration du service d'email
 const resend = new Resend(process.env.OFFICIAL_API_KEY);
-
-// Email de notification (configurable via variables d'environnement)
-const NOTIFICATION_EMAIL =
-  process.env.NOTIFICATION_EMAIL || "alexismarketeur@gmail.com";
 
 // Types d'erreurs
 export type EmailError = {

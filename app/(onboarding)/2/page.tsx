@@ -1,12 +1,10 @@
 "use client";
 
-import React from "react";
-import { FeaturesSectionWithHoverEffects } from "@/components/ui/feature-section-with-hover-effects";
-import { useStep2Form } from "./hooks/useStep2Form";
-import { StepHeader } from "./components/StepHeader";
 import { ActivitySectorInput } from "./components/ActivitySectorInput";
 import { CompanySizeInput } from "./components/CompanySizeInput";
 import { NavigationButtons } from "./components/NavigationButtons";
+import { StepHeader } from "./components/StepHeader";
+import { useStep2Form } from "./hooks/useStep2Form";
 
 export default function Step2() {
   const {

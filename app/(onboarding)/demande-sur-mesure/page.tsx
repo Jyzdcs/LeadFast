@@ -1,11 +1,10 @@
 "use client";
 
-import React from "react";
-import { FormHeader } from "./components/FormHeader";
+import { useRouter } from "next/navigation";
 import { FormFields } from "./components/FormFields";
+import { FormHeader } from "./components/FormHeader";
 import { SuccessMessage } from "./components/SuccessMessage";
 import { useDemandeSurMesureForm } from "./hooks/useDemandeSurMesureForm";
-import { useRouter } from "next/navigation";
 /**
  * Page de demande sur mesure avec design minimaliste
  * Centrée sur l'expérience utilisateur avec uniquement les inputs essentiels

@@ -1,4 +1,3 @@
-import React from "react";
 import TreeCards from "@/components/ui/tree-cards";
 
 export function FeatureCardsSection() {
@@ -13,4 +12,4 @@ export function FeatureCardsSection() {
       </div>
     </div>
   );
-} 
+}

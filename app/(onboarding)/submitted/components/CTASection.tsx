@@ -1,6 +1,6 @@
 import React from "react";
-import CTACard from "./CTACard";
 import { CTASectionProps } from "../types";
+import CTACard from "./CTACard";
 
 /**
  * Section des cartes CTA

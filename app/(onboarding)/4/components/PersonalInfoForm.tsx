@@ -1,18 +1,12 @@
-import React from "react";
 import { Input } from "@/components/ui/input";
-import { User, Mail, Phone, Info } from "lucide-react";
+import { Mail, Phone, User } from "lucide-react";
+import React from "react";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { Step4FormValues } from "../mocks/constants";
-import {
-  UseFormRegister,
   FieldErrors,
   UseFormGetValues,
+  UseFormRegister,
 } from "react-hook-form";
+import { Step4FormValues } from "../mocks/constants";
 
 /**
  * Interface pour les props du composant PersonalInfoForm

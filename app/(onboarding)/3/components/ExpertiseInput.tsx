@@ -1,15 +1,13 @@
-import React, { KeyboardEvent, useState } from "react";
-import { Badge } from "@/components/ui/badge";
-import { X, Lightbulb, InfoIcon, PlusIcon } from "lucide-react";
-import { Input } from "@/components/ui/input";
+import { KeywordInput } from "@/components/ui/keyword-input";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { InfoIcon } from "lucide-react";
+import React, { KeyboardEvent, useState } from "react";
 import { expertiseSuggestions } from "../mocks/constants";
-import { KeywordInput } from "@/components/ui/keyword-input";
 
 interface ExpertiseInputProps {
   expertise: string[];

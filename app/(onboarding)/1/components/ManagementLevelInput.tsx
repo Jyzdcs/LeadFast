@@ -1,13 +1,13 @@
-import React from "react";
-import { X, UserIcon, InfoIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Combobox } from "@/components/ui/combobox";
 import {
   Tooltip,
-  TooltipTrigger,
   TooltipContent,
   TooltipProvider,
+  TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { InfoIcon, UserIcon, X } from "lucide-react";
+import React from "react";
 import { managementLevels } from "../mocks/constants";
 
 interface ManagementLevelInputProps {

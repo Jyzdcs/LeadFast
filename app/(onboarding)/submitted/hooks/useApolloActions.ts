@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { useToast } from "@/components/ui/use-toast";
-import { useLeadFastApollo } from "@/hooks/useLeadFastApollo";
-import { useOnboarding } from "@/contexts/OnboardingContext";
 import { prepareEngineData } from "@/app/(onboarding)/submitted/utils/apolloDataAdapter";
+import { useToast } from "@/components/ui/use-toast";
+import { useOnboarding } from "@/contexts/OnboardingContext";
+import { useLeadFastApollo } from "@/hooks/useLeadFastApollo";
+import { useState } from "react";
 /**
  * Hook personnalisé pour gérer les actions liées à Apollo
  */
